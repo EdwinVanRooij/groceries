@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!--Placeholders-->
+    <string name="placeholder_text" translatable="false">Text</string>
+    <string name="placeholder_number" translatable="false">25</string>
+    <string name="placeholder_decimal" translatable="false">12.00</string>
+    <string name="placeholder_date" translatable="false">15–03–2015</string>
+    <string name="placeholder_desc" translatable="false">This is a description.</string>
 </resources>
