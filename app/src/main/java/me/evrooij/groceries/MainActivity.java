@@ -3,6 +3,8 @@ package me.evrooij.groceries;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setFragment(MainFragment.class);
     }
 
     @Override
@@ -80,23 +85,46 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         switch (id) {
             case R.id.nav_drawer_lists:
                 Toast.makeText(this, "Clicked lists", Toast.LENGTH_SHORT).show();
+                setFragment(MyListsFragment.class);
                 break;
             case R.id.nav_drawer_friends:
                 Toast.makeText(this, "Clicked friends", Toast.LENGTH_SHORT).show();
+                setFragment(FriendsFragment.class);
                 break;
             case R.id.nav_drawer_settings:
                 Toast.makeText(this, "Clicked settings", Toast.LENGTH_SHORT).show();
+                setFragment(SettingsFragment.class);
                 break;
             case R.id.nav_drawer_logout:
                 Toast.makeText(this, "Clicked logout", Toast.LENGTH_SHORT).show();
+                // TODO: 20-11-16 execute logout
+
+                setFragment(MainFragment.class);
                 break;
+            default:
+                setFragment(MainFragment.class);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setFragment(Class fragmentClass) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 }
