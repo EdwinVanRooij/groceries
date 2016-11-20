@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -74,24 +75,24 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id) {
+            case R.id.nav_drawer_lists:
+                Toast.makeText(this, "Clicked lists", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_drawer_friends:
+                Toast.makeText(this, "Clicked friends", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_drawer_settings:
+                Toast.makeText(this, "Clicked settings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_drawer_logout:
+                Toast.makeText(this, "Clicked logout", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
