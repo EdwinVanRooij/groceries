@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.evrooij.groceries.domain.Friend;
-import me.evrooij.groceries.domain.adapters.FriendAdapter;
+import me.evrooij.groceries.domain.User;
 import me.evrooij.groceries.domain.adapters.FriendAdapter;
 
 import java.util.ArrayList;
@@ -36,20 +35,10 @@ public class FriendsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         // Construct the data source
-        ArrayList<Friend> data = new ArrayList<>();
-        data.add(new Friend("UserName1", "Name1", "Surname1", 23));
-        data.add(new Friend("UserName2", "Name2", "Surname2", 24));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
-        data.add(new Friend("UserName3", "Name3", "Surname3", 18));
+        ArrayList<User> data = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            data.add(new User(String.format("Username%s", i), String.format("Name%s", i), String.format("Surname%s", i), 18));
+        }
         // Create the adapter to convert the array to views
         FriendAdapter adapter = new FriendAdapter(getActivity(), data);
         // Attach the adapter to a ListView

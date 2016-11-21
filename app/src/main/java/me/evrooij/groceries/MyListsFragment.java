@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.evrooij.groceries.domain.User;
 import me.evrooij.groceries.domain.adapters.GroceryListAdapter;
 import me.evrooij.groceries.domain.GroceryList;
 
@@ -35,24 +36,9 @@ public class MyListsFragment extends Fragment {
 
         // Construct the data source
         ArrayList<GroceryList> data = new ArrayList<>();
-        data.add(new GroceryList("ListOne", "Owner"));
-        data.add(new GroceryList("ListTwo", "Owner2"));
-        data.add(new GroceryList("ListThree", "Owner3"));
-        data.add(new GroceryList("ListOne", "Owner"));
-        data.add(new GroceryList("ListTwo", "Owner2"));
-        data.add(new GroceryList("ListThree", "Owner3"));
-        data.add(new GroceryList("ListOne", "Owner"));
-        data.add(new GroceryList("ListTwo", "Owner2"));
-        data.add(new GroceryList("ListThree", "Owner3"));
-        data.add(new GroceryList("ListOne", "Owner"));
-        data.add(new GroceryList("ListTwo", "Owner2"));
-        data.add(new GroceryList("ListThree", "Owner3"));
-        data.add(new GroceryList("ListOne", "Owner"));
-        data.add(new GroceryList("ListTwo", "Owner2"));
-        data.add(new GroceryList("ListThree", "Owner3"));
-        data.add(new GroceryList("ListOne", "Owner"));
-        data.add(new GroceryList("ListTwo", "Owner2"));
-        data.add(new GroceryList("ListThree", "Owner3"));
+        for (int i = 0; i < 15; i++) {
+            data.add(new GroceryList(String.format("List%s", i), String.format("Owner%s", i)));
+        }
         // Create the adapter to convert the array to views
         GroceryListAdapter adapter = new GroceryListAdapter(getActivity(), data);
         // Attach the adapter to a ListView

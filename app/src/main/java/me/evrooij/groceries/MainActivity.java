@@ -1,5 +1,6 @@
 package me.evrooij.groceries;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,12 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static me.evrooij.groceries.R.id.fab;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
@@ -51,8 +49,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
+
+        if (f instanceof MainFragment) {
+            Snackbar.make(view, "Handle mainfragment action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else if (f instanceof MyListsFragment) {
+            Snackbar.make(view, "Handle mylists action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        } else if (f instanceof FriendsFragment) {
+            startActivity(new Intent(this, SearchUserActivity.class));
+        } else {
+            Snackbar.make(view, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 
     @Override
@@ -63,13 +73,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -92,30 +95,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         switch (id) {
+            case R.id.nav_drawer_home:
+                setFragment(MainFragment.class);
+                fab.show();
             case R.id.nav_drawer_lists:
-                fab.hide();
-                Toast.makeText(this, "Clicked lists", Toast.LENGTH_SHORT).show();
                 setFragment(MyListsFragment.class);
+                fab.show();
                 break;
             case R.id.nav_drawer_friends:
-                Toast.makeText(this, "Clicked friends", Toast.LENGTH_SHORT).show();
                 setFragment(FriendsFragment.class);
                 fab.show();
                 break;
             case R.id.nav_drawer_settings:
-                Toast.makeText(this, "Clicked settings", Toast.LENGTH_SHORT).show();
+//                We don't need a fab in settings
                 setFragment(SettingsFragment.class);
+                fab.hide();
                 break;
             case R.id.nav_drawer_logout:
-                Toast.makeText(this, "Clicked logout", Toast.LENGTH_SHORT).show();
                 // TODO: 20-11-16 execute logout
-
-                setFragment(MainFragment.class);
                 break;
             default:
-                setFragment(MainFragment.class);
+                System.out.println("Could not determine which drawer item was clicked");
         }
 
 
