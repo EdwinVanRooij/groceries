@@ -1,4 +1,4 @@
-package me.evrooij.groceries.androiddomain;
+package me.evrooij.groceries.domain.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

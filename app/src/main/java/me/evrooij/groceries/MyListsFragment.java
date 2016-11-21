@@ -9,13 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.google.android.gms.plus.model.people.Person;
-import me.evrooij.groceries.androiddomain.GroceryListAdapter;
+import me.evrooij.groceries.domain.adapters.GroceryListAdapter;
 import me.evrooij.groceries.domain.GroceryList;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
