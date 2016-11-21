@@ -22,7 +22,6 @@ public class MyListsFragment extends Fragment {
 
     @BindView(R.id.lv_my_lists) ListView listView;
 
-
     public MyListsFragment() {
         // Required empty public constructor
     }
@@ -36,6 +35,21 @@ public class MyListsFragment extends Fragment {
 
         // Construct the data source
         ArrayList<GroceryList> data = new ArrayList<>();
+        data.add(new GroceryList("ListOne", "Owner"));
+        data.add(new GroceryList("ListTwo", "Owner2"));
+        data.add(new GroceryList("ListThree", "Owner3"));
+        data.add(new GroceryList("ListOne", "Owner"));
+        data.add(new GroceryList("ListTwo", "Owner2"));
+        data.add(new GroceryList("ListThree", "Owner3"));
+        data.add(new GroceryList("ListOne", "Owner"));
+        data.add(new GroceryList("ListTwo", "Owner2"));
+        data.add(new GroceryList("ListThree", "Owner3"));
+        data.add(new GroceryList("ListOne", "Owner"));
+        data.add(new GroceryList("ListTwo", "Owner2"));
+        data.add(new GroceryList("ListThree", "Owner3"));
+        data.add(new GroceryList("ListOne", "Owner"));
+        data.add(new GroceryList("ListTwo", "Owner2"));
+        data.add(new GroceryList("ListThree", "Owner3"));
         data.add(new GroceryList("ListOne", "Owner"));
         data.add(new GroceryList("ListTwo", "Owner2"));
         data.add(new GroceryList("ListThree", "Owner3"));
