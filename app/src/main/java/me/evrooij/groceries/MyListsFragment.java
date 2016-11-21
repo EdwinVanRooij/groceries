@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.android.gms.plus.model.people.Person;
 import me.evrooij.groceries.androiddomain.GroceryListAdapter;
 import me.evrooij.groceries.domain.GroceryList;
@@ -21,9 +23,8 @@ import java.util.List;
  */
 public class MyListsFragment extends Fragment {
 
-    private List<GroceryList> myLists;
-    private ListView listView;
-    private GroceryListAdapter adapter;
+    @BindView(R.id.lv_my_lists) ListView listView;
+
 
     public MyListsFragment() {
         // Required empty public constructor
@@ -33,21 +34,19 @@ public class MyListsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_my_lists, container, false);
+        ButterKnife.bind(this, view);
 
-        listView = (ListView) container.findViewById(R.id.lv_my_lists);
-        myLists = new ArrayList<>();
-        addDummyData();
-        adapter = new GroceryListAdapter(youractivity.this, 0, myLists);
+        // Construct the data source
+        ArrayList<GroceryList> data = new ArrayList<>();
+        data.add(new GroceryList("ListOne", "Owner"));
+        data.add(new GroceryList("ListTwo", "Owner2"));
+        data.add(new GroceryList("ListThree", "Owner3"));
+        // Create the adapter to convert the array to views
+        GroceryListAdapter adapter = new GroceryListAdapter(getActivity(), data);
+        // Attach the adapter to a ListView
         listView.setAdapter(adapter);
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_lists, container, false);
+        return view;
     }
-
-    private void addDummyData() {
-
-        myLists.add(new GroceryList("LijstNaam1"));
-        myLists.add(new GroceryList("LijstNaam2"));
-    }
-
 }
