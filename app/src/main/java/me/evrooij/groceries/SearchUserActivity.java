@@ -1,10 +1,12 @@
 package me.evrooij.groceries;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import me.evrooij.groceries.domain.User;
 import me.evrooij.groceries.domain.adapters.UserAdapter;
 
@@ -31,4 +33,10 @@ public class SearchUserActivity extends AppCompatActivity {
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
     }
+
+    @OnItemClick(R.id.lv_users)
+    public void onItemClick(int position) {
+        startActivity(new Intent(this, ProfileActivity.class));
+    }
+
 }

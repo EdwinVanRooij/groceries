@@ -14,6 +14,7 @@
     <string name="placeholder_decimal" translatable="false">12.00</string>
     <string name="placeholder_date" translatable="false">15–03–2015</string>
     <string name="placeholder_desc" translatable="false">This is a description.</string>
+    <string name="placeholder_paragraph" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec varius nisi, a mattis erat. Etiam sit amet orci et risus imperdiet vehicula vitae in sapien. Donec a tellus a odio laoreet elementum. Ut tempor sem ac viverra volutpat. Pellentesque efficitur, ipsum a suscipit elementum, leo ipsum aliquet dui, sit amet accumsan diam arcu et velit</string>
 
     <string name="nav_drawer_home">Home</string>
     <string name="nav_drawer_lists">Lists</string>
