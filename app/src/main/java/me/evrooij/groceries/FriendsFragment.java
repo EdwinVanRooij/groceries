@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class FriendsFragment extends Fragment {
 
-    @BindView(R.id.lv_my_friends)
+    @BindView(R.id.lv_users)
     ListView listView;
 
     public FriendsFragment() {

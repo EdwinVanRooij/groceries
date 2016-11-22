@@ -7,8 +7,5 @@
     android:layout_height="match_parent"
     tools:context="me.evrooij.groceries.SearchUserActivity">
 
-    <ListView
-        android:id="@+id/lv_users"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/listview_users"/>
 </RelativeLayout>

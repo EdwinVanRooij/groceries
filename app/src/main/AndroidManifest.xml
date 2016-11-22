@@ -21,8 +21,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchUserActivity" />
-        <activity android:name=".ProfileActivity"
-            android:theme="@style/BaseTheme"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:theme="@style/BaseTheme" />
+        <activity
+            android:name=".NewListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

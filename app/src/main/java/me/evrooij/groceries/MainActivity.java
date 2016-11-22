@@ -1,6 +1,7 @@
 package me.evrooij.groceries;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 
 import static android.R.attr.id;
 
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setSupportActionBar(toolbar);
 
+        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -57,9 +62,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Snackbar.make(view, "Handle mainfragment action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else if (f instanceof MyListsFragment) {
-            Snackbar.make(view, "Handle mylists action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+//            Start creating a new list
+            startActivity(new Intent(this, NewListActivity.class));
         } else if (f instanceof FriendsFragment) {
+//            Start searching for friends
             startActivity(new Intent(this, SearchUserActivity.class));
         } else {
             Snackbar.make(view, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
