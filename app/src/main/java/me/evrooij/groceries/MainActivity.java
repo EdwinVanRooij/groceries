@@ -14,16 +14,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-
-import static android.R.attr.id;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setAction("Action", null).show();
         } else if (f instanceof MyListsFragment) {
 //            Start creating a new list
-            startActivity(new Intent(this, NewListActivity.class));
+            startActivity(new Intent(this, NewListContainer.class));
         } else if (f instanceof FriendsFragment) {
 //            Start searching for friends
             startActivity(new Intent(this, SearchUserActivity.class));
