@@ -33,7 +33,7 @@ public class NewListContainer extends AppCompatActivity {
 
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24));
 
-        setFragment(SelectFriendsFragment.class, false);
+        setFragment(SelectFriendsFragment.class, false, true);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class NewListContainer extends AppCompatActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
 
         if (f instanceof SelectFriendsFragment) {
-            setFragment(CompleteListFragment.class, true);
+            setFragment(CompleteListFragment.class, true, false);
             fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_done).color(Color.WHITE).sizeDp(24));
         } else if (f instanceof CompleteListFragment) {
             finish();
@@ -57,7 +57,7 @@ public class NewListContainer extends AppCompatActivity {
         }
     }
 
-    private void setFragment(Class fragmentClass, boolean animated) {
+    private void setFragment(Class fragmentClass, boolean animated, boolean isFirst) {
         try {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment fragment = (Fragment) fragmentClass.newInstance();
@@ -67,7 +67,9 @@ public class NewListContainer extends AppCompatActivity {
                 transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right);
             }
             transaction.replace(R.id.flContent, fragment);
-            transaction.addToBackStack(null);
+            if (!isFirst) {
+                transaction.addToBackStack(null);
+            }
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
