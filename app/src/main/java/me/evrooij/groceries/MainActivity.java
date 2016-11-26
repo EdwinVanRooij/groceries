@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setAction("Action", null).show();
         } else if (f instanceof MyListsFragment) {
 //            Start creating a new list
-            startActivity(new Intent(this, NewListContainer.class));
+            startActivity(new Intent(this, NewListContainerActivity.class));
         } else if (f instanceof FriendsFragment) {
 //            Start searching for friends
             startActivity(new Intent(this, SearchUserActivity.class));

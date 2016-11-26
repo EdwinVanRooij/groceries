@@ -18,7 +18,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.fragments.CompleteListFragment;
 import me.evrooij.groceries.fragments.SelectFriendsFragment;
 
-public class NewListContainer extends AppCompatActivity {
+public class NewListContainerActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.toolbar)
