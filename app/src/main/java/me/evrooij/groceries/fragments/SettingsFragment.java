@@ -21,9 +21,6 @@ import static java.lang.System.load;
  */
 public class SettingsFragment extends Fragment {
 
-    @BindView(R.id.imageView)
-    ImageView iv;
-
     private Unbinder unbinder;
 
     public SettingsFragment() {
@@ -41,10 +38,6 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         unbinder = ButterKnife.bind(this, view);
-        Picasso.with(getActivity())
-                .load("http://placekitten.com/500/200")
-                .into(iv);
-
 
         return view;
     }
