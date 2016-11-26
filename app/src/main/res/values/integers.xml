@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="default_animation_duration">400</integer>
+    <integer name="logo_movement_duration">800</integer>
+    <integer name="slide_duration_horizontal">550</integer>
+
+    <integer name="slow_fade_duration">850</integer>
+
+    <integer name="slide_duration_vertical">1100</integer>
+
+    <integer name="product_amount_default">1</integer>
+</resources>
+

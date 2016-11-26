@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -32,7 +33,13 @@ public class NewListContainer extends AppCompatActivity {
 
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24));
 
-        setFragment(SelectFriendsFragment.class);
+        setFragment(SelectFriendsFragment.class, false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24));
+        super.onBackPressed();
     }
 
     @OnClick(R.id.fab)
@@ -40,19 +47,28 @@ public class NewListContainer extends AppCompatActivity {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
 
         if (f instanceof SelectFriendsFragment) {
-            Snackbar.make(view, "Handle selectfriendsfragment action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            setFragment(CompleteListFragment.class, true);
+            fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_done).color(Color.WHITE).sizeDp(24));
+        } else if (f instanceof CompleteListFragment) {
+            finish();
         } else {
             Snackbar.make(view, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }
 
-    private void setFragment(Class fragmentClass) {
+    private void setFragment(Class fragmentClass, boolean animated) {
         try {
-            Fragment fragment = (Fragment) fragmentClass.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            Fragment fragment = (Fragment) fragmentClass.newInstance();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            if (animated) {
+                transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+            transaction.replace(R.id.flContent, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
