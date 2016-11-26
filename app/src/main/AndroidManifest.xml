@@ -22,17 +22,17 @@
         </activity>
         <activity
             android:name=".LoginContainerActivity"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:theme="@style/AppTheme.Dark.NoActionBar.FullScreen" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewListContainerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SearchUserActivity" />
         <activity
             android:name=".ProfileActivity"
-            android:theme="@style/BaseTheme" />
-        <activity
-            android:name=".NewListContainerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
