@@ -54,7 +54,7 @@ public class MainLoginFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         Picasso.with(getActivity())
-                .load("http://placekitten.com/500/200")
+                .load("http://placekitten.com/600/400")
                 .into(iv);
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ADAM.otf");

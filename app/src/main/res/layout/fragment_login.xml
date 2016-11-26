@@ -25,7 +25,7 @@
         android:paddingBottom="12dp"
         android:paddingTop="12dp">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         android:paddingBottom="12dp"
         android:paddingTop="12dp">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

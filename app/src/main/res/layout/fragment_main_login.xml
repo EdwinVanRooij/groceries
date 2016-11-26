@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="225dp"
-        android:layout_height="125dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/placeholder_desc" />
 
@@ -30,7 +30,7 @@
             android:clickable="false"
             android:text="@string/app_name"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="@dimen/textSizeH2" />
+            android:textSize="@dimen/launcherAppName" />
     </RelativeLayout>
 
     <Button
