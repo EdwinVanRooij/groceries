@@ -1,4 +1,4 @@
-package me.evrooij.groceries;
+package me.evrooij.groceries.fragments;
 
 
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.GroceryList;
 import me.evrooij.groceries.domain.Product;
 import me.evrooij.groceries.domain.adapters.GroceryListAdapter;
@@ -31,12 +33,18 @@ public class MainFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private Unbinder unbinder;
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         // Construct the data source
         ArrayList<Product> data = new ArrayList<>();

@@ -1,4 +1,4 @@
-package me.evrooij.groceries;
+package me.evrooij.groceries.fragments;
 
 
 import android.os.Bundle;
@@ -6,7 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import com.squareup.picasso.Picasso;
+import me.evrooij.groceries.R;
+
+import static java.lang.System.load;
 
 
 /**
@@ -14,17 +21,30 @@ import butterknife.ButterKnife;
  */
 public class SettingsFragment extends Fragment {
 
+    @BindView(R.id.imageView)
+    ImageView iv;
+
+    private Unbinder unbinder;
 
     public SettingsFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
+        Picasso.with(getActivity())
+                .load("http://placekitten.com/500/200")
+                .into(iv);
+
 
         return view;
     }

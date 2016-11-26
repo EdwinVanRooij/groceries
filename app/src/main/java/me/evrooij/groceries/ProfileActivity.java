@@ -1,25 +1,22 @@
 package me.evrooij.groceries;
 
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.MotionEvent;
-import android.widget.ImageView;
-import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Callback;
+import me.evrooij.groceries.domain.SquareImageView;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    @BindView(R.id.image)
+    SquareImageView imageView;
 
     private static final String EXTRA_IMAGE = "com.antonioleiva.materializeyourapp.extraImage";
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -41,6 +38,10 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(getResources().getString(R.string.placeholder_name));
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+
+        Picasso.with(this)
+                .load("http://placekitten.com/300/400")
+                .into(imageView);
     }
 
     @Override
@@ -59,13 +60,5 @@ public class ProfileActivity extends AppCompatActivity {
             getWindow().setEnterTransition(transition);
             getWindow().setReturnTransition(transition);
         }
-    }
-
-    private void updateBackground(FloatingActionButton fab, Palette palette) {
-        int lightVibrantColor = palette.getLightVibrantColor(getResources().getColor(android.R.color.white));
-        int vibrantColor = palette.getVibrantColor(getResources().getColor(R.color.color));
-
-        fab.setRippleColor(lightVibrantColor);
-        fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
     }
 }

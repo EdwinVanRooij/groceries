@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/person"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar

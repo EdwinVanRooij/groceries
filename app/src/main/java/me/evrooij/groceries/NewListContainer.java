@@ -1,6 +1,5 @@
 package me.evrooij.groceries;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import me.evrooij.groceries.fragments.CompleteListFragment;
+import me.evrooij.groceries.fragments.SelectFriendsFragment;
 
 public class NewListContainer extends AppCompatActivity {
     @BindView(R.id.fab)
