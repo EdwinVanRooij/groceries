@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.User;
+import me.evrooij.groceries.domain.Account;
 
 import java.util.ArrayList;
 
@@ -15,15 +15,15 @@ import java.util.ArrayList;
  * Created by eddy on 20-11-16.
  */
 
-public class UserAdapter extends ArrayAdapter<User> {
-    public UserAdapter(Context context, ArrayList<User> users) {
+public class AccountAdapter extends ArrayAdapter<Account> {
+    public AccountAdapter(Context context, ArrayList<Account> users) {
         super(context, 0, users);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        User user = getItem(position);
+        Account user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user, parent, false);
@@ -32,7 +32,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         // Populate the data into the template view using the data object
         if (user != null) {
-            tvName.setText(user.toString());
+            tvName.setText(user.getUsername());
         }
 
         // Return the completed view to render on screen

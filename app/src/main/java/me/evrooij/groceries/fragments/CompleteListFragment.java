@@ -11,8 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.User;
-import me.evrooij.groceries.adapters.UserAdapter;
+import me.evrooij.groceries.adapters.AccountAdapter;
+import me.evrooij.groceries.domain.Account;
 
 import java.util.ArrayList;
 
@@ -45,12 +45,12 @@ public class CompleteListFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         // Construct the data source
-        ArrayList<User> data = new ArrayList<>();
+        ArrayList<Account> data = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            data.add(new User(String.format("Username%s", i), String.format("Name%s", i), String.format("Surname%s", i), 18));
+            data.add(new Account(String.format("Accountname%s", i), String.format("Name%s", i), String.format("Surname%s", i)));
         }
         // Create the adapter to convert the array to views
-        UserAdapter adapter = new UserAdapter(getActivity(), data);
+        AccountAdapter adapter = new AccountAdapter(getActivity(), data);
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
 

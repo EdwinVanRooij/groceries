@@ -34,7 +34,7 @@ public class GroceryListAdapter extends ArrayAdapter<GroceryList> {
         // Populate the data into the template view using the data object
         if (user != null) {
             tvTitle.setText(user.getName());
-            tvDescription.setText(user.getOwner());
+            tvDescription.setText(user.getOwner().getUsername());
         }
         // Return the completed view to render on screen
         return convertView;

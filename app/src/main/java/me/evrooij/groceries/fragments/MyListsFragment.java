@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.GroceryListAdapter;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.GroceryList;
 
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
  */
 public class MyListsFragment extends Fragment {
 
-    @BindView(R.id.lv_my_lists) ListView listView;
+    @BindView(R.id.lv_my_lists)
+    ListView listView;
 
     public MyListsFragment() {
         // Required empty public constructor
@@ -30,11 +32,13 @@ public class MyListsFragment extends Fragment {
 
 
     private Unbinder unbinder;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,8 +47,9 @@ public class MyListsFragment extends Fragment {
 
         // Construct the data source
         ArrayList<GroceryList> data = new ArrayList<>();
+        Account thisAccount = new Account("Hankinson", "Hank@hankinson.com", "hanksww");
         for (int i = 0; i < 5; i++) {
-            data.add(new GroceryList(String.format("List%s", i), String.format("Owner%s", i)));
+            data.add(new GroceryList(String.format("List%s", i), thisAccount));
         }
         // Create the adapter to convert the array to views
         GroceryListAdapter adapter = new GroceryListAdapter(getActivity(), data);

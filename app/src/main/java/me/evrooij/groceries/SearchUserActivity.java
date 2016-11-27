@@ -7,8 +7,8 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import me.evrooij.groceries.domain.User;
-import me.evrooij.groceries.adapters.UserAdapter;
+import me.evrooij.groceries.adapters.AccountAdapter;
+import me.evrooij.groceries.domain.Account;
 
 import java.util.ArrayList;
 
@@ -24,12 +24,12 @@ public class SearchUserActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Construct the data source
-        ArrayList<User> data = new ArrayList<>();
+        ArrayList<Account> data = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
-            data.add(new User(String.format("Username%s", i), String.format("Name%s", i), String.format("Surname%s", i), 18));
+            data.add(new Account(String.format("Accountname%s", i), String.format("Name%s", i), String.format("Surname%s", i)));
         }
         // Create the adapter to convert the array to views
-        UserAdapter adapter = new UserAdapter(this, data);
+        AccountAdapter adapter = new AccountAdapter(this, data);
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
     }
