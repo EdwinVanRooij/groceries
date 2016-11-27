@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.User;
-import me.evrooij.groceries.domain.adapters.FriendAdapter;
+import me.evrooij.groceries.adapters.FriendAdapter;
 
 import java.util.ArrayList;
 

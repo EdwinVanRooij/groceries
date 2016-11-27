@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.User;
-import me.evrooij.groceries.domain.adapters.GroceryListAdapter;
+import me.evrooij.groceries.adapters.GroceryListAdapter;
 import me.evrooij.groceries.domain.GroceryList;
 
 import java.util.ArrayList;

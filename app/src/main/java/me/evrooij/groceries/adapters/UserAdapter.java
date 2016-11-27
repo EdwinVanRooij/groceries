@@ -1,13 +1,11 @@
-package me.evrooij.groceries.domain.adapters;
+package me.evrooij.groceries.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.User;
 
@@ -17,8 +15,8 @@ import java.util.ArrayList;
  * Created by eddy on 20-11-16.
  */
 
-public class FriendAdapter extends ArrayAdapter<User> {
-    public FriendAdapter(Context context, ArrayList<User> users) {
+public class UserAdapter extends ArrayAdapter<User> {
+    public UserAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
     }
 

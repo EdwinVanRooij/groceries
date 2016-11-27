@@ -1,4 +1,4 @@
-package me.evrooij.groceries.domain.adapters;
+package me.evrooij.groceries.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,12 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Product;
-import me.evrooij.groceries.domain.User;
 
 import java.util.ArrayList;
-
-import static me.evrooij.groceries.R.id.tvAmount;
-import static me.evrooij.groceries.R.id.tvName;
 
 /**
  * Created by eddy on 20-11-16.
