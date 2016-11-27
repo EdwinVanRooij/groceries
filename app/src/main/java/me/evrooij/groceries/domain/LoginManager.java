@@ -1,7 +1,8 @@
 package me.evrooij.groceries.domain;
 
 /**
- * Created by eddy on 27-11-16.
+ * Created by eddy
+ * Date: 27-11-16.
  */
 
 public class LoginManager {

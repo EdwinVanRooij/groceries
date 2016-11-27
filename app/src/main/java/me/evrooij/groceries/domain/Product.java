@@ -26,10 +26,22 @@ public class Product {
         return owner;
     }
 
-    public Product(String name, int amount, String owner, String comment) {
+    public Product(String name, int amount, String comment, String owner) {
         this.name = name;
         this.amount = amount;
         this.owner = owner;
+        this.comment = comment;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setComment(String comment) {
         this.comment = comment;
     }
 }

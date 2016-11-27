@@ -7,33 +7,34 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by eddy on 27-11-16.
+ * Created by eddy
+ * Date: 27-11-16.
  */
 public class LoginManagerTest {
     /*
      * at least 6 characters, at max 30
      */
-    public static final String CORRECT_USERNAME_1 = "111111";
-    public static final String CORRECT_USERNAME_2 = "111111111111111111111111111111";
-    public static final String CORRECT_USERNAME_3 = "Hank";
-    public static final String INCORRECT_USERNAME_1 = "11111";
-    public static final String INCORRECT_USERNAME_2 = "1111111111111111111111111111111";
-    public static final String INCORRECT_USERNAME_3 = "hank@hankinson.com";
-    public static final String CORRECT_EMAIL_1 = "mail@gmail.com";
-    public static final String CORRECT_EMAIL_2 = "somestring@student.fontys.me";
-    public static final String CORRECT_EMAIL_3 = "info@evrooij.me";
-    public static final String INCORRECT_EMAIL_1 = "@mail.com";
-    public static final String INCORRECT_EMAIL_2 = "info@.com";
-    public static final String INCORRECT_EMAIL_3 = "info@me.";
+    private static final String CORRECT_USERNAME_1 = "111111";
+    private static final String CORRECT_USERNAME_2 = "111111111111111111111111111111";
+    private static final String CORRECT_USERNAME_3 = "Hank";
+    private static final String INCORRECT_USERNAME_1 = "11111";
+    private static final String INCORRECT_USERNAME_2 = "1111111111111111111111111111111";
+    private static final String INCORRECT_USERNAME_3 = "hank@hankinson.com";
+    private static final String CORRECT_EMAIL_1 = "mail@gmail.com";
+    private static final String CORRECT_EMAIL_2 = "somestring@student.fontys.me";
+    private static final String CORRECT_EMAIL_3 = "info@evrooij.me";
+    private static final String INCORRECT_EMAIL_1 = "@mail.com";
+    private static final String INCORRECT_EMAIL_2 = "info@.com";
+    private static final String INCORRECT_EMAIL_3 = "info@me.";
     /*
      * at least 8 characters, at max 100
      */
-    public static final String CORRECT_PASS_1 = "11111111";
-    public static final String CORRECT_PASS_2 = "mypass1332";
-    public static final String CORRECT_PASS_3 = "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
-    public static final String INCORRECT_PASS_1 = "1111111";
-    public static final String INCORRECT_PASS_2 = "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
-    public static final String INCORRECT_PASS_3 = "r11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+    private static final String CORRECT_PASS_1 = "11111111";
+    private static final String CORRECT_PASS_2 = "mypass1332";
+    private static final String CORRECT_PASS_3 = "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+    private static final String INCORRECT_PASS_1 = "1111111";
+    private static final String INCORRECT_PASS_2 = "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+    private static final String INCORRECT_PASS_3 = "r11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
     private LoginManager loginManager;
 
     @Before
@@ -69,26 +70,6 @@ public class LoginManagerTest {
 
     @Test
     public void register() throws Exception {
-        /**
-         * Creates a new Account entry in the database.
-         * @param username identification name, must be:
-         *                 unique relative to all of the other usernames
-         *                 at least 6 characters long
-         *                 at max 30 characters long
-         * @param email e-mail address of the user used for communication purposes, must:
-         *              contain something before the @
-         *              contain a @ character
-         *              contain something after the @
-         *              contain a dot after the @
-         *              contain something after the dot
-         * @param password used to log into the user account for validation, must be:
-         *                 at least 8 characters long
-         *                 at max 100 characters long
-         * @return the user account if successful, null if unsuccessful
-         */
-        /*
-         * Check the happy flow first
-         */
         Account account = loginManager.register(CORRECT_USERNAME_1, CORRECT_EMAIL_1, CORRECT_PASS_1);
         assertNotNull(account);
         Account account2 = loginManager.register(CORRECT_USERNAME_2, CORRECT_EMAIL_2, CORRECT_PASS_2);
