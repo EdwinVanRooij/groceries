@@ -82,16 +82,6 @@ public class GroceryListTest {
 
     @Test
     public void editItem() throws Exception {
-        /**
-         * Edits an existing item of this list
-         *
-         * @param name    new name of the product
-         * @param amount  new amount of the product
-         * @param comment new comment of the product
-         * @param owner   must equal the owner of this product
-         *                you're not allowed to edit the product of someone else
-         * @return boolean indicating the exit status of the method
-         */
         /*
          * Declare some variables for the product
          */
@@ -148,11 +138,6 @@ public class GroceryListTest {
 
     @Test
     public void getAmountOfProducts() throws Exception {
-        /**
-         * Returns the amount of products currently in the list
-         *
-         * @return integer value indicating the size of the product list
-         */
         // Get the current amount of products, should be 0
         int expectedPreInsert = 0;
         int actualPreInsert = currentList.getAmountOfProducts();

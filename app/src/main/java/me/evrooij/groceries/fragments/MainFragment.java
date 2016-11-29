@@ -45,7 +45,7 @@ public class MainFragment extends Fragment {
         // Construct the data source
         ArrayList<Product> data = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
-            data.add(new Product(id, String.format("Appels%s", i), ((i * 3 ) % 5) +1, String.format("Comment %s", i), String.format("Hankinson %s", i)));
+            data.add(new Product(i, String.format("Appels%s", i), ((i * 3 ) % 5) +1, String.format("Comment %s", i), String.format("Hankinson %s", i)));
         }
         // Create the adapter to convert the array to views
         ProductAdapter adapter = new ProductAdapter(getActivity(), data);
