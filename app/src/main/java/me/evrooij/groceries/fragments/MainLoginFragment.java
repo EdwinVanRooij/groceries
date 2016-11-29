@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import me.evrooij.groceries.R;
 
 /**
@@ -53,7 +53,7 @@ public class MainLoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_login, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        Picasso.with(getActivity())
+        Glide.with(this)
                 .load("http://placekitten.com/600/400")
                 .into(iv);
 

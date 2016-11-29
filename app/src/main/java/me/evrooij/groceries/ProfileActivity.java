@@ -10,7 +10,7 @@ import android.transition.Slide;
 import android.view.MotionEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 import me.evrooij.groceries.domain.SquareImageView;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle(getResources().getString(R.string.placeholder_name));
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
-        Picasso.with(this)
+        Glide.with(this)
                 .load("http://placekitten.com/300/400")
                 .into(imageView);
     }

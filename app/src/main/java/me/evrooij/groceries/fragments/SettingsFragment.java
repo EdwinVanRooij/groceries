@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.squareup.picasso.Picasso;
 import me.evrooij.groceries.R;
 
 import static java.lang.System.load;
