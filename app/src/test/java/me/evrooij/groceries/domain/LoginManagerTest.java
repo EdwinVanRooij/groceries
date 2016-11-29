@@ -16,7 +16,7 @@ public class LoginManagerTest {
      */
     private static final String CORRECT_USERNAME_1 = "111111";
     private static final String CORRECT_USERNAME_2 = "111111111111111111111111111111";
-    private static final String CORRECT_USERNAME_3 = "Hank";
+    private static final String CORRECT_USERNAME_3 = "Hankinson";
     private static final String INCORRECT_USERNAME_1 = "11111";
     private static final String INCORRECT_USERNAME_2 = "1111111111111111111111111111111";
     private static final String INCORRECT_USERNAME_3 = "hank@hankinson.com";
@@ -76,9 +76,11 @@ public class LoginManagerTest {
         assertNotNull(account2);
         Account account3 = loginManager.register(CORRECT_USERNAME_3, CORRECT_EMAIL_3, CORRECT_PASS_3);
         assertNotNull(account3);
+
         /*
          * Check whether the registration fails at any incorrect parameter
          */
+
         // Check incorrect username
         Account incorrectAccountUsername1 = loginManager.register(INCORRECT_USERNAME_1, CORRECT_EMAIL_1, CORRECT_PASS_1);
         assertNull(incorrectAccountUsername1);
@@ -86,6 +88,7 @@ public class LoginManagerTest {
         assertNull(incorrectAccountUsername2);
         Account incorrectAccountUsername3 = loginManager.register(INCORRECT_USERNAME_3, CORRECT_EMAIL_1, CORRECT_PASS_1);
         assertNull(incorrectAccountUsername3);
+
         // Check incorrect email
         Account incorrectAccountEmail1 = loginManager.register(CORRECT_USERNAME_1, INCORRECT_EMAIL_1, CORRECT_PASS_1);
         assertNull(incorrectAccountEmail1);
@@ -93,6 +96,7 @@ public class LoginManagerTest {
         assertNull(incorrectAccountEmail2);
         Account incorrectAccountEmail3 = loginManager.register(CORRECT_USERNAME_1, INCORRECT_EMAIL_3, CORRECT_PASS_1);
         assertNull(incorrectAccountEmail3);
+
         // Check incorrect pass
         Account incorrectAccountPass = loginManager.register(CORRECT_USERNAME_2, CORRECT_EMAIL_3, INCORRECT_PASS_1);
         assertNull(incorrectAccountPass);
@@ -100,6 +104,7 @@ public class LoginManagerTest {
         assertNull(incorrectAccountPass2);
         Account incorrectAccountPass3 = loginManager.register(CORRECT_USERNAME_2, CORRECT_EMAIL_3, INCORRECT_PASS_3);
         assertNull(incorrectAccountPass3);
+
         // Now let's get batshit crazy
         Account incorrectAccountEverything = loginManager.register(INCORRECT_USERNAME_1, INCORRECT_EMAIL_1, INCORRECT_PASS_1);
         assertNull(incorrectAccountEverything);
