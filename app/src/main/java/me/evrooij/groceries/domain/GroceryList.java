@@ -3,6 +3,9 @@ package me.evrooij.groceries.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.id;
+import static android.R.attr.x;
+
 /**
  * Created by eddy
  * Date: 20-11-16.
@@ -46,18 +49,20 @@ public class GroceryList {
     /**
      * Adds a new item to the list
      *
+     * @param id      unique identifier of the product
      * @param name    name of the product
      * @param amount  amount of times you want the product
      * @param comment comment about the product
      * @param owner   username of the user who added this product
      */
-    public void addItem(String name, int amount, String comment, String owner) {
-        productList.add(new Product(name, amount, comment, owner));
+    public void addItem(int id, String name, int amount, String comment, String owner) {
+        productList.add(new Product(id, name, amount, comment, owner));
     }
 
     /**
      * Edits an existing item of this list
      *
+     * @param id      unique identifier of the product
      * @param name    new name of the product
      * @param amount  new amount of the product
      * @param comment new comment of the product
@@ -65,7 +70,8 @@ public class GroceryList {
      *                you're not allowed to edit the product of someone else
      * @return boolean indicating the exit status of the method
      */
-    public boolean editItem(Product product, String name, int amount, String comment, String owner) {
+    public boolean editItem(int id, String name, int amount, String comment, String owner) {
+        Product product = getProduct(id);
         if (product.getOwner().equals(owner)) {
             product.setName(name);
             product.setAmount(amount);
@@ -78,10 +84,10 @@ public class GroceryList {
     /**
      * Removes a product
      *
-     * @param product the product to remove
+     * @param id unique identifier of the product to remove
      */
-    public void removeItem(Product product) {
-        productList.remove(product);
+    public void removeItem(int id) {
+        productList.remove(getProduct(id));
     }
 
     /**
@@ -93,6 +99,23 @@ public class GroceryList {
         return productList.size();
     }
 
-    // TODO: 27-11-16 find a way to make a getProduct(<params>) method in a neat way
+    /**
+     * Searches the GroceryList for a product
+     *
+     * @param id id of the product to look for
+     * @return the product if it's in here, null if it's not
+     */
+    public Product getProduct(int id) {
+        for (Product p :
+                productList) {
+            if (p.getId() == id) {
+                // Product found
+                return p;
+            }
+        }
+        // No product found
+        return null;
+    }
+
 }
 

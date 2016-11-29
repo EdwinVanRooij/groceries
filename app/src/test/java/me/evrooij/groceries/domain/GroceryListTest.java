@@ -4,7 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static android.provider.Telephony.Carriers.PASSWORD;
+import static android.R.attr.cursorVisible;
+import static android.R.attr.id;
+import static android.R.attr.orientation;
+import static android.icu.lang.UProperty.NAME;
 import static org.junit.Assert.*;
 
 /**
@@ -56,6 +59,7 @@ public class GroceryListTest {
         /*
          * Declare some variables for the product
          */
+        int id = 1;
         String productName = "Apples";
         int amount = 3;
         String comment = "Jonagold";
@@ -68,7 +72,7 @@ public class GroceryListTest {
         /*
          * Add it to the list, so we can retrieve it later on
          */
-        currentList.addItem(productName, amount, comment, owner);
+        currentList.addItem(id, productName, amount, comment, owner);
         /*
          * Verify that we have one more product now
          */
@@ -91,15 +95,18 @@ public class GroceryListTest {
         /*
          * Declare some variables for the product
          */
+        int id = 0;
         String productName = "Apples";
         int amount = 3;
         String comment = "Jonagold";
         String owner = currentAccount.getUsername();
 
         /*
-         * Create the product to edit later on
+         * Create the product to edit later on, add to the list as well
          */
-        Product product = new Product(productName, amount, comment, owner);
+        Product product = new Product(id, productName, amount, comment, owner);
+        currentList.addItem(product.getId(), product.getName(), product.getAmount(), product.getComment(), product.getOwner());
+
         /*
          * Declare new values
          */
@@ -108,42 +115,72 @@ public class GroceryListTest {
         String newComment = "Jonagold in a basket";
 
         /*
-         * Attempt to edit the item
+         * Attempt to edit the item: happy flow
          */
-        currentList.editItem(product, newProductName, newAmount, newComment, owner);
+        currentList.editItem(id, newProductName, newAmount, newComment, owner);
+        Product actual = currentList.getProduct(id);
 
-        // TODO: 27-11-16 finish this test
+        // Check if name was changed
+        assertEquals(newProductName, actual.getName());
+
+        // Check if amount was changed
+        assertEquals(newAmount, actual.getAmount());
+
+        // Check if comment was changed
+        assertEquals(newComment, actual.getComment());
     }
 
     @Test
     public void removeItem() throws Exception {
-        /**
-         * Removes a product
-         *
-         * @param product the product to remove
-         */
+        int id = 10;
 
+        // Add a product to the list
+        currentList.addItem(id, "Name", 10, "Comment", currentAccount.getUsername());
+
+        // Remove the product
+        currentList.removeItem(id);
+
+        // Check whether the product was removed, should return null on no product found
+        // Quote from getProduct(int id):
+//        * @return the product if it's in here, null if it's not
+        assertNull(currentList.getProduct(id));
     }
 
     @Test
     public void getAmountOfProducts() throws Exception {
-
         /**
          * Returns the amount of products currently in the list
          *
          * @return integer value indicating the size of the product list
          */
+        // Get the current amount of products, should be 0
+        int expectedPreInsert = 0;
+        int actualPreInsert = currentList.getAmountOfProducts();
+        assertEquals(expectedPreInsert, actualPreInsert);
+
+        // Add a product, expect 1
+        int expectedPostInsert = 1;
+        currentList.addItem(100, "Name", 10, "Comment", currentAccount.getUsername());
+        int actualPostInsert = currentList.getAmountOfProducts();
+        assertEquals(expectedPostInsert, actualPostInsert);
+
+        // Add 15 items, expect 16 now because we added one above
+        for (int i = 0; i < 15; i++) {
+            currentList.addItem(i, "Name", 10, "Comment", currentAccount.getUsername());
+        }
+        int expectedPostLots = 16;
+        int actualPostLots = currentList.getAmountOfProducts();
+        assertEquals(expectedPostLots, actualPostLots);
     }
 
 
     @Test
     public void testConstructor() throws Exception {
+        // Create a list
+        GroceryList list = new GroceryList("Name", currentAccount);
 
-        /**
-         * A list of product objects
-         *
-         * @param name  name of the list
-         * @param owner account of the user who created this list
-         */
+        // Check if basic parameters were initialized correctly
+        assertNotNull(list.getName());
+        assertNotNull(list.getOwner());
     }
 }
