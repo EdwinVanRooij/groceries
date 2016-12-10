@@ -27,6 +27,7 @@ public class GroceryListTest {
     @Before
     public void setUp() throws Exception {
         currentAccount = new Account(USERNAME, EMAIL, PASSWORD);
+
         currentList = new GroceryList(LIST_NAME, currentAccount);
     }
 

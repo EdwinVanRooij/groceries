@@ -1,5 +1,9 @@
 package me.evrooij.groceries.domain;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
 /**
  * Created by eddy
  * Date: 27-11-16.
@@ -42,9 +46,9 @@ public class LoginManager {
         String regexEmail = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+\\.?[a-zA-Z0-9]*$";
         String regexPassword = "^.{8,100}$";
 
-        if (username.matches(regexUsername) && email.matches(regexEmail) && password.matches(regexPassword)) {
-            return new Account(username, email, password);
+        if (!username.matches(regexUsername) || !email.matches(regexEmail) || !password.matches(regexPassword)) {
+            return null;
         }
-        return null;
+        return new Account(username, email, password);
     }
 }
