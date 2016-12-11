@@ -85,9 +85,12 @@ public class RegisterFragment extends Fragment {
     @OnClick(R.id.btnRegister)
     public void onLoginClick(View view) {
         try {
-            String username = etUsername.getText().toString().trim();
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+//            String username = etUsername.getText().toString().trim();
+//            String email = etEmail.getText().toString().trim();
+//            String password = etPassword.getText().toString().trim();
+            String username = "usernameee";
+            String email = "mail@mail.android";
+            String password = "passwordfromapp";
 
             registerAccountFromRESTApi(username, email, password);
         } catch (Exception e) {

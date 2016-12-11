@@ -11,8 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.Product;
 import me.evrooij.groceries.adapters.ProductAdapter;
+import me.evrooij.groceries.domain.Product;
 
 import java.util.ArrayList;
 

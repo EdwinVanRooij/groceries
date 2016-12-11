@@ -1,15 +1,8 @@
 package me.evrooij.groceries.rest;
 
-import android.util.Log;
 import com.squareup.okhttp.OkHttpClient;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
 
 /**
  * Created by eddy

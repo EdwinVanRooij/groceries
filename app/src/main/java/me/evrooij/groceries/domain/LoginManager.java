@@ -1,9 +1,5 @@
 package me.evrooij.groceries.domain;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 /**
  * Created by eddy
  * Date: 27-11-16.

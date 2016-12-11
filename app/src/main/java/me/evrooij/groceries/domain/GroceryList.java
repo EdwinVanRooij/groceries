@@ -3,9 +3,6 @@ package me.evrooij.groceries.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.id;
-import static android.R.attr.x;
-
 /**
  * Created by eddy
  * Date: 20-11-16.

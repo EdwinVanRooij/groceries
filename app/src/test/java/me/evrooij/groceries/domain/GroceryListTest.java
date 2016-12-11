@@ -4,10 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static android.R.attr.cursorVisible;
-import static android.R.attr.id;
-import static android.R.attr.orientation;
-import static android.icu.lang.UProperty.NAME;
 import static org.junit.Assert.*;
 
 /**
