@@ -5,6 +5,7 @@ package me.evrooij.groceries.domain;
  */
 
 public class Account {
+    private int id;
     private String username;
     private String email;
     private String password;
@@ -16,6 +17,10 @@ public class Account {
     }
 
     public Account() {
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setUsername(String username) {
@@ -40,5 +45,10 @@ public class Account {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("User %s (%s) - Mail %s - Pass %s", username, id, email, password);
     }
 }

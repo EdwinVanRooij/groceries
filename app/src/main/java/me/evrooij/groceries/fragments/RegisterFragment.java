@@ -18,6 +18,12 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.rest.GroceriesApiInterface;
+import me.evrooij.groceries.rest.RestClient;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 
 /**
@@ -39,10 +45,6 @@ public class RegisterFragment extends Fragment {
     TextInputLayout containerPassword;
     @BindView(R.id.btnRegister)
     Button btnRegister;
-
-    private String username;
-    private String email;
-    private String password;
 
     private Unbinder unbinder;
 
@@ -83,15 +85,41 @@ public class RegisterFragment extends Fragment {
     @OnClick(R.id.btnRegister)
     public void onLoginClick(View view) {
         try {
-            username = etUsername.getText().toString().trim();
-            email = etEmail.getText().toString().trim();
-            password = etPassword.getText().toString().trim();
+            String username = etUsername.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
-            startActivity(
-                    new Intent(getActivity(), MainActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            registerAccountFromRESTApi(username, email, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void registerAccountFromRESTApi(String username, String email, String pass) {
+        // Setup retrofit http request
+        GroceriesApiInterface service = RestClient.getClient();
+        Call<Account> call = service.registerAccount(new Account(username, email, pass));
+        call.enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Response<Account> response) {
+                if (response.isSuccess()) {
+                    // request successful (status code 200, 201)
+                    Account result = response.body();
+
+                    System.out.println(String.format("Received account: %s", result.toString()));
+                    startActivity(
+                            new Intent(getActivity(), MainActivity.class)
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                } else {
+                    //request not successful (like 400,401,403 etc)
+                    //Handle errors
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 }
