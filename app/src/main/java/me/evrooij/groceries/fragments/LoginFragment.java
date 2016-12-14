@@ -19,11 +19,13 @@ import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.rest.GroceriesApiInterface;
-import me.evrooij.groceries.rest.RestClient;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import me.evrooij.groceries.rest.GroceriesClient;
+import me.evrooij.groceries.rest.ServiceGenerator;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -81,8 +83,10 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.btnLogin)
     public void onLoginClick(View view) {
         try {
-            String username = etUsername.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+//            String username = etUsername.getText().toString().trim();
+//            String password = etPassword.getText().toString().trim();
+            String username = "usernameee";
+            String password = "passwordfromapp";
 
             getAccountFromRESTApi(username, password);
         } catch (Exception e) {
@@ -91,30 +95,23 @@ public class LoginFragment extends Fragment {
     }
 
     private void getAccountFromRESTApi(String username, String pass) {
-        // Setup retrofit http request
-        GroceriesApiInterface service = RestClient.getClient();
-        Call<Account> call = service.getAccountByLogin(username, pass);
-        call.enqueue(new Callback<Account>() {
-            @Override
-            public void onResponse(Response<Account> response) {
-                if (response.isSuccess()) {
-                    // request successful (status code 200, 201)
-                    Account result = response.body();
+        // Create a very simple REST adapter which points the GitHub API endpoint.
+        GroceriesClient client = ServiceGenerator.createService(GroceriesClient.class);
 
-                    System.out.println(String.format("Received account: %s", result.toString()));
-                    startActivity(
-                            new Intent(getActivity(), MainActivity.class)
-                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-                } else {
-                    //request not successful (like 400,401,403 etc)
-                    //Handle errors
-                }
+        // Fetch and print a list of the contributors to this library.
+        Call<Account> call =
+                client.getAccountByLogin(username, pass);
+
+
+        new Thread(() -> {
+            try {
+                Response<Account> a = call.execute();
+                Account acc = a.body();
+                System.out.println(String.format("Account: %s", acc));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }).start();
 
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
     }
 }
