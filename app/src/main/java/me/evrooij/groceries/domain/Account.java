@@ -1,14 +1,18 @@
 package me.evrooij.groceries.domain;
 
+
+import org.parceler.Parcel;
+
 /**
  * Created by eddy on 27-11-16.
  */
 
+@Parcel
 public class Account {
-    private int id;
-    private String username;
-    private String email;
-    private String password;
+    int id;
+    String username;
+    String email;
+    String password;
 
     public Account(String username, String email, String password) {
         this.username = username;

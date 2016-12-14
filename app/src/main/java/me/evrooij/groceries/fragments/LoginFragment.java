@@ -19,13 +19,10 @@ import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.rest.GroceriesClient;
-import me.evrooij.groceries.rest.ServiceGenerator;
-import retrofit2.Call;
-import retrofit2.Response;
+import me.evrooij.groceries.domain.LoginManager;
+import org.parceler.Parcels;
 
 import java.io.IOException;
-import java.util.List;
 
 
 /**
@@ -44,7 +41,7 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.btnLogin)
     Button btnLogin;
 
-    private static final String TAG = "LoginFragment";
+    private LoginManager loginManager;
 
     private Unbinder unbinder;
 
@@ -77,41 +74,24 @@ public class LoginFragment extends Fragment {
         Animation a3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         btnLogin.startAnimation(a3);
 
+        loginManager = new LoginManager();
+
         return view;
     }
 
     @OnClick(R.id.btnLogin)
     public void onLoginClick(View view) {
-        try {
 //            String username = etUsername.getText().toString().trim();
 //            String password = etPassword.getText().toString().trim();
-            String username = "usernameee";
-            String password = "passwordfromapp";
-
-            getAccountFromRESTApi(username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getAccountFromRESTApi(String username, String pass) {
-        // Create a very simple REST adapter which points the GitHub API endpoint.
-        GroceriesClient client = ServiceGenerator.createService(GroceriesClient.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<Account> call =
-                client.getAccountByLogin(username, pass);
-
+        String username = "administrator";
+        String password = "administrator123";
 
         new Thread(() -> {
-            try {
-                Response<Account> a = call.execute();
-                Account acc = a.body();
-                System.out.println(String.format("Account: %s", acc));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+            Account a = loginManager.login(username, password);
 
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.putExtra("user", Parcels.wrap(a));
+            startActivity(intent);
+        }).start();
     }
 }

@@ -1,7 +1,6 @@
 package me.evrooij.groceries.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -16,12 +15,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.rest.GroceriesClient;
-import retrofit2.Call;
-import retrofit2.Response;
+import me.evrooij.groceries.domain.LoginManager;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,9 +41,9 @@ public class RegisterFragment extends Fragment {
     @BindView(R.id.btnRegister)
     Button btnRegister;
 
-    private Unbinder unbinder;
+    private LoginManager loginManager;
 
-    private static final String TAG = "RegisterFragment";
+    private Unbinder unbinder;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -76,19 +74,29 @@ public class RegisterFragment extends Fragment {
         Animation a3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         btnRegister.startAnimation(a3);
 
+        loginManager = new LoginManager();
+
         return view;
     }
 
     @OnClick(R.id.btnRegister)
-    public void onLoginClick(View view) {
+    public void onRegisterClick(View view) {
         try {
 //            String username = etUsername.getText().toString().trim();
 //            String email = etEmail.getText().toString().trim();
 //            String password = etPassword.getText().toString().trim();
-            String username = "usernameee";
-            String email = "mail@mail.android";
-            String password = "passwordfromapp";
+            String username = "administrator";
+            String email = "info@admin.com";
+            String password = "administrator123";
 
+            new Thread(() -> {
+                try {
+                    Account a = loginManager.register(username, email, password);
+                    System.out.println(a);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         } catch (Exception e) {
             e.printStackTrace();
         }

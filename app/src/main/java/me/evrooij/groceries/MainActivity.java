@@ -20,10 +20,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.fragments.FriendsFragment;
 import me.evrooij.groceries.fragments.MainFragment;
 import me.evrooij.groceries.fragments.MyListsFragment;
 import me.evrooij.groceries.fragments.SettingsFragment;
+import org.parceler.Parcels;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+
+    private Account thisAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        System.out.println(String.format("Account from main activity: %s", thisAccount));
 
         setFragment(MainFragment.class);
     }
