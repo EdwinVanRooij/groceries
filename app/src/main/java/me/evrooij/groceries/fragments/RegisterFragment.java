@@ -90,12 +90,8 @@ public class RegisterFragment extends Fragment {
             String password = "administrator123";
 
             new Thread(() -> {
-                try {
-                    Account a = loginManager.register(username, email, password);
-                    System.out.println(a);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Account a = loginManager.register(username, email, password);
+                System.out.println(a);
             }).start();
         } catch (Exception e) {
             e.printStackTrace();

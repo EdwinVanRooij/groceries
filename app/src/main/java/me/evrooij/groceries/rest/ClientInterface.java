@@ -1,22 +1,26 @@
 package me.evrooij.groceries.rest;
 
 import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.GroceryList;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.*;
+
+import java.util.List;
 
 /**
  * Created by eddy
  * Date: 11-12-16.
  */
 
-public interface LoginClientInterface {
-    //    http://localhost:4567/users/login?username=user&password=passs
+public interface ClientInterface {
+    // Login interfaces
     @GET("/users/login")
     Call<Account> getAccountByLogin(@Query("username") String username, @Query("password") String password);
 
     @POST("/users/register")
     Call<Account> registerAccount(@Body Account account);
+
+    // Get all lists of a user
+    @GET("/user/{id}/lists")
+    Call<List<GroceryList>> getListsByAccountId(@Path("id") int accountId);
 }

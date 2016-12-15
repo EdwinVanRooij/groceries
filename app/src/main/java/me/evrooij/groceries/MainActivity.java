@@ -127,10 +127,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setFragment(Class fragmentClass) {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Account getAccount() {
+        return thisAccount;
     }
 }

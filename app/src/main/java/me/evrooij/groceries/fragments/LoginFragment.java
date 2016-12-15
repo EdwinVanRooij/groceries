@@ -81,8 +81,8 @@ public class LoginFragment extends Fragment {
     public void onLoginClick(View view) {
 //            String username = etUsername.getText().toString().trim();
 //            String password = etPassword.getText().toString().trim();
-        String username = "administrator";
-        String password = "administrator123";
+        String username = "ThisIsAUsername34";
+        String password = "thisis!dapassword";
 
         new Thread(() -> {
             Account a = loginManager.login(username, password);
