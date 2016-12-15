@@ -77,8 +77,6 @@ public class MyListsFragment extends Fragment {
     }
 
     private void executeOnMainThread() {
-        getActivity().runOnUiThread(() -> {
-            listView.setAdapter(adapter);
-        });
+        getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
     }
 }

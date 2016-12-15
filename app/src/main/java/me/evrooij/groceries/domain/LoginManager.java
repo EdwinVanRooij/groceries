@@ -62,16 +62,6 @@ public class LoginManager {
      * @return the user account if successful, null if unsuccessful
      */
     public Account register(String username, String email, String password) {
-        String regexUsername = "^[a-zA-Z0-9]{6,30}$";
-        String regexEmail = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+\\.?[a-zA-Z0-9]*$";
-        String regexPassword = "^.{8,100}$";
-
-        // Match regular expressions with the user input
-        if (!username.matches(regexUsername) || !email.matches(regexEmail) || !password.matches(regexPassword)) {
-            // One of the parameters was invalid
-            return null;
-        }
-
         // Create a rest adapter
         ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
 
