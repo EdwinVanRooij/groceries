@@ -1,14 +1,8 @@
 package me.evrooij.groceries.rest;
 
-import android.util.Base64;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.io.IOException;
 
 /**
  * Created by eddy on 14-12-16.

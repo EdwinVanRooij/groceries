@@ -22,8 +22,6 @@ import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.LoginManager;
 import org.parceler.Parcels;
 
-import java.io.IOException;
-
 
 /**
  * A simple {@link Fragment} subclass.
