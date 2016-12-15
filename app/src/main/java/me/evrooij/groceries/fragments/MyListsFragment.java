@@ -1,9 +1,6 @@
 package me.evrooij.groceries.fragments;
 
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +20,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.password;
-import static android.R.attr.recognitionService;
+import static me.evrooij.groceries.Constants.KEY_USER;
 
 
 /**
@@ -35,14 +31,16 @@ public class MyListsFragment extends Fragment {
     @BindView(R.id.lv_my_lists)
     ListView listView;
 
-    public MyListsFragment() {
-        // Required empty public constructor
-    }
-
+    private Account thisAccount;
     private Unbinder unbinder;
     private ArrayList<GroceryList> data;
     private GroceryListAdapter adapter;
     private ListManager listManager;
+
+    public MyListsFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -58,6 +56,8 @@ public class MyListsFragment extends Fragment {
 
         listManager = new ListManager();
 
+        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_USER));
+
         addLists();
 
         return view;
@@ -65,18 +65,11 @@ public class MyListsFragment extends Fragment {
 
     private void addLists() {
         new Thread(() -> {
-            MainActivity activity = (MainActivity) getActivity();
-            System.out.println(String.format("Account: %s", activity.getAccount()));
-
-            List<GroceryList> result = listManager.getMyLists(activity.getAccount());
+            List<GroceryList> result = listManager.getMyLists(thisAccount);
             data = new ArrayList<>(result);
             adapter = new GroceryListAdapter(getActivity(), data);
 
-            executeOnMainThread();
+            getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
         }).start();
-    }
-
-    private void executeOnMainThread() {
-        getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
     }
 }

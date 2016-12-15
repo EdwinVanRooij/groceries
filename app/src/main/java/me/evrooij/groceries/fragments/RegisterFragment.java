@@ -82,12 +82,9 @@ public class RegisterFragment extends Fragment {
     @OnClick(R.id.btnRegister)
     public void onRegisterClick(View view) {
         try {
-//            String username = etUsername.getText().toString().trim();
-//            String email = etEmail.getText().toString().trim();
-//            String password = etPassword.getText().toString().trim();
-            String username = "administrator";
-            String email = "info@admin.com";
-            String password = "administrator123";
+            String username = etUsername.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
             new Thread(() -> {
                 Account a = loginManager.register(username, email, password);

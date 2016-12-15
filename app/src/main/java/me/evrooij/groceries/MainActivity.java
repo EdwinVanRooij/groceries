@@ -21,13 +21,17 @@ import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.GroceryList;
 import me.evrooij.groceries.fragments.FriendsFragment;
 import me.evrooij.groceries.fragments.MainFragment;
 import me.evrooij.groceries.fragments.MyListsFragment;
 import me.evrooij.groceries.fragments.SettingsFragment;
 import org.parceler.Parcels;
 
+import static me.evrooij.groceries.Constants.KEY_USER;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.fab)
@@ -55,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra("user"));
-        System.out.println(String.format("Account from main activity: %s", thisAccount));
+        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_USER));
 
         setFragment(MainFragment.class);
     }
@@ -128,14 +131,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
 
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(KEY_USER, Parcels.wrap(thisAccount));
+            fragment.setArguments(bundle);
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public Account getAccount() {
-        return thisAccount;
     }
 }

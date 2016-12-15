@@ -22,6 +22,8 @@ import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.LoginManager;
 import org.parceler.Parcels;
 
+import static me.evrooij.groceries.Constants.KEY_USER;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,16 +81,14 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.btnLogin)
     public void onLoginClick(View view) {
-//            String username = etUsername.getText().toString().trim();
-//            String password = etPassword.getText().toString().trim();
-        String username = "ThisIsAUsername34";
-        String password = "thisis!dapassword";
+        String username = etUsername.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
         new Thread(() -> {
             Account a = loginManager.login(username, password);
 
             Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra("user", Parcels.wrap(a));
+            intent.putExtra(KEY_USER, Parcels.wrap(a));
             startActivity(intent);
         }).start();
     }

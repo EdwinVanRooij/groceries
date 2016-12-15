@@ -114,5 +114,8 @@ public class GroceryList {
         return null;
     }
 
+    public List<Product> getProductList() {
+        return productList;
+    }
 }
 
