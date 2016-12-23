@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by eddy
@@ -18,7 +19,7 @@ public interface ClientInterface {
     Call<Account> getAccountByLogin(@Query("username") String username, @Query("password") String password);
 
     @POST("/users/register")
-    Call<Account> registerAccount(@Body Account account);
+    Call<Account> registerAccount(@Body Map<String, String> accountMap);
 
     // Get all lists of a user
     @GET("/user/{id}/lists")

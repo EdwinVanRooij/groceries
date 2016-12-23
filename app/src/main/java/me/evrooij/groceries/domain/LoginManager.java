@@ -6,6 +6,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by eddy
@@ -66,7 +68,11 @@ public class LoginManager {
         ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
-        Call<Account> call = client.registerAccount(new Account(username, email, password));
+        Map<String, String> accountMap = new HashMap<>();
+        accountMap.put("username", username);
+        accountMap.put("email", email);
+        accountMap.put("password", password);
+        Call<Account> call = client.registerAccount(accountMap);
 
         // Execute the call
         Response<Account> response;

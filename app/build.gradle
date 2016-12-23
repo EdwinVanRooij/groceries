@@ -53,9 +53,11 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jakewharton:butterknife:8.4.0'
 
+    // Icons library, choose material
     compile 'com.mikepenz:iconics-core:2.8.1@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
 
+    // Json converter library from google, gson
     compile 'com.google.code.gson:gson:2.6.2'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
