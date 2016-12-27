@@ -1,5 +1,6 @@
 package me.evrooij.groceries.domain;
 
+import me.evrooij.groceries.fragments.FriendsFragment;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
@@ -47,6 +48,27 @@ public class UserManager {
 
         // Execute the call
         Response<ResponseMessage> response;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            // Call failed, ignore exception. Return null.
+//            e.printStackTrace();
+            return null;
+        }
+
+        // Get the account from the body and return
+        return response.body();
+    }
+
+    public List<Account> getFriends(int accountId) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<List<Account>> call = client.getFriends(accountId);
+
+        // Execute the call
+        Response<List<Account>> response;
         try {
             response = call.execute();
         } catch (IOException e) {
