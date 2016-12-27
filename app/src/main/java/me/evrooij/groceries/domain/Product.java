@@ -5,7 +5,7 @@ package me.evrooij.groceries.domain;
  */
 
 public class Product {
-    private final int id;
+    private int id;
     private String name;
     private int amount;
     private String owner;
@@ -31,8 +31,10 @@ public class Product {
         return owner;
     }
 
-    public Product(int id, String name, int amount, String comment, String owner) {
-        this.id = id;
+    public Product() {
+    }
+
+    public Product(String name, int amount, String comment, String owner) {
         this.name = name;
         this.amount = amount;
         this.owner = owner;
@@ -61,11 +63,16 @@ public class Product {
     public boolean equals(Object obj) {
         Product other = (Product) obj;
         // If all fields are the same, return true
-        return other.getId() == getId() // If all fields are the same, return true
-                && other.getName().equals(getName())
+//        return other.getId() == getId() // If all fields are the same, return true
+        return other.getName().equals(getName())
                 && other.getAmount() == getAmount()
                 && other.getOwner().equals(getOwner())
                 && other.getComment().equals(getComment())
                 || super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, id %s - %s times of %s, %s", getName(), getId(), getAmount(), getOwner(), getComment());
     }
 }

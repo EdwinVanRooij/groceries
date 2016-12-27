@@ -1,4 +1,4 @@
-package me.evrooij.groceries.fragments;
+package me.evrooij.groceries.login;
 
 
 import android.content.Intent;

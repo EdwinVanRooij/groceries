@@ -29,7 +29,7 @@ public class LoginManager {
             response = call.execute();
         } catch (IOException e) {
             // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
 
@@ -54,7 +54,7 @@ public class LoginManager {
             response = call.execute();
         } catch (IOException e) {
             // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
 

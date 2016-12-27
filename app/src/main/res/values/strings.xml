@@ -39,4 +39,6 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="new_list_name">New list name</string>
+    <string name="search_user_title">Search user</string>
+    <string name="search_user_button">Go!</string>
 </resources>

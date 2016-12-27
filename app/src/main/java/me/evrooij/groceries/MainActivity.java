@@ -21,9 +21,8 @@ import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.GroceryList;
+import me.evrooij.groceries.fragments.DefaultListFragment;
 import me.evrooij.groceries.fragments.FriendsFragment;
-import me.evrooij.groceries.fragments.MainFragment;
 import me.evrooij.groceries.fragments.MyListsFragment;
 import me.evrooij.groceries.fragments.SettingsFragment;
 import org.parceler.Parcels;
@@ -61,14 +60,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_USER));
 
-        setFragment(MainFragment.class);
+        setFragment(DefaultListFragment.class);
     }
 
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
 
-        if (f instanceof MainFragment) {
+        if (f instanceof DefaultListFragment) {
             Snackbar.make(view, "Handle mainfragment action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         } else if (f instanceof MyListsFragment) {
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_drawer_home:
-                setFragment(MainFragment.class);
+                setFragment(DefaultListFragment.class);
                 fab.show();
                 break;
             case R.id.nav_drawer_lists:

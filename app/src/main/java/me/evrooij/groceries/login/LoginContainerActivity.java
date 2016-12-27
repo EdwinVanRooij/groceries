@@ -1,4 +1,4 @@
-package me.evrooij.groceries;
+package me.evrooij.groceries.login;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
-import me.evrooij.groceries.fragments.MainLoginFragment;
+import me.evrooij.groceries.R;
 
 public class LoginContainerActivity extends AppCompatActivity {
 

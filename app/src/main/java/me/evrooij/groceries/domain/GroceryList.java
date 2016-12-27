@@ -9,9 +9,21 @@ import java.util.List;
  */
 
 public class GroceryList {
+    private int id;
     private String name;
     private Account owner;
+    private List<Account> participants;
     private List<Product> productList;
+    private int products;
+
+    /**
+     * Unique identifier
+     *
+     * @return int id
+     */
+    public int getId() {
+        return id;
+    }
 
     /**
      * Gets the name of this list
@@ -32,6 +44,19 @@ public class GroceryList {
     }
 
     /**
+     * Get all participants of this list
+     *
+     * @return list of accounts
+     */
+    public List<Account> getParticipants() {
+        return participants;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    /**
      * A list of product objects
      *
      * @param name  name of the list
@@ -41,19 +66,69 @@ public class GroceryList {
         this.name = name;
         this.owner = owner;
         productList = new ArrayList<>();
+        participants = new ArrayList<>();
     }
 
     /**
-     * Adds a new item to the list
+     * A list of product objects
      *
-     * @param id      unique identifier of the product
+     * @param name         name of the list
+     * @param owner        account of the user who created this list
+     * @param participants list of accounts who are participating in this list
+     */
+    public GroceryList(String name, Account owner, List<Account> participants) {
+        this.name = name;
+        this.owner = owner;
+        this.participants = participants;
+        productList = new ArrayList<>();
+    }
+
+    public GroceryList() {
+    }
+
+    /**
+     * Adds someone else to this list
+     *
+     * @param account new account to add as participant
+     *                must not already be in the list of participants
+     * @return boolean value indicating the exit status
+     */
+    public boolean addParticipant(Account account) {
+        for (Account participant : participants) {
+            if (participant.equals(account)) {
+                // Account is already a participant, do not allow to re-add
+                return false;
+            }
+        }
+        participants.add(account);
+        return true;
+    }
+
+    /**
+     * Adds a new product to the list
+     *
      * @param name    name of the product
      * @param amount  amount of times you want the product
      * @param comment comment about the product
      * @param owner   username of the user who added this product
      */
-    public void addItem(int id, String name, int amount, String comment, String owner) {
-        productList.add(new Product(id, name, amount, comment, owner));
+    public void addProduct(String name, int amount, String comment, String owner) {
+        productList.add(new Product(name, amount, comment, owner));
+    }
+
+    /**
+     * Checks if the given account is already a participant in this list
+     *
+     * @param account account to check for
+     * @return true if the account is already a participant here, false if it's not
+     */
+    public boolean hasParticipant(Account account) {
+        for (Account participant : participants) {
+            if (participant.equals(account)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -97,6 +172,15 @@ public class GroceryList {
     }
 
     /**
+     * Returns the amount of participants in this list, excluding owner
+     *
+     * @return integer value
+     */
+    public int getAmountOfParticipants() {
+        return participants.size();
+    }
+
+    /**
      * Searches the GroceryList for a product
      *
      * @param id id of the product to look for
@@ -114,8 +198,62 @@ public class GroceryList {
         return null;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    /**
+     * Returns a product
+     *
+     * @param name
+     * @param owner
+     * @param comment
+     * @return
+     */
+    @SuppressWarnings("JavaDoc")
+    public Product getProduct(String name, String owner, String comment) {
+        for (Product p : productList) {
+            if (p.getName().equals(name) && p.getOwner().equals(owner) && p.getComment().equals(comment)) {
+                // Product found
+                return p;
+            }
+        }
+        // No product found
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s participants, owner %s, %s products", getName(), participants.size(), getOwner().getUsername(), getAmountOfProducts());
+    }
+
+    /**
+     * Declare equality on same id
+     *
+     * @param obj other list
+     * @return
+     */
+    @SuppressWarnings("JavaDoc")
+    @Override
+    public boolean equals(Object obj) {
+        GroceryList other = (GroceryList) obj;
+        return other.getId() == getId() || super.equals(obj);
+    }
+
+    /**
+     * Updates a product
+     *
+     * @param productId
+     * @param name
+     * @param amount
+     * @param comment
+     * @param owner
+     */
+    @SuppressWarnings("JavaDoc")
+    public void updateProduct(int productId, String name, int amount, String comment, String owner) {
+        for (Product p : productList) {
+            if (p.getId() == productId) {
+                p.setName(name);
+                p.setAmount(amount);
+                p.setComment(comment);
+            }
+        }
     }
 }
 

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LauncherActivity"
+            android:name=".login.LauncherActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginContainerActivity"
+            android:name=".login.LoginContainerActivity"
             android:theme="@style/AppTheme.Dark.NoActionBar.FullScreen" />
         <activity
             android:name=".MainActivity"

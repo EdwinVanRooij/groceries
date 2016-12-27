@@ -1,8 +1,10 @@
-package me.evrooij.groceries;
+package me.evrooij.groceries.login;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import me.evrooij.groceries.MainActivity;
+import me.evrooij.groceries.login.LoginContainerActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 

@@ -33,16 +33,16 @@ import static me.evrooij.groceries.Constants.KEY_USER;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment {
+public class DefaultListFragment extends Fragment {
 
     @BindView(R.id.lv_my_groceries)
     ListView listView;
 
-    public MainFragment() {
+    public DefaultListFragment() {
         // Required empty public constructor
     }
 
-    private static final String TAG = "MainFragment";
+    private static final String TAG = "DefaultListFragment";
 
     private Unbinder unbinder;
     private Account thisAccount;

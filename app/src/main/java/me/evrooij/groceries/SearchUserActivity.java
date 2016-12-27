@@ -7,6 +7,8 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
+import me.evrooij.groceries.ProfileActivity;
+import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.domain.Account;
 

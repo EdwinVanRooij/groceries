@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import me.evrooij.groceries.R;
 import me.evrooij.groceries.fragments.CompleteListFragment;
 import me.evrooij.groceries.fragments.SelectFriendsFragment;
 
