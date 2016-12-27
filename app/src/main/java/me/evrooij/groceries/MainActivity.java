@@ -27,6 +27,8 @@ import me.evrooij.groceries.fragments.MyListsFragment;
 import me.evrooij.groceries.fragments.SettingsFragment;
 import org.parceler.Parcels;
 
+import static android.R.attr.fragment;
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_USER;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,14 +74,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .setAction("Action", null).show();
         } else if (f instanceof MyListsFragment) {
 //            Start creating a new list
-            startActivity(new Intent(this, NewListContainerActivity.class));
+            startActivityWithAccount(new Intent(this, NewListContainerActivity.class));
         } else if (f instanceof FriendsFragment) {
 //            Start searching for friends
-            startActivity(new Intent(this, SearchUserActivity.class));
+            startActivityWithAccount(new Intent(this, SearchUserActivity.class));
         } else {
             Snackbar.make(view, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+
+    private void startActivityWithAccount(Intent intent) {
+        intent.putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
+        startActivity(intent);
     }
 
     @Override

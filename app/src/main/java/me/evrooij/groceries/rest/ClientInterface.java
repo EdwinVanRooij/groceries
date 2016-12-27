@@ -21,6 +21,16 @@ public interface ClientInterface {
     @POST("/users/register")
     Call<Account> registerAccount(@Body Map<String, String> accountMap);
 
+    // Friends
+    @GET("/accounts/{ownId}/friends/find")
+    Call<List<Account>> findFriends(@Path("ownId") int ownId, @Query("query") String searchQuery);
+
+    @POST("/accounts/{ownId}/friends/add")
+    Call<ResponseMessage> addFriend(@Path("ownId") int ownId, @Body Account newFriend);
+
+    @GET("/accounts/{ownId}/friends")
+    Call<List<Account>> getFriends(@Path("ownId") int ownId);
+
     // Get all lists of a user
     @GET("/user/{id}/lists")
     Call<List<GroceryList>> getListsByAccountId(@Path("id") int accountId);

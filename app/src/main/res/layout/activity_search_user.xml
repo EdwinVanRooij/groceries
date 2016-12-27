@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_search_account"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="8dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
@@ -37,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/etName"
+                    android:id="@+id/etSearchQuery"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_large"
@@ -45,7 +46,7 @@
                     android:inputType="text" />
 
                 <Button
-                    android:id="@+id/btnAdd"
+                    android:id="@+id/btnSearch"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -59,4 +60,4 @@
     </android.support.v7.widget.CardView>
 
     <include layout="@layout/listview_users" />
-</RelativeLayout>
+</LinearLayout>
