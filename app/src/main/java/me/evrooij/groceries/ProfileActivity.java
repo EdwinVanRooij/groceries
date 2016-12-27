@@ -8,18 +8,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.MotionEvent;
+import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.bumptech.glide.Glide;
+import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.UserManager;
+import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.util.SquareImageView;
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Constants.KEY_SEARCHED_USER;
+import static me.evrooij.groceries.R.id.etSearchQuery;
 
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.image)
     SquareImageView imageView;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.tvDescription)
+    TextView tvDescription;
 
     private static final String EXTRA_IMAGE = "com.antonioleiva.materializeyourapp.extraImage";
     private CollapsingToolbarLayout collapsingToolbarLayout;
+
+    private UserManager userManager;
+
+    private Account thisAccount;
+    private Account searchedUser;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -29,6 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
+        searchedUser = Parcels.unwrap(getIntent().getParcelableExtra(KEY_SEARCHED_USER));
+
+        userManager = new UserManager();
+
         ViewCompat.setTransitionName(findViewById(R.id.app_bar_layout), EXTRA_IMAGE);
         supportPostponeEnterTransition();
 
@@ -36,12 +63,27 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle(getResources().getString(R.string.placeholder_name));
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        collapsingToolbarLayout.setTitle(searchedUser.getUsername());
+
+        tvTitle.setText(searchedUser.getUsername());
+        tvDescription.setText(String.format("%s likes to take a shit while being naked...", searchedUser.getUsername()));
 
         Glide.with(this)
                 .load("http://placekitten.com/300/400")
                 .into(imageView);
+    }
+
+    @OnClick(R.id.btnAdd)
+    public void onBtnAddClick() {
+        System.out.println("clicked button search");
+        new Thread(() -> {
+            ResponseMessage result = userManager.addFriend(thisAccount.getId(), searchedUser);
+
+            runOnUiThread(() -> {
+                Toast.makeText(this, String.format("Result: %s", result.toString()), Toast.LENGTH_SHORT).show();
+            });
+        }).start();
     }
 
     @Override

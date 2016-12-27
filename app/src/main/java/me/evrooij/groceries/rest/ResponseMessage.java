@@ -16,4 +16,9 @@ public class ResponseMessage {
     public ResponseMessage(Exception e) {
         this.message = e.getMessage();
     }
+
+    @Override
+    public String toString() {
+        return message;
+    }
 }

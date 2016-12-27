@@ -1,6 +1,7 @@
 package me.evrooij.groceries.domain;
 
 import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -37,4 +38,24 @@ public class UserManager {
         return response.body();
     }
 
+    public ResponseMessage addFriend(int accountId, Account friend) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<ResponseMessage> call = client.addFriend(accountId, friend);
+
+        // Execute the call
+        Response<ResponseMessage> response;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            // Call failed, ignore exception. Return null.
+//            e.printStackTrace();
+            return null;
+        }
+
+        // Get the account from the body and return
+        return response.body();
+    }
 }
