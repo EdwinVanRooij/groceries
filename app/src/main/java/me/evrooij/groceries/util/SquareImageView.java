@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.evrooij.groceries.domain;
+package me.evrooij.groceries.util;
 
 import android.content.Context;
 import android.util.AttributeSet;

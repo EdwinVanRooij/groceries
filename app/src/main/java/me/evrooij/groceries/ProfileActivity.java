@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
-import me.evrooij.groceries.domain.SquareImageView;
+import me.evrooij.groceries.util.SquareImageView;
 
 public class ProfileActivity extends AppCompatActivity {
 
