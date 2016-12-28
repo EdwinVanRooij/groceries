@@ -1,5 +1,6 @@
 package me.evrooij.groceries;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -35,7 +36,8 @@ public class NewListContainerActivity extends AppCompatActivity {
 
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24));
 
-        setFragment(SelectFriendsFragment.class, false, true);
+        startActivity(new Intent(this, MultiselectSampleActivity.class));
+//        setFragment(SelectFriendsFragment.class, false, true);
     }
 
     @Override

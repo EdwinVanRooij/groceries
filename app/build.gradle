@@ -42,6 +42,19 @@ dependencies {
     compile 'com.android.support:palette-v7:25.1.0'
     compile 'com.android.support:multidex:1.0.1'
 
+    // RecyclerView
+    compile('com.mikepenz:fastadapter:2.1.5@aar') {
+        transitive = true
+    }
+    compile 'com.mikepenz:fastadapter-commons:2.1.0@aar'
+    compile('com.mikepenz:materialdrawer:5.8.0@aar') {
+        transitive = true
+        exclude module: "fastadapter"
+    }
+    compile 'com.mikepenz:fastadapter-extensions:2.1.0@aar'
+//The tiny Materialize library used for its useful helper classes
+    compile 'com.mikepenz:materialize:1.0.0@aar'
+
     // Parcelables
     compile 'org.parceler:parceler-api:1.1.6'
     annotationProcessor 'org.parceler:parceler:1.1.6'
