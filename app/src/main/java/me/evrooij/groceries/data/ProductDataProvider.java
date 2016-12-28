@@ -3,24 +3,24 @@ package me.evrooij.groceries.data;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ExampleDataProvider {
-    private List<ProductData> mData;
-    private ProductData mLastRemovedData;
+public class ProductDataProvider {
+    private List<ProductData> productDataList;
+    private ProductData lastRemovedProductData;
     private int mLastRemovedPosition = -1;
 
-    public ExampleDataProvider(List<Product> products) {
+    public ProductDataProvider(List<Product> products) {
 
-        mData = new LinkedList<>();
+        productDataList = new LinkedList<>();
 
         for (Product p : products) {
-            final long id = mData.size();
+            final long id = productDataList.size();
             final int viewType = 0;
-            mData.add(new ProductData(id, viewType, p));
+            productDataList.add(new ProductData(id, viewType, p));
         }
     }
 
     public int getCount() {
-        return mData.size();
+        return productDataList.size();
     }
 
     public ProductData getItem(int index) {
@@ -28,21 +28,21 @@ public class ExampleDataProvider {
             throw new IndexOutOfBoundsException("index = " + index);
         }
 
-        return mData.get(index);
+        return productDataList.get(index);
     }
 
     public int undoLastRemoval() {
-        if (mLastRemovedData != null) {
+        if (lastRemovedProductData != null) {
             int insertedPosition;
-            if (mLastRemovedPosition >= 0 && mLastRemovedPosition < mData.size()) {
+            if (mLastRemovedPosition >= 0 && mLastRemovedPosition < productDataList.size()) {
                 insertedPosition = mLastRemovedPosition;
             } else {
-                insertedPosition = mData.size();
+                insertedPosition = productDataList.size();
             }
 
-            mData.add(insertedPosition, mLastRemovedData);
+            productDataList.add(insertedPosition, lastRemovedProductData);
 
-            mLastRemovedData = null;
+            lastRemovedProductData = null;
             mLastRemovedPosition = -1;
 
             return insertedPosition;
@@ -53,9 +53,9 @@ public class ExampleDataProvider {
 
     public void removeItem(int position) {
         //noinspection UnnecessaryLocalVariable
-        final ProductData removedItem = mData.remove(position);
+        final ProductData removedItem = productDataList.remove(position);
 
-        mLastRemovedData = removedItem;
+        lastRemovedProductData = removedItem;
         mLastRemovedPosition = position;
     }
 

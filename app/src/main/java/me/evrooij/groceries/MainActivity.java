@@ -23,12 +23,11 @@ import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
 
-import static android.R.attr.data;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -162,28 +161,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 R.string.snack_bar_text_item_removed,
                 Snackbar.LENGTH_LONG);
 
-        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemUndoActionClicked();
-            }
-        });
+        snackbar.setAction(R.string.snack_bar_action_undo, v -> onItemUndoActionClicked());
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
         snackbar.show();
-    }
-
-    /**
-     * This method will be called when a list item is pinned
-     *
-     * @param position The position of the item within data set
-     */
-    public void onItemPinned(int position) {
-        final DialogFragment dialog = ItemPinnedMessageDialogFragment.newInstance(position);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(dialog, FRAGMENT_TAG_ITEM_PINNED_DIALOG)
-                .commit();
     }
 
     /**
@@ -192,8 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * @param position The position of the item within data set
      */
     public void onItemClicked(int position) {
-        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-        ExampleDataProvider.ProductData data = getDataProvider().getItem(position);
+        ProductDataProvider.ProductData data = getDataProvider().getItem(position);
         Product product = (Product) data.getItem();
 
         System.out.println(String.format("Clicked item %s", product.getName()));
@@ -207,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public ExampleDataProvider getDataProvider() {
+    public ProductDataProvider getDataProvider() {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
         return ((ExampleDataProviderFragment) fragment).getDataProvider();
     }

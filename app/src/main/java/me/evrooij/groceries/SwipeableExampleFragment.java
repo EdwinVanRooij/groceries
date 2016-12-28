@@ -16,7 +16,6 @@
 
 package me.evrooij.groceries;
 
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,12 +28,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.ProductDataProvider;
 
 public class SwipeableExampleFragment extends Fragment {
     private RecyclerView mRecyclerView;
@@ -148,7 +146,7 @@ public class SwipeableExampleFragment extends Fragment {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
-    public ExampleDataProvider getDataProvider() {
+    public ProductDataProvider getDataProvider() {
         return ((MainActivity) getActivity()).getDataProvider();
     }
 

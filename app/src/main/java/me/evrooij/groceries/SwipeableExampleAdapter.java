@@ -26,12 +26,11 @@ import android.widget.TextView;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
-import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.data.Product;
 
 class SwipeableExampleAdapter
@@ -43,7 +42,7 @@ class SwipeableExampleAdapter
     private interface Swipeable extends SwipeableItemConstants {
     }
 
-    private ExampleDataProvider mProvider;
+    private ProductDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
@@ -56,12 +55,18 @@ class SwipeableExampleAdapter
 
     public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         public FrameLayout mContainer;
-        public TextView mTextView;
+        public TextView tvName;
+        public TextView tvAmount;
+        public TextView tvComment;
+        public TextView tvOwner;
 
         public MyViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            tvName = (TextView) v.findViewById(R.id.tvName);
+            tvAmount = (TextView) v.findViewById(R.id.tvAmount);
+            tvComment = (TextView) v.findViewById(R.id.tvComment);
+            tvOwner = (TextView) v.findViewById(R.id.tvOwner);
         }
 
         @Override
@@ -70,7 +75,7 @@ class SwipeableExampleAdapter
         }
     }
 
-    public SwipeableExampleAdapter(ExampleDataProvider dataProvider) {
+    public SwipeableExampleAdapter(ProductDataProvider dataProvider) {
         mProvider = dataProvider;
         mItemViewOnClickListener = this::onItemViewClick;
         mSwipeableViewContainerOnClickListener = this::onSwipeableViewContainerClick;
@@ -105,13 +110,13 @@ class SwipeableExampleAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        final View v = inflater.inflate(R.layout.item_product, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final ExampleDataProvider.ProductData item = mProvider.getItem(position);
+        final ProductDataProvider.ProductData item = mProvider.getItem(position);
 
         // set listeners
         // (if the item is *pinned*, click event comes to the itemView)
@@ -121,7 +126,10 @@ class SwipeableExampleAdapter
 
         // set text
         Product product = (Product) item.getItem();
-        holder.mTextView.setText(product.getName());
+        holder.tvName.setText(product.getName());
+        holder.tvAmount.setText(String.valueOf(product.getAmount()));
+        holder.tvComment.setText(product.getComment());
+        holder.tvOwner.setText(product.getOwner());
 
         // set background resource (target view ID: container)
         final int swipeState = holder.getSwipeStateFlags();

@@ -19,14 +19,14 @@ package me.evrooij.groceries.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.data.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExampleDataProviderFragment extends Fragment {
-    private ExampleDataProvider mDataProvider;
+    private ProductDataProvider mDataProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,13 +34,13 @@ public class ExampleDataProviderFragment extends Fragment {
 
         setRetainInstance(true);  // keep the mDataProvider instance
         List<Product> products = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            products.add(new Product("name", 10, "comment", "owner"));
+        for (int i = 0; i < 15; i++) {
+            products.add(new Product(String.format("name %s", i), 10, "comment", "owner"));
         }
-        mDataProvider = new ExampleDataProvider(products);
+        mDataProvider = new ProductDataProvider(products);
     }
 
-    public ExampleDataProvider getDataProvider() {
+    public ProductDataProvider getDataProvider() {
         return mDataProvider;
     }
 }
