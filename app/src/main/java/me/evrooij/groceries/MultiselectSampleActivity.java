@@ -14,12 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.mikepenz.fastadapter.FastAdapter;
-import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.HeaderAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter_extensions.ActionModeHelper;
 import com.mikepenz.fastadapter_extensions.UndoHelper;
-import com.mikepenz.materialize.MaterializeBuilder;
 import com.mikepenz.materialize.util.UIUtils;
 import me.evrooij.groceries.domain.SimpleItem;
 
@@ -46,13 +44,9 @@ public class MultiselectSampleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.app_name);
 
-        //style our ui
-        new MaterializeBuilder().withActivity(this).build();
-
         //create our FastAdapter
         mFastAdapter = new FastAdapter<>();
 
-        //
         mUndoHelper = new UndoHelper(mFastAdapter, new UndoHelper.UndoListener<SimpleItem>() {
             @Override
             public void commitRemove(Set<Integer> positions, ArrayList<FastAdapter.RelativeInfo<SimpleItem>> removed) {
@@ -73,34 +67,25 @@ public class MultiselectSampleActivity extends AppCompatActivity {
         mFastAdapter.withSelectable(true);
         mFastAdapter.withMultiSelect(true);
         mFastAdapter.withSelectOnLongClick(true);
-        mFastAdapter.withOnPreClickListener(new FastAdapter.OnClickListener<SimpleItem>() {
-            @Override
-            public boolean onClick(View v, IAdapter<SimpleItem> adapter, SimpleItem item, int position) {
-                //we handle the default onClick behavior for the actionMode. This will return null if it didn't do anything and you can handle a normal onClick
-                Boolean res = mActionModeHelper.onClick(item);
-                return res != null ? res : false;
-            }
+        mFastAdapter.withOnPreClickListener((v, adapter, item, position) -> {
+            //we handle the default onClick behavior for the actionMode. This will return null if it didn't do anything and you can handle a normal onClick
+            Boolean res = mActionModeHelper.onClick(item);
+            return res != null ? res : false;
         });
-        mFastAdapter.withOnClickListener(new FastAdapter.OnClickListener<SimpleItem>() {
-            @Override
-            public boolean onClick(View v, IAdapter<SimpleItem> adapter, SimpleItem item, int position) {
-                Toast.makeText(v.getContext(), "SelectedCount: " + mFastAdapter.getSelections().size() + " ItemsCount: " + mFastAdapter.getSelectedItems().size(), Toast.LENGTH_SHORT).show();
-                return false;
-            }
+        mFastAdapter.withOnClickListener((v, adapter, item, position) -> {
+            Toast.makeText(v.getContext(), "SelectedCount: " + mFastAdapter.getSelections().size() + " ItemsCount: " + mFastAdapter.getSelectedItems().size(), Toast.LENGTH_SHORT).show();
+            return false;
         });
-        mFastAdapter.withOnPreLongClickListener(new FastAdapter.OnLongClickListener<SimpleItem>() {
-            @Override
-            public boolean onLongClick(View v, IAdapter<SimpleItem> adapter, SimpleItem item, int position) {
-                ActionMode actionMode = mActionModeHelper.onLongClick(MultiselectSampleActivity.this, position);
+        mFastAdapter.withOnPreLongClickListener((v, adapter, item, position) -> {
+            ActionMode actionMode = mActionModeHelper.onLongClick(MultiselectSampleActivity.this, position);
 
-                if (actionMode != null) {
-                    //we want color our CAB
-                    findViewById(R.id.action_mode_bar).setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(MultiselectSampleActivity.this, R.attr.colorPrimary, R.color.material_drawer_primary));
-                }
-
-                //if we have no actionMode we do not consume the event
-                return actionMode != null;
+            if (actionMode != null) {
+                //we want color our CAB
+                findViewById(R.id.action_mode_bar).setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(MultiselectSampleActivity.this, R.attr.colorPrimary, R.color.material_drawer_primary));
             }
+
+            //if we have no actionMode we do not consume the event
+            return actionMode != null;
         });
 
         //get our recyclerView and do basic setup

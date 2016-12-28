@@ -17,14 +17,20 @@ import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.fragments.CompleteListFragment;
 import me.evrooij.groceries.fragments.SelectFriendsFragment;
+import org.parceler.Parcels;
+
+import static me.evrooij.groceries.Constants.KEY_USER;
 
 public class NewListContainerActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    private Account thisAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +42,10 @@ public class NewListContainerActivity extends AppCompatActivity {
 
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24));
 
-        startActivity(new Intent(this, MultiselectSampleActivity.class));
-//        setFragment(SelectFriendsFragment.class, false, true);
+        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_USER));
+
+//        startActivity(new Intent(this, MultiselectSampleActivity.class));
+        setFragment(SelectFriendsFragment.class, false, true);
     }
 
     @Override
@@ -66,6 +74,10 @@ public class NewListContainerActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(KEY_USER, Parcels.wrap(thisAccount));
+            fragment.setArguments(bundle);
 
             if (animated) {
                 transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right);
