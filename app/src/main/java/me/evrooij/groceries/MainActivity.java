@@ -22,14 +22,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.data.AbstractDataProvider;
 import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
 
+import static android.R.attr.data;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ItemPinnedMessageDialogFragment.EventListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
@@ -191,13 +193,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public void onItemClicked(int position) {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-        AbstractDataProvider.Data data = getDataProvider().getItem(position);
+        ExampleDataProvider.ProductData data = getDataProvider().getItem(position);
+        Product product = (Product) data.getItem();
 
-        if (data.isPinned()) {
-            // unpin if tapped the pinned item
-            data.setPinned(false);
-            ((SwipeableExampleFragment) fragment).notifyItemChanged(position);
-        }
+        System.out.println(String.format("Clicked item %s", product.getName()));
     }
 
     private void onItemUndoActionClicked() {
@@ -208,16 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    // implements ItemPinnedMessageDialogFragment.EventListener
-    @Override
-    public void onNotifyItemPinnedDialogDismissed(int itemPosition, boolean ok) {
-        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-
-        getDataProvider().getItem(itemPosition).setPinned(ok);
-        ((SwipeableExampleFragment) fragment).notifyItemChanged(itemPosition);
-    }
-
-    public AbstractDataProvider getDataProvider() {
+    public ExampleDataProvider getDataProvider() {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
         return ((ExampleDataProviderFragment) fragment).getDataProvider();
     }

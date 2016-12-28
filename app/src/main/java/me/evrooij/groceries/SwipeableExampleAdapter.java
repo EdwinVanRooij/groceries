@@ -31,7 +31,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
-import me.evrooij.groceries.data.AbstractDataProvider;
+import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.Product;
 
 class SwipeableExampleAdapter
         extends RecyclerView.Adapter<SwipeableExampleAdapter.MyViewHolder>
@@ -42,15 +43,13 @@ class SwipeableExampleAdapter
     private interface Swipeable extends SwipeableItemConstants {
     }
 
-    private AbstractDataProvider mProvider;
+    private ExampleDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
 
     public interface EventListener {
         void onItemRemoved(int position);
-
-        void onItemPinned(int position);
 
         void onItemViewClicked(View v, boolean pinned);
     }
@@ -71,20 +70,10 @@ class SwipeableExampleAdapter
         }
     }
 
-    public SwipeableExampleAdapter(AbstractDataProvider dataProvider) {
+    public SwipeableExampleAdapter(ExampleDataProvider dataProvider) {
         mProvider = dataProvider;
-        mItemViewOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemViewClick(v);
-            }
-        };
-        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSwipeableViewContainerClick(v);
-            }
-        };
+        mItemViewOnClickListener = this::onItemViewClick;
+        mSwipeableViewContainerOnClickListener = this::onSwipeableViewContainerClick;
 
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
@@ -122,7 +111,7 @@ class SwipeableExampleAdapter
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final AbstractDataProvider.Data item = mProvider.getItem(position);
+        final ExampleDataProvider.ProductData item = mProvider.getItem(position);
 
         // set listeners
         // (if the item is *pinned*, click event comes to the itemView)
@@ -131,7 +120,8 @@ class SwipeableExampleAdapter
         holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
 
         // set text
-        holder.mTextView.setText(item.getText());
+        Product product = (Product) item.getItem();
+        holder.mTextView.setText(product.getName());
 
         // set background resource (target view ID: container)
         final int swipeState = holder.getSwipeStateFlags();
@@ -149,10 +139,6 @@ class SwipeableExampleAdapter
 
             holder.mContainer.setBackgroundResource(bgResId);
         }
-
-        // set swiping properties
-        holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -190,29 +176,15 @@ class SwipeableExampleAdapter
         switch (result) {
             // swipe right
             case Swipeable.RESULT_SWIPED_RIGHT:
-                if (mProvider.getItem(position).isPinned()) {
-                    // pinned --- back to default position
-                    return new UnpinResultAction(this, position);
-                } else {
-                    // not pinned --- remove
-                    return new SwipeRightResultAction(this, position);
-                }
-                // swipe left -- pin
+                return new SwipeRightResultAction(this, position);
+            // swipe left
             case Swipeable.RESULT_SWIPED_LEFT:
                 return new SwipeLeftResultAction(this, position);
             // other --- do nothing
             case Swipeable.RESULT_CANCELED:
             default:
-                if (position != RecyclerView.NO_POSITION) {
-                    return new UnpinResultAction(this, position);
-                } else {
-                    return null;
-                }
+                return null;
         }
-    }
-
-    public EventListener getEventListener() {
-        return mEventListener;
     }
 
     public void setEventListener(EventListener eventListener) {
@@ -222,7 +194,6 @@ class SwipeableExampleAdapter
     private static class SwipeLeftResultAction extends SwipeResultActionMoveToSwipedDirection {
         private SwipeableExampleAdapter mAdapter;
         private final int mPosition;
-        private boolean mSetPinned;
 
         SwipeLeftResultAction(SwipeableExampleAdapter adapter, int position) {
             mAdapter = adapter;
@@ -233,21 +204,16 @@ class SwipeableExampleAdapter
         protected void onPerformAction() {
             super.onPerformAction();
 
-            AbstractDataProvider.Data item = mAdapter.mProvider.getItem(mPosition);
-
-            if (!item.isPinned()) {
-                item.setPinned(true);
-                mAdapter.notifyItemChanged(mPosition);
-                mSetPinned = true;
-            }
+            mAdapter.mProvider.removeItem(mPosition);
+            mAdapter.notifyItemRemoved(mPosition);
         }
 
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
 
-            if (mSetPinned && mAdapter.mEventListener != null) {
-                mAdapter.mEventListener.onItemPinned(mPosition);
+            if (mAdapter.mEventListener != null) {
+                mAdapter.mEventListener.onItemRemoved(mPosition);
             }
         }
 
@@ -282,34 +248,6 @@ class SwipeableExampleAdapter
 
             if (mAdapter.mEventListener != null) {
                 mAdapter.mEventListener.onItemRemoved(mPosition);
-            }
-        }
-
-        @Override
-        protected void onCleanUp() {
-            super.onCleanUp();
-            // clear the references
-            mAdapter = null;
-        }
-    }
-
-    private static class UnpinResultAction extends SwipeResultActionDefault {
-        private SwipeableExampleAdapter mAdapter;
-        private final int mPosition;
-
-        UnpinResultAction(SwipeableExampleAdapter adapter, int position) {
-            mAdapter = adapter;
-            mPosition = position;
-        }
-
-        @Override
-        protected void onPerformAction() {
-            super.onPerformAction();
-
-            AbstractDataProvider.Data item = mAdapter.mProvider.getItem(mPosition);
-            if (item.isPinned()) {
-                item.setPinned(false);
-                mAdapter.notifyItemChanged(mPosition);
             }
         }
 

@@ -19,21 +19,28 @@ package me.evrooij.groceries.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import me.evrooij.groceries.data.AbstractDataProvider;
 import me.evrooij.groceries.data.ExampleDataProvider;
+import me.evrooij.groceries.data.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExampleDataProviderFragment extends Fragment {
-    private AbstractDataProvider mDataProvider;
+    private ExampleDataProvider mDataProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);  // keep the mDataProvider instance
-        mDataProvider = new ExampleDataProvider();
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            products.add(new Product("name", 10, "comment", "owner"));
+        }
+        mDataProvider = new ExampleDataProvider(products);
     }
 
-    public AbstractDataProvider getDataProvider() {
+    public ExampleDataProvider getDataProvider() {
         return mDataProvider;
     }
 }

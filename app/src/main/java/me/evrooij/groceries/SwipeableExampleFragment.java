@@ -34,7 +34,7 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDec
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import me.evrooij.groceries.data.AbstractDataProvider;
+import me.evrooij.groceries.data.ExampleDataProvider;
 
 public class SwipeableExampleFragment extends Fragment {
     private RecyclerView mRecyclerView;
@@ -59,7 +59,7 @@ public class SwipeableExampleFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext(),  LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
@@ -75,11 +75,6 @@ public class SwipeableExampleFragment extends Fragment {
             @Override
             public void onItemRemoved(int position) {
                 ((MainActivity) getActivity()).onItemRemoved(position);
-            }
-
-            @Override
-            public void onItemPinned(int position){
-                ((MainActivity) getActivity()).onItemPinned(position);
             }
 
             @Override
@@ -104,11 +99,6 @@ public class SwipeableExampleFragment extends Fragment {
 
         // additional decorations
         //noinspection StatementWithEmptyBody
-        if (supportsViewElevation()) {
-            // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
-        } else {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
-        }
         mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider_h), true));
 
         // NOTE:
@@ -117,13 +107,6 @@ public class SwipeableExampleFragment extends Fragment {
         // priority: TouchActionGuard > Swipe > DragAndDrop
         mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
-
-        // for debugging
-//        animator.setDebug(true);
-//        animator.setMoveDuration(2000);
-//        animator.setRemoveDuration(2000);
-//        mRecyclerViewSwipeManager.setMoveToOutsideWindowAnimationDuration(2000);
-//        mRecyclerViewSwipeManager.setReturnToDefaultPositionAnimationDuration(2000);
     }
 
     @Override
@@ -165,7 +148,7 @@ public class SwipeableExampleFragment extends Fragment {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
-    public AbstractDataProvider getDataProvider() {
+    public ExampleDataProvider getDataProvider() {
         return ((MainActivity) getActivity()).getDataProvider();
     }
 
