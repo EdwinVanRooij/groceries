@@ -76,7 +76,7 @@ public class MainLoginFragment extends Fragment {
     public void onLoginClick() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment loginFragment = new LoginFragment();
-        ft.add(R.id.flContent, loginFragment);
+        ft.add(R.id.container, loginFragment);
         ft.setCustomAnimations(R.anim.slide_in_left, 0, 0, R.anim.slide_out_right);
         ft.addToBackStack(null);
         ft.show(loginFragment);
@@ -87,7 +87,7 @@ public class MainLoginFragment extends Fragment {
     public void onRegisterClick() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment registerFragment = new RegisterFragment();
-        ft.add(R.id.flContent, registerFragment);
+        ft.add(R.id.container, registerFragment);
         ft.setCustomAnimations(R.anim.slide_in_left, 0, 0, R.anim.slide_out_right);
         ft.addToBackStack(null);
         ft.show(registerFragment);

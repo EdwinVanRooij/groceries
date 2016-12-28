@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.data.Account;
 
 import java.util.ArrayList;
 

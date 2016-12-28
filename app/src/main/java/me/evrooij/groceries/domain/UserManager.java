@@ -1,5 +1,6 @@
 package me.evrooij.groceries.domain;
 
+import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;

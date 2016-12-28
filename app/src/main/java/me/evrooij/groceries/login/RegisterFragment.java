@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.domain.LoginManager;
 
 /**

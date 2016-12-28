@@ -15,8 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.GroceryList;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.domain.ListManager;
 import me.evrooij.groceries.fragments.CompleteListFragment;
 import me.evrooij.groceries.fragments.SelectFriendsFragment;
@@ -64,7 +64,7 @@ public class NewListContainerActivity extends AppCompatActivity {
             bundle.putParcelable(KEY_ACCOUNT, Parcels.wrap(thisAccount));
             fragment.setArguments(bundle);
 
-            transaction.replace(R.id.flContent, fragment);
+            transaction.replace(R.id.container, fragment);
             transaction.addToBackStack(null);
             transaction.commit();
         } catch (Exception e) {
@@ -90,7 +90,7 @@ public class NewListContainerActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
 
         if (f instanceof SelectFriendsFragment) {
             try {
@@ -103,7 +103,7 @@ public class NewListContainerActivity extends AppCompatActivity {
                 fragment.setArguments(bundle);
 
                 transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right);
-                transaction.replace(R.id.flContent, fragment);
+                transaction.replace(R.id.container, fragment);
                 transaction.commit();
             } catch (Exception e) {
                 e.printStackTrace();

@@ -45,4 +45,8 @@
     <string name="product_hint_amount">1</string>
     <string name="product_hint_comment">Comment…</string>
     <string name="product_button_add">Add product!</string>
+
+    <string name="snack_bar_text_item_removed">1 item removed</string>
+    <string name="snack_bar_action_undo">UNDO</string>
+    <string name="dialog_message_item_pinned">Item pinned! (position = %1$d)</string>
 </resources>

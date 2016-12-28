@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,16 +22,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.fragments.DefaultListFragment;
-import me.evrooij.groceries.fragments.FriendsFragment;
-import me.evrooij.groceries.fragments.MyListsFragment;
-import me.evrooij.groceries.fragments.SettingsFragment;
+import me.evrooij.groceries.data.AbstractDataProvider;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ItemPinnedMessageDialogFragment.EventListener {
+
+    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
+    private static final String FRAGMENT_LIST_VIEW = "list view";
+    private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -39,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-
-    static final int SCAN_QR_REQUEST = 2;  // The request code
-    private static final int ZXING_CAMERA_PERMISSION = 1;
 
     private Account thisAccount;
 
@@ -63,13 +64,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
 
-        setFragment(DefaultListFragment.class);
+//        setFragment(DefaultListFragment.class);
+        getSupportFragmentManager().beginTransaction()
+                .add(new ExampleDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
+                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new SwipeableExampleFragment(), FRAGMENT_LIST_VIEW)
+                .commit();
         fab.hide();
     }
 
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.container);
 
         if (f instanceof MyListsFragment) {
 //            Start creating a new list
@@ -136,9 +143,82 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method will be called when a list item is removed
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemRemoved(int position) {
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                R.string.snack_bar_text_item_removed,
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemUndoActionClicked();
+            }
+        });
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
+        snackbar.show();
+    }
+
+    /**
+     * This method will be called when a list item is pinned
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemPinned(int position) {
+        final DialogFragment dialog = ItemPinnedMessageDialogFragment.newInstance(position);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(dialog, FRAGMENT_TAG_ITEM_PINNED_DIALOG)
+                .commit();
+    }
+
+    /**
+     * This method will be called when a list item is clicked
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemClicked(int position) {
+        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
+        AbstractDataProvider.Data data = getDataProvider().getItem(position);
+
+        if (data.isPinned()) {
+            // unpin if tapped the pinned item
+            data.setPinned(false);
+            ((SwipeableExampleFragment) fragment).notifyItemChanged(position);
+        }
+    }
+
+    private void onItemUndoActionClicked() {
+        int position = getDataProvider().undoLastRemoval();
+        if (position >= 0) {
+            final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
+            ((SwipeableExampleFragment) fragment).notifyItemInserted(position);
+        }
+    }
+
+    // implements ItemPinnedMessageDialogFragment.EventListener
+    @Override
+    public void onNotifyItemPinnedDialogDismissed(int itemPosition, boolean ok) {
+        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
+
+        getDataProvider().getItem(itemPosition).setPinned(ok);
+        ((SwipeableExampleFragment) fragment).notifyItemChanged(itemPosition);
+    }
+
+    public AbstractDataProvider getDataProvider() {
+        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
+        return ((ExampleDataProviderFragment) fragment).getDataProvider();
     }
 }

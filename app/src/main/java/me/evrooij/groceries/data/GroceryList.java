@@ -1,4 +1,4 @@
-package me.evrooij.groceries.domain;
+package me.evrooij.groceries.data;
 
 import java.util.ArrayList;
 import java.util.List;

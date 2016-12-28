@@ -21,10 +21,10 @@ import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.NewProduct;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.ProductAdapter;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.GroceryList;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.domain.ListManager;
-import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.data.Product;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -41,8 +41,8 @@ public class DefaultListFragment extends Fragment {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    @BindView(R.id.lv_my_groceries)
-    ListView listView;
+//    @BindView(R.id.lv_my_groceries)
+//    ListView listView;
 
     ProductAdapter adapter;
 
@@ -128,6 +128,6 @@ public class DefaultListFragment extends Fragment {
 
         adapter = new ProductAdapter(getActivity(), data);
 
-        getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
+//        getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
     }
 }

@@ -1,8 +1,8 @@
 package me.evrooij.groceries.rest;
 
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.GroceryList;
-import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.GroceryList;
+import me.evrooij.groceries.data.Product;
 import retrofit2.Call;
 import retrofit2.http.*;
 

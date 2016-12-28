@@ -1,5 +1,8 @@
 package me.evrooij.groceries.domain;
 
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.GroceryList;
+import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ServiceGenerator;
 import retrofit2.Call;

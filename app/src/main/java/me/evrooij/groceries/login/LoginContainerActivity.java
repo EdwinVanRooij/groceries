@@ -24,7 +24,7 @@ public class LoginContainerActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.flContent, fragment);
+            transaction.replace(R.id.container, fragment);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

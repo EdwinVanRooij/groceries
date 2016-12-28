@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
-import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.domain.UserManager;
 import org.parceler.Parcels;
 

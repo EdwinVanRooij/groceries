@@ -8,9 +8,9 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.domain.ListManager;
-import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.data.Product;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
