@@ -1,6 +1,5 @@
 package me.evrooij.groceries.domain;
 
-import me.evrooij.groceries.fragments.FriendsFragment;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;

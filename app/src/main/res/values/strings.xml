@@ -41,4 +41,8 @@
     <string name="new_list_name">New list name</string>
     <string name="search_user_title">Search user</string>
     <string name="search_user_button">Go!</string>
+    <string name="product_hint_name">Name…</string>
+    <string name="product_hint_amount">1</string>
+    <string name="product_hint_comment">Comment…</string>
+    <string name="product_button_add">Add product!</string>
 </resources>

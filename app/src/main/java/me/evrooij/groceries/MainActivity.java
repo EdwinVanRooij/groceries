@@ -27,8 +27,6 @@ import me.evrooij.groceries.fragments.MyListsFragment;
 import me.evrooij.groceries.fragments.SettingsFragment;
 import org.parceler.Parcels;
 
-import static android.R.attr.fragment;
-import static android.R.attr.start;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+
+    static final int SCAN_QR_REQUEST = 2;  // The request code
+    private static final int ZXING_CAMERA_PERMISSION = 1;
 
     private Account thisAccount;
 
@@ -63,16 +64,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
 
         setFragment(DefaultListFragment.class);
+        fab.hide();
     }
 
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
 
-        if (f instanceof DefaultListFragment) {
-            Snackbar.make(view, "Handle mainfragment action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        } else if (f instanceof MyListsFragment) {
+        if (f instanceof MyListsFragment) {
 //            Start creating a new list
             startActivity(new Intent(this, NewListContainerActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
         } else if (f instanceof FriendsFragment) {
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id) {
             case R.id.nav_drawer_home:
                 setFragment(DefaultListFragment.class);
-                fab.show();
+                fab.hide();
                 break;
             case R.id.nav_drawer_lists:
                 setFragment(MyListsFragment.class);

@@ -6,10 +6,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.password;
 
 /**
  * Author: eddy
@@ -48,6 +45,25 @@ public class ListManager {
 
         // Execute the call
         Response<GroceryList> response;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return response.body();
+    }
+
+    public Product newProduct(int listId, Product newProduct) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<Product> call = client.newProduct(listId, newProduct);
+
+        // Execute the call
+        Response<Product> response;
         try {
             response = call.execute();
         } catch (IOException e) {

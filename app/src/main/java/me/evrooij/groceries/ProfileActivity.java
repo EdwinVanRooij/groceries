@@ -20,11 +20,8 @@ import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.util.SquareImageView;
 import org.parceler.Parcels;
 
-import java.util.List;
-
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_SEARCHED_USER;
-import static me.evrooij.groceries.R.id.etSearchQuery;
 
 public class ProfileActivity extends AppCompatActivity {
 

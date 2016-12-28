@@ -2,6 +2,7 @@ package me.evrooij.groceries.rest;
 
 import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.GroceryList;
+import me.evrooij.groceries.domain.Product;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -37,5 +38,9 @@ public interface ClientInterface {
 
     @POST("/lists/new")
     Call<GroceryList> newList(@Body GroceryList list);
+
+    // Products
+    @POST("/list/{id}/products/new")
+    Call<Product> newProduct(@Path("id") int listId, @Body Product newProduct);
 
 }

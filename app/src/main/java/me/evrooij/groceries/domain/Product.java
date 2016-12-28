@@ -1,9 +1,12 @@
 package me.evrooij.groceries.domain;
 
+import org.parceler.Parcel;
+
 /**
  * Created by eddy on 22-11-16.
  */
 
+@Parcel
 public class Product {
     private int id;
     private String name;

@@ -1,12 +1,10 @@
 package me.evrooij.groceries;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,9 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.AccountItem;
 import me.evrooij.groceries.domain.GroceryList;
 import me.evrooij.groceries.domain.ListManager;
 import me.evrooij.groceries.fragments.CompleteListFragment;
@@ -29,7 +25,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.fragment;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_SELECTED_ACCOUNTS;
 

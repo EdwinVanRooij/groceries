@@ -19,9 +19,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.data;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
-import static me.evrooij.groceries.R.id.etSearchQuery;
 
 
 /**
