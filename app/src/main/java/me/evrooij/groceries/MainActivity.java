@@ -30,7 +30,6 @@ import org.parceler.Parcels;
 import static android.R.attr.fragment;
 import static android.R.attr.start;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
-import static me.evrooij.groceries.Constants.KEY_USER;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_USER));
+        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
 
         setFragment(DefaultListFragment.class);
     }
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Fragment fragment = (Fragment) fragmentClass.newInstance();
 
             Bundle bundle = new Bundle();
-            bundle.putParcelable(KEY_USER, Parcels.wrap(thisAccount));
+            bundle.putParcelable(KEY_ACCOUNT, Parcels.wrap(thisAccount));
             fragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();

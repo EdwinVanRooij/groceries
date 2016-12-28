@@ -26,8 +26,8 @@ import java.util.List;
 
 import static android.R.attr.data;
 import static android.R.id.list;
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_GROCERYLIST;
-import static me.evrooij.groceries.Constants.KEY_USER;
 
 
 /**
@@ -61,7 +61,7 @@ public class DefaultListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_USER));
+        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
         listManager = new ListManager();
 

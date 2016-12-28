@@ -14,7 +14,7 @@ import java.util.Map;
  */
 
 public interface ClientInterface {
-    // Login interfaces
+    // Login
     @GET("/users/login")
     Call<Account> getAccountByLogin(@Query("username") String username, @Query("password") String password);
 
@@ -31,7 +31,11 @@ public interface ClientInterface {
     @GET("/accounts/{ownId}/friends")
     Call<List<Account>> getFriends(@Path("ownId") int ownId);
 
-    // Get all lists of a user
+    // Lists
     @GET("/user/{id}/lists")
     Call<List<GroceryList>> getListsByAccountId(@Path("id") int accountId);
+
+    @POST("/lists/new")
+    Call<GroceryList> newList(@Body GroceryList list);
+
 }

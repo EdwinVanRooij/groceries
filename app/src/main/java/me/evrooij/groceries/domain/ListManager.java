@@ -39,4 +39,22 @@ public class ListManager {
         return response.body();
     }
 
+    public GroceryList newList(GroceryList list) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<GroceryList> call = client.newList(list);
+
+        // Execute the call
+        Response<GroceryList> response;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return response.body();
+    }
 }

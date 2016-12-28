@@ -16,14 +16,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.mikepenz.fastadapter.FastAdapter;
-import com.mikepenz.fastadapter.adapters.HeaderAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter_extensions.ActionModeHelper;
 import com.mikepenz.fastadapter_extensions.UndoHelper;
+import me.evrooij.groceries.NewListContainerActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.SimpleItem;
+import me.evrooij.groceries.domain.AccountItem;
 import me.evrooij.groceries.domain.UserManager;
 import org.parceler.Parcels;
 
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static me.evrooij.groceries.Constants.KEY_USER;
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,11 +51,13 @@ public class SelectFriendsFragment extends Fragment {
     AccountAdapter adapter;
 
     //save our FastAdapter
-    private FastAdapter<SimpleItem> mFastAdapter;
+    private FastAdapter<AccountItem> mFastAdapter;
     private UndoHelper mUndoHelper;
     private ActionModeHelper mActionModeHelper;
 
-    private List<Account> selectedAccounts;
+    private ItemAdapter<AccountItem> itemAdapter;
+
+    NewListContainerActivity activity;
 
     public SelectFriendsFragment() {
         // Required empty public constructor
@@ -73,15 +75,12 @@ public class SelectFriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_select_friends, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_USER));
+        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
+        System.out.println(String.format("Received account %s in selectfriendsfragment", thisAccount));
+
         userManager = new UserManager();
 
-        selectedAccounts = new ArrayList<>();
-
-//        fillListView();
-
         return view;
-        // Inflate the layout for this fragment
     }
 
     @Override
@@ -89,9 +88,9 @@ public class SelectFriendsFragment extends Fragment {
         //create our FastAdapter
         mFastAdapter = new FastAdapter<>();
 
-        mUndoHelper = new UndoHelper(mFastAdapter, new UndoHelper.UndoListener<SimpleItem>() {
+        mUndoHelper = new UndoHelper(mFastAdapter, new UndoHelper.UndoListener<AccountItem>() {
             @Override
-            public void commitRemove(Set<Integer> positions, ArrayList<FastAdapter.RelativeInfo<SimpleItem>> removed) {
+            public void commitRemove(Set<Integer> positions, ArrayList<FastAdapter.RelativeInfo<AccountItem>> removed) {
                 Log.e("UndoHelper", "Positions: " + positions.toString() + " Removed: " + removed.size());
             }
         });
@@ -100,8 +99,9 @@ public class SelectFriendsFragment extends Fragment {
         mActionModeHelper = new ActionModeHelper(mFastAdapter, R.menu.cab, new ActionBarCallBack());
 
         //create our adapters
-        ItemAdapter<SimpleItem> itemAdapter = new ItemAdapter<>();
-        final HeaderAdapter<SimpleItem> headerAdapter = new HeaderAdapter<>();
+        itemAdapter = new ItemAdapter<>();
+
+        activity = (NewListContainerActivity) getActivity();
 
         //configure our mFastAdapter
         //as we provide id's for the items we want the hasStableIds enabled to speed up things
@@ -109,64 +109,40 @@ public class SelectFriendsFragment extends Fragment {
         mFastAdapter.withSelectable(true);
         mFastAdapter.withMultiSelect(true);
         mFastAdapter.withOnClickListener((v, adapter, item, position) -> {
-//            if (v.isSelected()) {
-//                selectedAccounts.add(item);
-//            }
+            if (v.isSelected()) {
+                activity.addToSelection(item.getAccount());
+                System.out.println(String.format("selected %s in selectfriendsfragment", item.getAccount()));
+            }
             Boolean res = mActionModeHelper.onClick(item);
-            Toast.makeText(v.getContext(), "SelectedCount: " + mFastAdapter.getSelections().size() + " ItemsCount: " + mFastAdapter.getSelectedItems().size(), Toast.LENGTH_SHORT).show();
             return res != null ? res : false;
         });
 
         //get our recyclerView and do basic setup
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(itemAdapter.wrap(headerAdapter.wrap(mFastAdapter)));
-
-        //fill with some sample data
-        SimpleItem SimpleItem = new SimpleItem();
-        SimpleItem
-                .withName("Header")
-                .withIdentifier(1)
-                .withSelectable(false);
-        headerAdapter.add(SimpleItem);
-        List<SimpleItem> items = new ArrayList<>();
-        for (int i = 1; i <= 100; i++) {
-            SimpleItem item = new SimpleItem();
-            item
-                    .withName("Test " + i).
-                    withIdentifier(100 + i);
-            items.add(item);
-        }
-        itemAdapter.add(items);
+        recyclerView.setAdapter(itemAdapter.wrap(mFastAdapter));
 
         //restore selections (this has to be done after the items were added
         mFastAdapter.withSavedInstanceState(savedInstanceState);
 
-        //inform that longClick is required
-        Toast.makeText(getActivity(), "LongClick to enable Multi-Selection", Toast.LENGTH_LONG).show();
+        fillListView();
 
         super.onViewCreated(view, savedInstanceState);
     }
 
-//    private void fillListView() {
-//        new Thread(() -> {
-//            List<Account> result = userManager.getFriends(thisAccount.getId());
-//            System.out.println(String.format("Found %s friends of %s", String.valueOf(result.size()), thisAccount.getUsername()));
-//
-//            refreshListView(result);
-//        }).start();
-//    }
-//
-//    private void refreshListView(List<Account> accounts) {
-//        // Construct the data source
-//        data = new ArrayList<>(accounts);
-//        // Create the adapter to convert the array to views
-//        adapter = new AccountAdapter(getActivity(), data);
-//
-//        getActivity().runOnUiThread(() ->
-//                // Attach the adapter to a ListView
-//                listView.setAdapter(adapter));
-//    }
+    private void fillListView() {
+        new Thread(() -> {
+            List<Account> result = userManager.getFriends(thisAccount.getId());
+            System.out.println(String.format("Found %s friends of %s", String.valueOf(result.size()), thisAccount.getUsername()));
+
+            getActivity().runOnUiThread(() -> {
+                for (Account a : result) {
+                    itemAdapter.add(new AccountItem().withAccount(a));
+                }
+            });
+
+        }).start();
+    }
 
     /**
      * Our ActionBarCallBack to showcase the CAB

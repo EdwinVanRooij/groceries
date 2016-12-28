@@ -22,7 +22,7 @@ import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.LoginManager;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.KEY_USER;
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 
 /**
@@ -88,7 +88,7 @@ public class LoginFragment extends Fragment {
             Account a = loginManager.login(username, password);
 
             Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra(KEY_USER, Parcels.wrap(a));
+            intent.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
             startActivity(intent);
         }).start();
     }

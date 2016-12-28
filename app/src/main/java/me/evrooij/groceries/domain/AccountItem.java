@@ -2,13 +2,11 @@ package me.evrooij.groceries.domain;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.ButterKnife;
 import com.mikepenz.fastadapter.IDraggable;
 import com.mikepenz.fastadapter.IItem;
@@ -24,19 +22,23 @@ import java.util.List;
 /**
  * Created by mikepenz on 28.12.15.
  */
-public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> implements IDraggable<SimpleItem, IItem> {
+public class AccountItem extends AbstractItem<AccountItem, AccountItem.ViewHolder> implements IDraggable<AccountItem, IItem> {
     //the static ViewHolderFactory which will be used to generate the ViewHolder for this Item
     private static final ViewHolderFactory<? extends ViewHolder> FACTORY = new ItemFactory();
 
-    public String header;
-    public StringHolder name;
-    public StringHolder description;
+    public Account account;
+    private StringHolder name;
 
     private boolean mIsDraggable = true;
 
-    public SimpleItem withName(String Name) {
-        this.name = new StringHolder(Name);
+    public AccountItem withAccount(Account account) {
+        this.account = account;
+        name = new StringHolder(account.getUsername());
         return this;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
     }
 
     @Override
-    public SimpleItem withIsDraggable(boolean draggable) {
+    public AccountItem withIsDraggable(boolean draggable) {
         this.mIsDraggable = draggable;
         return this;
     }
@@ -67,7 +69,7 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
      */
     @Override
     public int getLayoutRes() {
-        return R.layout.sample_item;
+        return R.layout.item_user;
     }
 
     /**
@@ -86,15 +88,12 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
         UIUtils.setBackground(viewHolder.view, FastAdapterUIUtils.getSelectableBackground(ctx, Color.RED, true));
         //set the text for the name
         StringHolder.applyTo(name, viewHolder.name);
-        //set the text for the description or hide
-        StringHolder.applyToOrHide(description, viewHolder.description);
     }
 
     @Override
     public void unbindView(ViewHolder holder) {
         super.unbindView(holder);
         holder.name.setText(null);
-        holder.description.setText(null);
     }
 
     /**
@@ -124,10 +123,10 @@ public class SimpleItem extends AbstractItem<SimpleItem, SimpleItem.ViewHolder> 
      */
     protected static class ViewHolder extends RecyclerView.ViewHolder {
         protected View view;
-        @BindView(R.id.material_drawer_name)
+        @BindView(R.id.ivProfilePicture)
+        ImageView ivProfilePicture;
+        @BindView(R.id.tvName)
         TextView name;
-        @BindView(R.id.material_drawer_description)
-        TextView description;
 
         public ViewHolder(View view) {
             super(view);

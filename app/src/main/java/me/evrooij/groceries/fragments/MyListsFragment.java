@@ -20,7 +20,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_USER;
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 
 /**
@@ -56,7 +56,7 @@ public class MyListsFragment extends Fragment {
 
         listManager = new ListManager();
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_USER));
+        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
         addLists();
 
