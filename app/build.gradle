@@ -8,8 +8,8 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         multiDexEnabled true
-        versionCode 2
-        versionName "0.0.2-ALPHA"
+        versionCode 3
+        versionName "0.0.3-ALPHA"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {
             enabled true
