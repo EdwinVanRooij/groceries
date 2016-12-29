@@ -3,6 +3,7 @@ package me.evrooij.groceries;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -22,21 +23,14 @@ import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.data.Product;
+import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
-    private static final String FRAGMENT_LIST_VIEW = "list view";
-    private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
 
     private ProductDataProvider mDataProvider;
 
@@ -69,14 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
 
-//        setFragment(DefaultListFragmentTwo.class);
-        List<Product> products = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            products.add(new Product(String.format("name %s", i), 10, "comment", "owner"));
-        }
-        mDataProvider = new ProductDataProvider(products);
+        mDataProvider = new ProductDataProvider();
 
-        setFragment(DefaultListFragment.class);
+        setFragment(DefaultListFragment.class, DefaultListFragment.TAG);
 
         fab.hide();
     }
@@ -114,20 +103,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_drawer_home:
-                setFragment(DefaultListFragmentTwo.class);
+                setFragment(DefaultListFragmentTwo.class, null);
                 fab.hide();
                 break;
             case R.id.nav_drawer_lists:
-                setFragment(MyListsFragment.class);
+                setFragment(MyListsFragment.class, null);
                 fab.show();
                 break;
             case R.id.nav_drawer_friends:
-                setFragment(FriendsFragment.class);
+                setFragment(FriendsFragment.class, null);
                 fab.show();
                 break;
             case R.id.nav_drawer_settings:
 //                We don't need a fab in settings
-                setFragment(SettingsFragment.class);
+                setFragment(SettingsFragment.class, null);
                 fab.hide();
                 break;
             case R.id.nav_drawer_logout:
@@ -141,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void setFragment(Class fragmentClass) {
+    private void setFragment(Class fragmentClass, @Nullable String tag) {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
 
@@ -150,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            if (tag != null) {
+                fragmentManager.beginTransaction().replace(R.id.container, fragment, tag).commit();
+            } else {
+                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public void onItemClicked(int position) {
         ProductDataProvider.ProductData data = getDataProvider().getItem(position);
-        Product product = (Product) data.getItem();
+        Product product = data.getItem();
 
         System.out.println(String.format("Clicked item %s", product.getName()));
     }
@@ -187,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void onItemUndoActionClicked() {
         int position = getDataProvider().undoLastRemoval();
         if (position >= 0) {
-            final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
+            final Fragment fragment = getSupportFragmentManager().findFragmentByTag(DefaultListFragment.TAG);
             ((DefaultListFragment) fragment).notifyItemInserted(position);
         }
     }

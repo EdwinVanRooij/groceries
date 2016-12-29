@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle(searchedUser.getUsername());
 
         tvTitle.setText(searchedUser.getUsername());
-        tvDescription.setText(String.format("%s likes to take a shit while being naked...", searchedUser.getUsername()));
+        tvDescription.setText(String.format("This is a description about %s's life.", searchedUser.getUsername()));
 
         Glide.with(this)
                 .load("http://placekitten.com/300/400")

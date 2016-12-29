@@ -19,6 +19,7 @@ package me.evrooij.groceries.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -62,6 +63,8 @@ import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_NEW_PRODUCT;
 
 public class DefaultListFragment extends Fragment {
+
+    public static final String TAG = "DefaultListFragment";
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -214,23 +217,20 @@ public class DefaultListFragment extends Fragment {
             if (result.size() > 0) {
                 thisList = result.get(0);
                 Log.d(TAG, String.format("setDefaultList: Retrieved %s lists from api, working with list %s which has %s products", result.size(), result.get(0).getName(), result.get(0).getProductList().size()));
-                refreshListView();
+
+                ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
+
+                getActivity().runOnUiThread(() -> {
+                            for (Product p : data) {
+                                getDataProvider().addItem(p);
+                            }
+                        }
+                );
             } else {
                 // No list was found, do nothing
                 Log.d(TAG, "setDefaultList: No list found");
             }
         }).start();
-    }
-
-    private void refreshListView() {
-        ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
-
-        getActivity().runOnUiThread(() -> {
-                    for (Product p : data) {
-                        getDataProvider().addItem(p);
-                    }
-                }
-        );
     }
 
     @Override
@@ -242,9 +242,11 @@ public class DefaultListFragment extends Fragment {
 
                 new Thread(() -> {
                     Product p = listManager.newProduct(thisList.getId(), newProduct);
+                    System.out.println(String.format("Received product %s", p.toString()));
 
                     getActivity().runOnUiThread(() -> {
                         getDataProvider().addItem(p);
+                        notifyItemInserted(mAdapter.getItemCount());
                         System.out.println(String.format("Added %s to adapter", p));
                     });
                 }).start();

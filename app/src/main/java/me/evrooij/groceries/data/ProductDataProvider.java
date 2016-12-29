@@ -19,6 +19,10 @@ public class ProductDataProvider {
         }
     }
 
+    public ProductDataProvider() {
+        productDataList = new LinkedList<>();
+    }
+
     public void addItem(Product product) {
         final long id = productDataList.size();
         final int viewType = 0;
