@@ -1,6 +1,7 @@
 package me.evrooij.groceries.domain;
 
 import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -72,5 +73,27 @@ public class ListManager {
         }
 
         return response.body();
+    }
+
+    public ResponseMessage deleteProduct(int listId, int productId) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<ResponseMessage> call = client.deleteProduct(listId, productId);
+
+        // Execute the call
+        Response<ResponseMessage> response;
+        try {
+            response = call.execute();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+
+        }
+
+        return response.body();
+
     }
 }

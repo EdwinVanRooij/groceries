@@ -12,19 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import me.evrooij.groceries.ConfirmDialog;
 import me.evrooij.groceries.NewProduct;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.ReturnBoolean;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.GroceryList;
 import me.evrooij.groceries.domain.ListManager;
 import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.rest.ResponseMessage;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -76,6 +80,30 @@ public class DefaultListFragment extends Fragment {
 
         setDefaultList();
 
+        listView.setOnItemClickListener((adapter1, v, position, id) -> {
+            Product product = (Product) adapter1.getItemAtPosition(position);
+
+            ReturnBoolean r = result -> {
+                if (result) {
+                    new Thread(() -> {
+                        ResponseMessage message = listManager.deleteProduct(thisList.getId(), product.getId());
+
+                        getActivity().runOnUiThread(() -> {
+                            adapter.remove(product);
+                            Toast.makeText(getActivity(), String.format("Result: %s", message.toString()), Toast.LENGTH_SHORT).show();
+                        });
+                    }).start();
+                }
+            };
+            new ConfirmDialog(getActivity(), r).show(getResources().getString(R.string.product_delete_warning));
+        });
+
+        listView.setOnItemLongClickListener((adapterView, view1, pos, id) -> {
+            Product product = (Product) adapterView.getItemAtPosition(pos);
+
+            return true;
+        });
+
         return view;
     }
 
@@ -86,7 +114,15 @@ public class DefaultListFragment extends Fragment {
             if (result.size() > 0) {
                 thisList = result.get(0);
                 Log.d(TAG, String.format("setDefaultList: Retrieved %s lists from api, working with list %s which has %s products", result.size(), result.get(0).getName(), result.get(0).getProductList().size()));
-                refreshListView();
+
+                ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
+
+                adapter = new ProductAdapter(getActivity(), data);
+
+                getActivity().runOnUiThread(() -> {
+                    listView.setAdapter(adapter);
+                    System.out.println(String.format("Finished setting new adapter with %s items", adapter.getCount()));
+                });
             } else {
                 // No list was found, do nothing
                 Log.d(TAG, "setDefaultList: No list found");
@@ -123,11 +159,4 @@ public class DefaultListFragment extends Fragment {
         }
     }
 
-    private void refreshListView() {
-        ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
-
-        adapter = new ProductAdapter(getActivity(), data);
-
-        getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
-    }
 }

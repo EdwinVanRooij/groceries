@@ -45,4 +45,7 @@
     <string name="product_hint_amount">1</string>
     <string name="product_hint_comment">Comment…</string>
     <string name="product_button_add">Add product!</string>
+    <string name="negative">no</string>
+    <string name="positive">yes</string>
+    <string name="product_delete_warning">Do you want to remove this product?</string>
 </resources>
