@@ -45,6 +45,8 @@ public class NewProduct extends AppCompatActivity {
         int amount = 0;
         if (etAmount.getText().toString().length() == 0) {
             amount = 1;
+        } else {
+            amount = Integer.valueOf(etAmount.getText().toString());
         }
         String comment = etRemark.getText().toString();
 

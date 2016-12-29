@@ -1,6 +1,5 @@
 package me.evrooij.groceries.fragments;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,14 +33,17 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
-import static me.evrooij.groceries.Constants.KEY_NEW_PRODUCT;
-
+import static android.R.attr.data;
+import static android.R.attr.defaultHeight;
+import static me.evrooij.groceries.Constants.*;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DefaultListFragment extends Fragment {
+
+    public final static int NEW_PRODUCT_CODE = 1;
+    public final static int EDIT_PRODUCT_CODE = 2;
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -101,6 +103,9 @@ public class DefaultListFragment extends Fragment {
         listView.setOnItemLongClickListener((adapterView, view1, pos, id) -> {
             Product product = (Product) adapterView.getItemAtPosition(pos);
 
+            Intent i = new Intent(getActivity(), NewProduct.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)).putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
+            startActivityForResult(i, NEW_PRODUCT_CODE);
+
             return true;
         });
 
@@ -133,30 +138,53 @@ public class DefaultListFragment extends Fragment {
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
         Intent i = new Intent(getActivity(), NewProduct.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
-        startActivityForResult(i, 1);
+        startActivityForResult(i, NEW_PRODUCT_CODE);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                Product newProduct = Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT));
-                System.out.println(String.format("Received product %s, sending to api now", newProduct.toString()));
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case NEW_PRODUCT_CODE:
+                    createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
+                    break;
+                case EDIT_PRODUCT_CODE:
 
-                new Thread(() -> {
-                    Product p = listManager.newProduct(thisList.getId(), newProduct);
-
-                    getActivity().runOnUiThread(() -> {
-                        adapter.add(p);
-                        System.out.println(String.format("Added %s to adapter", p));
-                    });
-                }).start();
+                    // edit product to back end
+                    break;
+                default:
+                    Log.d(TAG, "onActivityResult: Could not find product code");
+                    break;
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-                System.out.println("Canceled");
-            }
+        }
+        if (resultCode == Activity.RESULT_CANCELED) {
+            //Write your code if there's no result
+            System.out.println("Canceled");
         }
     }
 
+    private void createNewProduct(Product newProduct) {
+        System.out.println(String.format("Received product %s, sending to api now", newProduct.toString()));
+
+        new Thread(() -> {
+            Product p = listManager.newProduct(thisList.getId(), newProduct);
+
+            getActivity().runOnUiThread(() -> {
+                adapter.add(p);
+                System.out.println(String.format("Added %s to adapter", p));
+            });
+        }).start();
+    }
+
+    private void editProduct(Product editedProduct) {
+        new Thread(() -> {
+            Product productFromApi = listManager.editProduct(thisList.getId(), editedProduct);
+
+            getActivity().runOnUiThread(() -> {
+                adapter.remove(editedProduct);
+                adapter.add(editedProduct);
+                System.out.println(String.format("Added %s to adapter", p));
+            });
+        }).start();
+    }
 }

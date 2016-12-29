@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:hint="@string/product_hint_name"
+        android:inputType="text"
         android:maxLines="1" />
 
     <EditText
         android:id="@+id/etAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/etName"
         android:hint="@string/product_hint_amount"
         android:inputType="number" />
 
     <EditText
         android:id="@+id/etRemark"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/btnAdd"
-        android:layout_below="@+id/etAmount"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
         android:gravity="top|start"
-        android:hint="@string/product_hint_comment" />
+        android:hint="@string/product_hint_comment"
+        android:lines="3" />
 
     <Button
         android:id="@+id/btnAdd"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:text="@string/product_button_add" />
 
-</RelativeLayout>
+</LinearLayout>
