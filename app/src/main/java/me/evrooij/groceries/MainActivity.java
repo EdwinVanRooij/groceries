@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -31,7 +30,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.fragment;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -71,15 +69,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
 
-//        setFragment(DefaultListFragment.class);
+//        setFragment(DefaultListFragmentTwo.class);
         List<Product> products = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 3; i++) {
             products.add(new Product(String.format("name %s", i), 10, "comment", "owner"));
         }
         mDataProvider = new ProductDataProvider(products);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new SwipeableExampleFragment(), FRAGMENT_LIST_VIEW)
-                .commit();
+
+        setFragment(DefaultListFragment.class);
+
         fab.hide();
     }
 
@@ -116,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_drawer_home:
-                setFragment(DefaultListFragment.class);
+                setFragment(DefaultListFragmentTwo.class);
                 fab.hide();
                 break;
             case R.id.nav_drawer_lists:
@@ -190,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int position = getDataProvider().undoLastRemoval();
         if (position >= 0) {
             final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-            ((SwipeableExampleFragment) fragment).notifyItemInserted(position);
+            ((DefaultListFragment) fragment).notifyItemInserted(position);
         }
     }
 

@@ -19,6 +19,12 @@ public class ProductDataProvider {
         }
     }
 
+    public void addItem(Product product) {
+        final long id = productDataList.size();
+        final int viewType = 0;
+        productDataList.add(new ProductData(id, viewType, product));
+    }
+
     public int getCount() {
         return productDataList.size();
     }
