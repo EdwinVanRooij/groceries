@@ -96,4 +96,25 @@ public class ListManager {
         return response.body();
 
     }
+
+    public ResponseMessage editProduct(int listId, int productId, Product editedProduct) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<ResponseMessage> call = client.editProduct(listId, productId, editedProduct);
+
+        // Execute the call
+        Response<ResponseMessage> response;
+        try {
+            response = call.execute();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+
+        }
+
+        return response.body();
+    }
 }

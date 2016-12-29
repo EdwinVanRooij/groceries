@@ -46,4 +46,6 @@ public interface ClientInterface {
     @DELETE("/lists/{listId}/products/{productId}")
     Call<ResponseMessage> deleteProduct(@Path("listId") int listId, @Path("productId") int productId);
 
+    @PUT("/lists/{listId}/products/{productId}/edit")
+    Call<ResponseMessage> editProduct(@Path("listId") int listId, @Path("productId") int productId, @Body Product editedProduct);
 }

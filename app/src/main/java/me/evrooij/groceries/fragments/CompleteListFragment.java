@@ -38,9 +38,6 @@ public class CompleteListFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    private Account thisAccount;
-    private List<Account> selectedAccounts;
-
     private NewListContainerActivity activity;
 
     public CompleteListFragment() {
@@ -60,8 +57,7 @@ public class CompleteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_complete_list, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        selectedAccounts = Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS));
+        List<Account> selectedAccounts = Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS));
 
         // Construct the data source
         ArrayList<Account> data = new ArrayList<>(selectedAccounts);

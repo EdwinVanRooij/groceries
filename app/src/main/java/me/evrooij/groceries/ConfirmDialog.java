@@ -2,10 +2,10 @@ package me.evrooij.groceries;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 
 /**
- * Created by Edwin on 11/20/2015.
+ * Author: Edwin
+ * Date: 11/20/2015.
  */
 public class ConfirmDialog {
     //region Fields

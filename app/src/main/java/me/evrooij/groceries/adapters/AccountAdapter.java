@@ -1,6 +1,7 @@
 package me.evrooij.groceries.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,8 @@ import me.evrooij.groceries.domain.Account;
 import java.util.ArrayList;
 
 /**
- * Created by eddy on 20-11-16.
+ * Author: eddy
+ * Date: 20-11-16.
  */
 
 public class AccountAdapter extends ArrayAdapter<Account> {
@@ -20,8 +22,9 @@ public class AccountAdapter extends ArrayAdapter<Account> {
         super(context, 0, users);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         Account user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view

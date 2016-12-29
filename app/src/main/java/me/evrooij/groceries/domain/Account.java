@@ -6,7 +6,8 @@ import org.jraf.android.prefs.Prefs;
 import org.parceler.Parcel;
 
 /**
- * Created by eddy on 27-11-16.
+ * Author: eddy
+ * Date: 27-11-16.
  */
 
 @Prefs

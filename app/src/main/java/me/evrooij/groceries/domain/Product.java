@@ -3,7 +3,8 @@ package me.evrooij.groceries.domain;
 import org.parceler.Parcel;
 
 /**
- * Created by eddy on 22-11-16.
+ * Author: eddy
+ * Date: 22-11-16.
  */
 
 @Parcel
@@ -35,6 +36,14 @@ public class Product {
     }
 
     public Product() {
+    }
+
+    public Product(int id, String name, int amount, String comment, String owner) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+        this.owner = owner;
+        this.comment = comment;
     }
 
     public Product(String name, int amount, String comment, String owner) {

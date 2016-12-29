@@ -8,7 +8,6 @@ import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.domain.AccountPrefs;
 import org.parceler.Parcels;
 
-import static android.R.attr.password;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class LauncherActivity extends AppCompatActivity {

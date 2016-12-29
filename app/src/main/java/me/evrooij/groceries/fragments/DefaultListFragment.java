@@ -33,8 +33,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.data;
-import static android.R.attr.defaultHeight;
 import static me.evrooij.groceries.Constants.*;
 
 /**
@@ -103,8 +101,11 @@ public class DefaultListFragment extends Fragment {
         listView.setOnItemLongClickListener((adapterView, view1, pos, id) -> {
             Product product = (Product) adapterView.getItemAtPosition(pos);
 
+            // Remove product from adapter first
+            adapter.remove(product);
+
             Intent i = new Intent(getActivity(), NewProduct.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)).putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
-            startActivityForResult(i, NEW_PRODUCT_CODE);
+            startActivityForResult(i, EDIT_PRODUCT_CODE);
 
             return true;
         });
@@ -149,8 +150,11 @@ public class DefaultListFragment extends Fragment {
                     createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
                     break;
                 case EDIT_PRODUCT_CODE:
+                    Product editProduct = Parcels.unwrap(data.getParcelableExtra(KEY_EDIT_PRODUCT));
+                    System.out.println(String.format("Received %s from activity in edit", editProduct.toString()));
 
-                    // edit product to back end
+                    // Update change to backend
+                    editProduct(editProduct);
                     break;
                 default:
                     Log.d(TAG, "onActivityResult: Could not find product code");
@@ -178,12 +182,11 @@ public class DefaultListFragment extends Fragment {
 
     private void editProduct(Product editedProduct) {
         new Thread(() -> {
-            Product productFromApi = listManager.editProduct(thisList.getId(), editedProduct);
+            ResponseMessage responseMessage = listManager.editProduct(thisList.getId(), editedProduct.getId(), editedProduct);
 
             getActivity().runOnUiThread(() -> {
-                adapter.remove(editedProduct);
                 adapter.add(editedProduct);
-                System.out.println(String.format("Added %s to adapter", p));
+                Toast.makeText(getActivity(), responseMessage.toString(), Toast.LENGTH_SHORT).show();
             });
         }).start();
     }
