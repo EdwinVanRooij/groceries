@@ -14,7 +14,7 @@ public class ServiceGenerator {
     // Development env
 //    public static final String API_BASE_URL = "http://192.168.1.126:4567";
     // Production env
-    public static final String API_BASE_URL = "http://88.159.34.253";
+    public static final String API_BASE_URL = "http://88.159.34.253:6438";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
