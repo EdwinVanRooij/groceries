@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,6 +20,7 @@ import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.AccountPrefs;
 import me.evrooij.groceries.domain.LoginManager;
 import org.parceler.Parcels;
 
@@ -86,10 +88,21 @@ public class LoginFragment extends Fragment {
 
         new Thread(() -> {
             Account a = loginManager.login(username, password);
+            if (a == null) {
+                Toast.makeText(getActivity(), "Could not login.\nPlease check your credentials.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
-            startActivity(intent);
+            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Login was successful.\rWelcome, %s", a.getUsername()), Toast.LENGTH_SHORT).show());
+
+            AccountPrefs accountPrefs = AccountPrefs.get(getActivity());
+            //noinspection ConstantConditions
+            accountPrefs.edit().putId(a.getId()).putUsername(a.getUsername()).putEmail(a.getEmail()).putPassword(a.getPassword()).apply();
+
+            Intent i = new Intent(getActivity(), MainActivity.class);
+            i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         }).start();
     }
 }

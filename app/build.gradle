@@ -77,5 +77,9 @@ dependencies {
     // Json converter library from google, gson
     compile 'com.google.code.gson:gson:2.6.2'
 
+    // SharedPreferences lib
+    annotationProcessor 'org.jraf:prefs-compiler:1.1.0'
+    compile 'org.jraf:prefs:1.1.0'
+
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

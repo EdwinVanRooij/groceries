@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.AccountPrefs;
 import me.evrooij.groceries.fragments.DefaultListFragment;
 import me.evrooij.groceries.fragments.FriendsFragment;
 import me.evrooij.groceries.fragments.MyListsFragment;
@@ -117,7 +118,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fab.hide();
                 break;
             case R.id.nav_drawer_logout:
-                // TODO: 20-11-16 execute logout
+                AccountPrefs accountPrefs = AccountPrefs.get(this);
+                accountPrefs.removeId();
+                accountPrefs.removeUsername();
+                accountPrefs.removeEmail();
+                accountPrefs.removePassword();
+                finish();
                 break;
             default:
                 System.out.println("Could not determine which drawer item was clicked");

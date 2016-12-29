@@ -4,24 +4,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import me.evrooij.groceries.MainActivity;
+import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.AccountPrefs;
+import org.parceler.Parcels;
+
+import static android.R.attr.password;
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    boolean isLoggedIn = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: 26-11-16 go to activity based on login status, logged in --> main activity, not logged in --> logincontainer
-        if (isLoggedIn) {
-            startActivity(
-                    new Intent(this, MainActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+        System.out.println("Started");
+        AccountPrefs mainPrefs = AccountPrefs.get(this);
+
+        if (mainPrefs.getId() != null) {
+            Intent i = new Intent(this, MainActivity.class);
+            Account a = new Account(mainPrefs.getId(), mainPrefs.getUsername(), mainPrefs.getEmail(), mainPrefs.getPassword());
+            i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         } else {
-            startActivity(
-                    new Intent(this, LoginContainerActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            Intent i = new Intent(this, LoginContainerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i);
         }
         finish();
         super.onCreate(savedInstanceState);
     }
+
+
 }

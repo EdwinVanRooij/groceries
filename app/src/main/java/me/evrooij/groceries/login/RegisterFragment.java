@@ -1,6 +1,7 @@
 package me.evrooij.groceries.login;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -11,13 +12,19 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.AccountPrefs;
 import me.evrooij.groceries.domain.LoginManager;
+import org.parceler.Parcels;
+
+import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,7 +93,20 @@ public class RegisterFragment extends Fragment {
 
             new Thread(() -> {
                 Account a = loginManager.register(username, email, password);
-                System.out.println(a);
+                if (a == null) {
+                    Toast.makeText(getActivity(), "Could not register.\nPlease fill in valid fields.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Registration was successful.\rWelcome, %s", a.getUsername()), Toast.LENGTH_SHORT).show());
+
+                AccountPrefs accountPrefs = AccountPrefs.get(getActivity());
+                accountPrefs.edit().putId(a.getId()).putUsername(a.getUsername()).putEmail(a.getEmail()).putPassword(a.getPassword()).apply();
+
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
             }).start();
         } catch (Exception e) {
             e.printStackTrace();
