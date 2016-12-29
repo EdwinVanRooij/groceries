@@ -94,7 +94,7 @@ public class RegisterFragment extends Fragment {
             new Thread(() -> {
                 Account a = loginManager.register(username, email, password);
                 if (a == null) {
-                    Toast.makeText(getActivity(), "Could not register.\nPlease fill in valid fields.", Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Could not register.\nPlease fill in valid fields.", Toast.LENGTH_SHORT).show());
                     return;
                 }
 

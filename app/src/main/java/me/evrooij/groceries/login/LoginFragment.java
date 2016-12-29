@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
         new Thread(() -> {
             Account a = loginManager.login(username, password);
             if (a == null) {
-                Toast.makeText(getActivity(), "Could not login.\nPlease check your credentials.", Toast.LENGTH_SHORT).show();
+                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Could not login.\nPlease check your credentials.", Toast.LENGTH_SHORT).show());
                 return;
             }
 
