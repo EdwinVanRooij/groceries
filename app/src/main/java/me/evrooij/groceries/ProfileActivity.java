@@ -77,9 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
         new Thread(() -> {
             ResponseMessage result = userManager.addFriend(thisAccount.getId(), searchedUser);
 
-            runOnUiThread(() -> {
-                Toast.makeText(this, String.format("Result: %s", result.toString()), Toast.LENGTH_SHORT).show();
-            });
+            runOnUiThread(() -> Toast.makeText(this, String.format("Result: %s", result.toString()), Toast.LENGTH_SHORT).show());
         }).start();
     }
 

@@ -19,7 +19,6 @@ package me.evrooij.groceries.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -40,25 +39,23 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimat
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
-import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.NewProduct;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.ProductAdapter;
-import me.evrooij.groceries.adapters.ProductAdapterTwo;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.domain.ListManager;
+import me.evrooij.groceries.interfaces.EventListener;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mikepenz.iconics.Iconics.TAG;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_NEW_PRODUCT;
 
@@ -98,7 +95,6 @@ public class DefaultListFragment extends Fragment {
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         listManager = new ListManager();
 
-
         fab.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
 
         //noinspection ConstantConditions
@@ -115,15 +111,15 @@ public class DefaultListFragment extends Fragment {
 
         //adapter
         final ProductAdapter myItemAdapter = new ProductAdapter(getDataProvider());
-        myItemAdapter.setEventListener(new ProductAdapter.EventListener() {
+        myItemAdapter.setEventListener(new EventListener() {
             @Override
             public void onItemRemoved(int position) {
-                ((MainActivity) getActivity()).onItemRemoved(position);
+                ((MainActivity) getActivity()).onItemRemoved(position, thisList.getId());
             }
 
             @Override
-            public void onItemViewClicked(View v, boolean pinned) {
-                onItemViewClick(v, pinned);
+            public void onItemViewClicked(View v) {
+                onItemViewClick(v);
             }
         });
 
@@ -141,12 +137,8 @@ public class DefaultListFragment extends Fragment {
         mRecyclerView.setItemAnimator(animator);
 
         // additional decorations
-        //noinspection StatementWithEmptyBody
         mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider_h), true));
 
-        // NOTE:
-        // The initialization order is very important! This order determines the priority of touch event handling.
-        //
         // priority: TouchActionGuard > Swipe > DragAndDrop
         mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
@@ -162,35 +154,11 @@ public class DefaultListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (mRecyclerViewSwipeManager != null) {
-            mRecyclerViewSwipeManager.release();
-            mRecyclerViewSwipeManager = null;
-        }
-
-        if (mRecyclerViewTouchActionGuardManager != null) {
-            mRecyclerViewTouchActionGuardManager.release();
-            mRecyclerViewTouchActionGuardManager = null;
-        }
-
-        if (mRecyclerView != null) {
-            mRecyclerView.setItemAnimator(null);
-            mRecyclerView.setAdapter(null);
-            mRecyclerView = null;
-        }
-
-        if (mWrappedAdapter != null) {
-            WrapperAdapterUtils.releaseAll(mWrappedAdapter);
-            mWrappedAdapter = null;
-        }
-        mAdapter = null;
-        mLayoutManager = null;
-
         unbinder.unbind();
-
         super.onDestroyView();
     }
 
-    private void onItemViewClick(View v, boolean pinned) {
+    private void onItemViewClick(View v) {
         int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
             ((MainActivity) getActivity()).onItemClicked(position);

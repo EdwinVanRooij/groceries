@@ -8,17 +8,6 @@ public class ProductDataProvider {
     private ProductData lastRemovedProductData;
     private int mLastRemovedPosition = -1;
 
-    public ProductDataProvider(List<Product> products) {
-
-        productDataList = new LinkedList<>();
-
-        for (Product p : products) {
-            final long id = productDataList.size();
-            final int viewType = 0;
-            productDataList.add(new ProductData(id, viewType, p));
-        }
-    }
-
     public ProductDataProvider() {
         productDataList = new LinkedList<>();
     }
@@ -34,10 +23,6 @@ public class ProductDataProvider {
     }
 
     public ProductData getItem(int index) {
-        if (index < 0 || index >= getCount()) {
-            throw new IndexOutOfBoundsException("index = " + index);
-        }
-
         return productDataList.get(index);
     }
 
@@ -64,6 +49,7 @@ public class ProductDataProvider {
     public void removeItem(int position) {
         //noinspection UnnecessaryLocalVariable
         final ProductData removedItem = productDataList.remove(position);
+        System.out.println(String.format("Removing product %s in dataprovider", removedItem.getItem().toString()));
 
         lastRemovedProductData = removedItem;
         mLastRemovedPosition = position;

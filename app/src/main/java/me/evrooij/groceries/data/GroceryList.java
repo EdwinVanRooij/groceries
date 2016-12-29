@@ -247,6 +247,7 @@ public class GroceryList {
      */
     @SuppressWarnings("JavaDoc")
     public void updateProduct(int productId, String name, int amount, String comment, String owner) {
+        //noinspection Convert2streamapi
         for (Product p : productList) {
             if (p.getId() == productId) {
                 p.setName(name);

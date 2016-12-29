@@ -3,6 +3,7 @@ package me.evrooij.groceries;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,7 +27,12 @@ import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.data.ProductDataProvider;
-import me.evrooij.groceries.fragments.*;
+import me.evrooij.groceries.domain.ListManager;
+import me.evrooij.groceries.fragments.DefaultListFragment;
+import me.evrooij.groceries.fragments.FriendsFragment;
+import me.evrooij.groceries.fragments.MyListsFragment;
+import me.evrooij.groceries.fragments.SettingsFragment;
+import me.evrooij.groceries.rest.ResponseMessage;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawer;
 
     private Account thisAccount;
+    private ListManager listManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
+        listManager = new ListManager();
 
         mDataProvider = new ProductDataProvider();
 
@@ -97,13 +106,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         switch (id) {
             case R.id.nav_drawer_home:
-                setFragment(DefaultListFragmentTwo.class, null);
+                setFragment(DefaultListFragment.class, DefaultListFragment.TAG);
                 fab.hide();
                 break;
             case R.id.nav_drawer_lists:
@@ -151,10 +160,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * This method will be called when a list item is removed
-     *
-     * @param position The position of the item within data set
      */
-    public void onItemRemoved(int position) {
+    public void onItemRemoved(int position, int listId) {
         Snackbar snackbar = Snackbar.make(
                 findViewById(R.id.container),
                 R.string.snack_bar_text_item_removed,
@@ -163,6 +170,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         snackbar.setAction(R.string.snack_bar_action_undo, v -> onItemUndoActionClicked());
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
         snackbar.show();
+
+        new Thread(() -> {
+            ProductDataProvider.ProductData data = getDataProvider().getItem(position);
+            Product product = data.getItem();
+            System.out.println(String.format("Would remove %s in api", product.toString()));
+//
+//            ResponseMessage responseMessage = listManager.deleteProduct(listId, product.getId());
+//            System.out.println(String.format("removing list id %s and product %s", listId, product.toString()));
+//
+//            this.runOnUiThread(() -> Toast.makeText(this, String.format("Result: %s", responseMessage.toString()), Toast.LENGTH_SHORT).show());
+        }).start();
+
     }
 
     /**

@@ -22,7 +22,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 import static me.evrooij.groceries.Constants.KEY_SELECTED_ACCOUNTS;
 
 
@@ -37,9 +36,6 @@ public class CompleteListFragment extends Fragment {
     EditText etName;
 
     private Unbinder unbinder;
-
-    private Account thisAccount;
-    private List<Account> selectedAccounts;
 
     private NewListContainerActivity activity;
 
@@ -60,8 +56,7 @@ public class CompleteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_complete_list, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        selectedAccounts = Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS));
+        List<Account> selectedAccounts = Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS));
 
         // Construct the data source
         ArrayList<Account> data = new ArrayList<>(selectedAccounts);

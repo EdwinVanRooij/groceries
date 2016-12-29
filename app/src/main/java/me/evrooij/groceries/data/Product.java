@@ -3,7 +3,8 @@ package me.evrooij.groceries.data;
 import org.parceler.Parcel;
 
 /**
- * Created by eddy on 22-11-16.
+ * Author: eddy
+ * Date: 22-11-16.
  */
 
 @Parcel

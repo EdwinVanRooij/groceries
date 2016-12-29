@@ -43,4 +43,6 @@ public interface ClientInterface {
     @POST("/list/{id}/products/new")
     Call<Product> newProduct(@Path("id") int listId, @Body Product newProduct);
 
+    @DELETE("/lists/{listId}/products/{productId}")
+    Call<ResponseMessage> deleteProduct(@Path("listId") int listId, @Path("productId") int productId);
 }

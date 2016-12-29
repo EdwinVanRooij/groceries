@@ -4,7 +4,8 @@ package me.evrooij.groceries.data;
 import org.parceler.Parcel;
 
 /**
- * Created by eddy on 27-11-16.
+ * Author: eddy
+ * Date: 27-11-16.
  */
 
 @Parcel

@@ -33,35 +33,28 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.ProductDataProvider;
 import me.evrooij.groceries.data.Product;
+import me.evrooij.groceries.interfaces.EventListener;
 
-public class ProductAdapter
-        extends RecyclerView.Adapter<ProductAdapter.MyViewHolder>
-        implements SwipeableItemAdapter<ProductAdapter.MyViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> implements SwipeableItemAdapter<ProductAdapter.ProductViewHolder> {
+
     private static final String TAG = "MySwipeableItemAdapter";
-
-    // NOTE: Make accessible with short name
-    private interface Swipeable extends SwipeableItemConstants {
-    }
-
     private ProductDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
     private View.OnClickListener mSwipeableViewContainerOnClickListener;
 
-    public interface EventListener {
-        void onItemRemoved(int position);
-
-        void onItemViewClicked(View v, boolean pinned);
+    // NOTE: Make accessible with short name
+    private interface Swipeable extends SwipeableItemConstants {
     }
 
-    public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+    public static class ProductViewHolder extends AbstractSwipeableItemViewHolder {
         public FrameLayout mContainer;
         public TextView tvName;
         public TextView tvAmount;
         public TextView tvComment;
         public TextView tvOwner;
 
-        public MyViewHolder(View v) {
+        public ProductViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
             tvName = (TextView) v.findViewById(R.id.tvName);
@@ -88,13 +81,13 @@ public class ProductAdapter
 
     private void onItemViewClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(v, true); // true --- pinned
+            mEventListener.onItemViewClicked(v);
         }
     }
 
     private void onSwipeableViewContainerClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v), false);  // false --- not pinned
+            mEventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
         }
     }
 
@@ -109,14 +102,14 @@ public class ProductAdapter
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.item_product, parent, false);
-        return new MyViewHolder(v);
+        return new ProductViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(ProductViewHolder holder, int position) {
         final ProductDataProvider.ProductData item = mProvider.getItem(position);
 
         // set listeners
@@ -126,7 +119,7 @@ public class ProductAdapter
         holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
 
         // set text
-        Product product = (Product) item.getItem();
+        Product product = item.getItem();
         holder.tvName.setText(product.getName());
         holder.tvAmount.setText(String.valueOf(product.getAmount()));
         holder.tvComment.setText(product.getComment());
@@ -156,12 +149,12 @@ public class ProductAdapter
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+    public int onGetSwipeReactionType(ProductViewHolder holder, int position, int x, int y) {
         return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
+    public void onSetSwipeBackground(ProductViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
             case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -179,7 +172,7 @@ public class ProductAdapter
     }
 
     @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, final int position, int result) {
+    public SwipeResultAction onSwipeItem(ProductViewHolder holder, final int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {

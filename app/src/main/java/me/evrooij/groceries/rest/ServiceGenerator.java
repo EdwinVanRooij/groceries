@@ -5,7 +5,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by eddy on 14-12-16.
+ * Author: eddy
+ * Date: 14-12-16.
  */
 
 public class ServiceGenerator {

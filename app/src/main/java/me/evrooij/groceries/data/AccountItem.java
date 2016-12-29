@@ -20,7 +20,8 @@ import me.evrooij.groceries.R;
 import java.util.List;
 
 /**
- * Created by mikepenz on 28.12.15.
+ * Author: mikepenz
+ * Date: 28.12.15.
  */
 public class AccountItem extends AbstractItem<AccountItem, AccountItem.ViewHolder> implements IDraggable<AccountItem, IItem> {
     //the static ViewHolderFactory which will be used to generate the ViewHolder for this Item
@@ -112,6 +113,7 @@ public class AccountItem extends AbstractItem<AccountItem, AccountItem.ViewHolde
      *
      * @return
      */
+    @SuppressWarnings("JavaDoc")
     @Override
     public ViewHolderFactory<? extends ViewHolder> getFactory() {
         return FACTORY;
