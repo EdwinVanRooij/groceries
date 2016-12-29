@@ -79,7 +79,7 @@ public class ProductDataProvider {
             return mId;
         }
 
-        public Object getItem() {
+        public Product getItem() {
             return mProduct;
         }
     }

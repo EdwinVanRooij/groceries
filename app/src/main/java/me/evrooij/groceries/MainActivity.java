@@ -28,6 +28,10 @@ import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.attr.fragment;
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
     private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
+
+    private ProductDataProvider mDataProvider;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -66,9 +72,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
 
 //        setFragment(DefaultListFragment.class);
-        getSupportFragmentManager().beginTransaction()
-                .add(new ExampleDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
-                .commit();
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            products.add(new Product(String.format("name %s", i), 10, "comment", "owner"));
+        }
+        mDataProvider = new ProductDataProvider(products);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, new SwipeableExampleFragment(), FRAGMENT_LIST_VIEW)
                 .commit();
@@ -187,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public ProductDataProvider getDataProvider() {
-        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
-        return ((ExampleDataProviderFragment) fragment).getDataProvider();
+        return mDataProvider;
     }
 }

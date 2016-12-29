@@ -87,7 +87,6 @@ public class SwipeableExampleFragment extends Fragment {
 
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
 
-        // Change animations are enabled by default since support-v7-recyclerview v22.
         // Disable the change animation in order to make turning back animation of swiped item works properly.
         animator.setSupportsChangeAnimations(false);
 
@@ -140,10 +139,6 @@ public class SwipeableExampleFragment extends Fragment {
         if (position != RecyclerView.NO_POSITION) {
             ((MainActivity) getActivity()).onItemClicked(position);
         }
-    }
-
-    private boolean supportsViewElevation() {
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
     public ProductDataProvider getDataProvider() {
