@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import me.evrooij.groceries.MainActivity;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.AccountPrefs;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.AccountPrefs;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;

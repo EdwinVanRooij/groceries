@@ -9,8 +9,8 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.Product;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
@@ -42,8 +42,8 @@ public class NewProduct extends AppCompatActivity {
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         thisProduct = Parcels.unwrap(getIntent().getParcelableExtra(KEY_EDIT_PRODUCT));
-        System.out.println(String.format("Received %s in new product", thisProduct.toString()));
         if (thisProduct != null) {
+            System.out.println(String.format("Received %s in new product", thisProduct.toString()));
             isUpdate = true;
 
             etName.setText(thisProduct.getName());
@@ -66,15 +66,17 @@ public class NewProduct extends AppCompatActivity {
         }
         String comment = etRemark.getText().toString();
 
-        Product product = new Product(thisProduct.getId(), name, amount, comment, thisAccount.getUsername());
+        Product product;
 
         if (isUpdate) {
+            product = new Product(thisProduct.getId(), name, amount, comment, thisAccount.getUsername());
             // Product already exists, do an update
             Intent returnIntent = new Intent();
             returnIntent.putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } else {
+            product = new Product(name, amount, comment, thisAccount.getUsername());
             // Product doesn't exist yet, make new product
             Intent returnIntent = new Intent();
             returnIntent.putExtra(KEY_NEW_PRODUCT, Parcels.wrap(product));

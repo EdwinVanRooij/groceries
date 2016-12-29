@@ -21,9 +21,9 @@ import com.mikepenz.fastadapter_extensions.UndoHelper;
 import me.evrooij.groceries.NewListContainerActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.AccountItem;
-import me.evrooij.groceries.domain.UserManager;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.AccountItem;
+import me.evrooij.groceries.data.UserManager;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;

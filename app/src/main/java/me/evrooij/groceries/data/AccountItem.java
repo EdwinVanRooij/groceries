@@ -1,4 +1,4 @@
-package me.evrooij.groceries.domain;
+package me.evrooij.groceries.data;
 
 import android.content.Context;
 import android.graphics.Color;

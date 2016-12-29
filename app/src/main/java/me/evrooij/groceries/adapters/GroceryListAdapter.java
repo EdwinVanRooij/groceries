@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.GroceryList;
+import me.evrooij.groceries.data.GroceryList;
 
 import java.util.ArrayList;
 

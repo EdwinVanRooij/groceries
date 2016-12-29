@@ -23,10 +23,10 @@ import me.evrooij.groceries.NewProduct;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.ReturnBoolean;
 import me.evrooij.groceries.adapters.ProductAdapter;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.GroceryList;
-import me.evrooij.groceries.domain.ListManager;
-import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.GroceryList;
+import me.evrooij.groceries.data.ListManager;
+import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.rest.ResponseMessage;
 import org.parceler.Parcels;
 
@@ -49,6 +49,7 @@ public class DefaultListFragment extends Fragment {
     ListView listView;
 
     ProductAdapter adapter;
+    private Product editingProduct;
 
     public DefaultListFragment() {
         // Required empty public constructor
@@ -101,8 +102,7 @@ public class DefaultListFragment extends Fragment {
         listView.setOnItemLongClickListener((adapterView, view1, pos, id) -> {
             Product product = (Product) adapterView.getItemAtPosition(pos);
 
-            // Remove product from adapter first
-            adapter.remove(product);
+            editingProduct = product;
 
             Intent i = new Intent(getActivity(), NewProduct.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)).putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
             startActivityForResult(i, EDIT_PRODUCT_CODE);
@@ -152,6 +152,9 @@ public class DefaultListFragment extends Fragment {
                 case EDIT_PRODUCT_CODE:
                     Product editProduct = Parcels.unwrap(data.getParcelableExtra(KEY_EDIT_PRODUCT));
                     System.out.println(String.format("Received %s from activity in edit", editProduct.toString()));
+
+                    // Remove product from adapter first
+                    adapter.remove(editingProduct);
 
                     // Update change to backend
                     editProduct(editProduct);

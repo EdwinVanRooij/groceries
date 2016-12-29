@@ -1,4 +1,4 @@
-package me.evrooij.groceries.domain;
+package me.evrooij.groceries.data;
 
 import org.parceler.Parcel;
 
@@ -76,7 +76,8 @@ public class Product {
         Product other = (Product) obj;
         // If all fields are the same, return true
 //        return other.getId() == getId() // If all fields are the same, return true
-        return other.getName().equals(getName())
+        return other.getId() == getId()
+                && other.getName().equals(getName())
                 && other.getAmount() == getAmount()
                 && other.getOwner().equals(getOwner())
                 && other.getComment().equals(getComment())

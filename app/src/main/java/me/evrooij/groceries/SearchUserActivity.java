@@ -10,8 +10,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import me.evrooij.groceries.adapters.AccountAdapter;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.UserManager;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.UserManager;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;

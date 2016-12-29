@@ -1,4 +1,4 @@
-package me.evrooij.groceries.domain;
+package me.evrooij.groceries.data;
 
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ServiceGenerator;

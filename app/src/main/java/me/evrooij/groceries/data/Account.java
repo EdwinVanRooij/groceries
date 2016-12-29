@@ -1,4 +1,4 @@
-package me.evrooij.groceries.domain;
+package me.evrooij.groceries.data;
 
 
 import org.jraf.android.prefs.Name;

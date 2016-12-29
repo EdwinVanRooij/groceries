@@ -11,9 +11,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.GroceryListAdapter;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.GroceryList;
-import me.evrooij.groceries.domain.ListManager;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.GroceryList;
+import me.evrooij.groceries.data.ListManager;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;

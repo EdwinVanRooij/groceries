@@ -19,9 +19,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.domain.Account;
-import me.evrooij.groceries.domain.AccountPrefs;
-import me.evrooij.groceries.domain.LoginManager;
+import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.AccountPrefs;
+import me.evrooij.groceries.data.LoginManager;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
