@@ -4,6 +4,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static me.evrooij.groceries.Constants.API_BASE_URL;
+
 /**
  * Author: eddy
  * Date: 14-12-16.
@@ -11,10 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    // Development env
-//    public static final String API_BASE_URL = "http://192.168.1.126:4567";
-    // Production env
-    public static final String API_BASE_URL = "http://88.159.34.253:6438";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
