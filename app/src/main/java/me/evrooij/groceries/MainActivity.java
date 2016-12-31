@@ -23,10 +23,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.AccountPrefs;
-import me.evrooij.groceries.fragments.DefaultListFragment;
-import me.evrooij.groceries.fragments.FriendsFragment;
-import me.evrooij.groceries.fragments.MyListsFragment;
-import me.evrooij.groceries.fragments.SettingsFragment;
+import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
@@ -112,6 +109,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_drawer_friends:
                 setFragment(FriendsFragment.class);
                 fab.show();
+                break;
+            case R.id.nav_drawer_suggestion:
+                setFragment(SuggestionFragment.class);
+                fab.hide();
+                break;
+            case R.id.nav_drawer_bug:
+                setFragment(BugFragment.class);
+                fab.hide();
                 break;
             case R.id.nav_drawer_settings:
 //                We don't need a fab in settings

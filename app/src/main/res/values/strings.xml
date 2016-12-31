@@ -49,4 +49,19 @@
     <string name="positive">yes</string>
     <string name="product_delete_warning">Do you want to remove this product?</string>
     <string name="button_update_product">Update product!</string>
+    <string name="nav_drawer_feedback">Feedback</string>
+    <string name="nav_drawer_bug">Bugs</string>
+    <string name="nav_drawer_suggestion">Suggestions</string>
+
+    <string name="suggestion_button_send">Send feedback!</string>
+    <string name="suggestion_where">Where could we improve?</string>
+    <string name="suggestion_what">What could we improve?</string>
+    <string name="suggestion_hint_where">For example: On the page where you see your friends…</string>
+    <string name="suggestion_hint_what">For example: The app crashed…</string>
+    <string name="suggestion_hint_when">Example: when I pressed \'+\' at friends…</string>
+    <string name="suggestion_title">Do you have a suggestion which could improve this app?\nType below!</string>
+    <string name="bug_when">Have you experienced a bug? Please enter when it happened below.</string>
+    <string name="bug_what">What happened?</string>
+    <string name="suggestion_text">Suggestion…</string>
+    <string name="bug_button_send">Send bug!</string>
 </resources>

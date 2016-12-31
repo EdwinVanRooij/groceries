@@ -1,6 +1,7 @@
 package me.evrooij.groceries.rest;
 
 import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.Feedback;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.Product;
 import retrofit2.Call;
@@ -48,4 +49,8 @@ public interface ClientInterface {
 
     @PUT("/lists/{listId}/products/{productId}/edit")
     Call<ResponseMessage> editProduct(@Path("listId") int listId, @Path("productId") int productId, @Body Product editedProduct);
+
+    // Feedback
+    @POST("/feedback/new")
+    Call<ResponseMessage> reportFeedback(@Body Feedback feedback);
 }
