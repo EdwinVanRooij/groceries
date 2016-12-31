@@ -7,7 +7,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Author: eddy

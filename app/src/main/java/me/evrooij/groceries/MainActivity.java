@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    static final int SCAN_QR_REQUEST = 2;  // The request code
-    private static final int ZXING_CAMERA_PERMISSION = 1;
+    TextView tvName;
+    TextView tvEmail;
 
     private Account thisAccount;
 
@@ -61,6 +62,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
+
+        View header = navigationView.getHeaderView(0);
+/*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
+        tvName = (TextView) header.findViewById(R.id.nav_header_name);
+        tvEmail = (TextView) header.findViewById(R.id.nav_header_email);
+        tvName.setText(thisAccount.getUsername());
+        tvEmail.setText(thisAccount.getEmail());
+
 
         setFragment(DefaultListFragment.class);
         fab.hide();

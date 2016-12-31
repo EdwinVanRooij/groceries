@@ -64,4 +64,5 @@
     <string name="bug_what">What happened?</string>
     <string name="suggestion_text">Suggestion…</string>
     <string name="bug_button_send">Send bug!</string>
+    <string name="placeholder_email">mail@mail.com</string>
 </resources>

@@ -57,18 +57,20 @@ public class MyListsFragment extends Fragment {
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
-        addLists();
-
         return view;
     }
 
-    private void addLists() {
+    @Override
+    public void onResume() {
         new Thread(() -> {
-            List<GroceryList> result = listManager.getMyLists(thisAccount);
-            data = new ArrayList<>(result);
-            adapter = new GroceryListAdapter(getActivity(), data);
+            new Thread(() -> {
+                List<GroceryList> result = listManager.getMyLists(thisAccount);
+                data = new ArrayList<>(result);
+                adapter = new GroceryListAdapter(getActivity(), data);
 
-            getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
+                getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
+            }).start();
         }).start();
+        super.onResume();
     }
 }
