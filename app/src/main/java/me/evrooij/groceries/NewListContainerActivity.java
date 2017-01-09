@@ -31,8 +31,6 @@ import static me.evrooij.groceries.Config.KEY_SELECTED_ACCOUNTS;
 public class NewListContainerActivity extends AppCompatActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     private Account thisAccount;
     private List<Account> selectedAccounts;
@@ -45,8 +43,6 @@ public class NewListContainerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container_new_list);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
 
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24));
 

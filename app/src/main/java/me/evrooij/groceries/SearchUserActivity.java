@@ -39,8 +39,6 @@ public class SearchUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_user);
         ButterKnife.bind(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         userManager = new UserManager(getApplicationContext());
     }

@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +62,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        // Attempt to get account from launcher activity
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
+        if (thisAccount == null) {
+            // If activity was not created from launcher activity, get it from shared pref
+            AccountPrefs mainPrefs = AccountPrefs.get(this);
+            if (mainPrefs.getId() != null) {
+                thisAccount = new Account(mainPrefs.getId(), mainPrefs.getUsername(), mainPrefs.getEmail(), mainPrefs.getPassword());
+            } else {
+                Toast.makeText(this, getString(R.string.account_not_found), Toast.LENGTH_SHORT).show();
+                logOut();
+            }
+        }
 
         View header = navigationView.getHeaderView(0);
 /*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
@@ -137,12 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fab.hide();
                 break;
             case R.id.nav_drawer_logout:
-                AccountPrefs accountPrefs = AccountPrefs.get(this);
-                accountPrefs.removeId();
-                accountPrefs.removeUsername();
-                accountPrefs.removeEmail();
-                accountPrefs.removePassword();
-                finish();
+                logOut();
                 break;
             default:
                 System.out.println("Could not determine which drawer item was clicked");
@@ -150,6 +157,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logOut() {
+        AccountPrefs accountPrefs = AccountPrefs.get(this);
+        accountPrefs.removeId();
+        accountPrefs.removeUsername();
+        accountPrefs.removeEmail();
+        accountPrefs.removePassword();
+        finish();
     }
 
     private void setFragment(Class fragmentClass) {
