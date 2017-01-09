@@ -18,10 +18,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.ConfirmDialog;
-import me.evrooij.groceries.NewProduct;
-import me.evrooij.groceries.R;
-import me.evrooij.groceries.ReturnBoolean;
+import me.evrooij.groceries.*;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.GroceryList;
@@ -81,6 +78,7 @@ public class DefaultListFragment extends Fragment {
 
         setDefaultList();
 
+
         listView.setOnItemClickListener((adapter1, v, position, id) -> {
             Product product = (Product) adapter1.getItemAtPosition(position);
 
@@ -117,8 +115,11 @@ public class DefaultListFragment extends Fragment {
         new Thread(() -> {
             List<GroceryList> result = listManager.getMyLists(thisAccount);
 
+
             if (result.size() > 0) {
                 thisList = result.get(0);
+                ((MainActivity) getActivity()).setActionBarTitle(thisList.getName());
+
                 Log.d(TAG, String.format("setDefaultList: Retrieved %s lists from api, working with list %s which has %s products", result.size(), result.get(0).getName(), result.get(0).getProductList().size()));
 
                 ArrayList<Product> data = new ArrayList<>(thisList.getProductList());

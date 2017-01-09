@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Feedback;
@@ -51,6 +52,7 @@ public class SuggestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_suggestion, container, false);
         unbinder = ButterKnife.bind(this, view);
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_suggestions));
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         feedbackManager = new FeedbackManager(getActivity().getApplicationContext());

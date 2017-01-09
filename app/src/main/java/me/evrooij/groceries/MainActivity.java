@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.hide();
     }
 
+    public void setActionBarTitle(String title) {
+        runOnUiThread(() -> toolbar.setTitle(title));
+    }
+
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);

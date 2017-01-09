@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Feedback;
@@ -39,6 +40,19 @@ public class BugFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_bug, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_bugs));
+
+        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
+        feedbackManager = new FeedbackManager(getActivity().getApplicationContext());
+
+        return view;
+    }
+
     @OnClick(R.id.bug_button_send)
     public void onButtonSendClick() {
         new Thread(() -> {
@@ -49,18 +63,6 @@ public class BugFragment extends Fragment {
                 Toast.makeText(getActivity(), responseMessage.toString(), Toast.LENGTH_SHORT).show();
             });
         }).start();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bug, container, false);
-        unbinder = ButterKnife.bind(this, view);
-
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        feedbackManager = new FeedbackManager(getActivity().getApplicationContext());
-
-        return view;
     }
 
     @Override

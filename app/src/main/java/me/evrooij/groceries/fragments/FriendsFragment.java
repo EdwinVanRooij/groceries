@@ -10,6 +10,7 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.data.Account;
@@ -52,6 +53,7 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
         unbinder = ButterKnife.bind(this, view);
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_friends));
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         userManager = new UserManager(getActivity().getApplicationContext());

@@ -30,12 +30,26 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NewListContainerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SearchUserActivity" />
+            android:label="@string/toolbar_title_new_list"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".SearchUserActivity"
+            android:label="@string/toolbar_title_search_user">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".ProfileActivity"
+            android:label="@string/toolbar_title_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".NewProduct" />
+        <activity
+            android:name=".NewProduct"
+            android:label="@string/toolbar_title_new_product" />
     </application>
 
 </manifest>
