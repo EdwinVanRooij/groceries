@@ -33,7 +33,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.*;
+import static me.evrooij.groceries.Config.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +77,7 @@ public class DefaultListFragment extends Fragment {
         fab.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
-        listManager = new ListManager();
+        listManager = new ListManager(getActivity().getApplicationContext());
 
         setDefaultList();
 

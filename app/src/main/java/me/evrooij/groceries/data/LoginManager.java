@@ -1,5 +1,6 @@
 package me.evrooij.groceries.data;
 
+import android.content.Context;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ServiceGenerator;
 import retrofit2.Call;
@@ -16,9 +17,15 @@ import java.util.Map;
 
 public class LoginManager {
 
+    private Context context;
+
+    public LoginManager(Context context) {
+        this.context = context;
+    }
+
     public Account login(String username, String password) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<Account> call = client.getAccountByLogin(username, password);
@@ -39,7 +46,7 @@ public class LoginManager {
 
     public Account register(String username, String email, String password) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Map<String, String> accountMap = new HashMap<>();

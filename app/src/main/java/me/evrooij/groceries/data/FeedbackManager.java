@@ -1,5 +1,6 @@
 package me.evrooij.groceries.data;
 
+import android.content.Context;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
@@ -15,9 +16,16 @@ import java.io.IOException;
 
 public class FeedbackManager {
 
+    private Context context;
+
+    public FeedbackManager(Context context) {
+        this.context = context;
+
+    }
+
     public ResponseMessage reportFeedback(Feedback feedback) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<ResponseMessage> call = client.reportFeedback(feedback);

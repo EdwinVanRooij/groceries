@@ -19,7 +19,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 
 /**
@@ -53,7 +53,7 @@ public class MyListsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_lists, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        listManager = new ListManager();
+        listManager = new ListManager(getActivity().getApplicationContext());
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 

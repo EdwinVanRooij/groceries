@@ -17,8 +17,8 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
-import static me.evrooij.groceries.Constants.KEY_SEARCHED_USER;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_SEARCHED_USER;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public class SearchUserActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
-        userManager = new UserManager();
+        userManager = new UserManager(getApplicationContext());
     }
 
     @OnItemClick(R.id.lv_users)

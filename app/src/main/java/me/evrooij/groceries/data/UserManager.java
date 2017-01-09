@@ -1,5 +1,6 @@
 package me.evrooij.groceries.data;
 
+import android.content.Context;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
@@ -15,11 +16,16 @@ import java.util.List;
  */
 
 public class UserManager {
+    private Context context;
+
+    public UserManager(Context context) {
+        this.context = context;
+    }
 
     public List<Account> findFriends(int accountId, String query) {
         System.out.println(String.format("Starting search query with account id %s, query %s", String.valueOf(accountId), query));
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<List<Account>> call = client.findFriends(accountId, query);
@@ -40,7 +46,7 @@ public class UserManager {
 
     public ResponseMessage addFriend(int accountId, Account friend) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<ResponseMessage> call = client.addFriend(accountId, friend);
@@ -61,7 +67,7 @@ public class UserManager {
 
     public List<Account> getFriends(int accountId) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<List<Account>> call = client.getFriends(accountId);

@@ -13,7 +13,7 @@ import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Product;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.*;
+import static me.evrooij.groceries.Config.*;
 
 public class NewProduct extends AppCompatActivity {
     //region Fields

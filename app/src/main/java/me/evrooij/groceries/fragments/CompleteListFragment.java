@@ -22,7 +22,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_SELECTED_ACCOUNTS;
+import static me.evrooij.groceries.Config.KEY_SELECTED_ACCOUNTS;
 
 
 /**

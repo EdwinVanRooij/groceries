@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -16,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.orhanobut.logger.Logger;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.ListManager;
@@ -27,8 +25,8 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
-import static me.evrooij.groceries.Constants.KEY_SELECTED_ACCOUNTS;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_SELECTED_ACCOUNTS;
 
 public class NewListContainerActivity extends AppCompatActivity {
     @BindView(R.id.fab)
@@ -54,7 +52,7 @@ public class NewListContainerActivity extends AppCompatActivity {
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         selectedAccounts = new ArrayList<>();
-        listManager = new ListManager();
+        listManager = new ListManager(getApplicationContext());
 
         System.out.println(String.format("Received account %s in newlistcontainer", thisAccount));
 

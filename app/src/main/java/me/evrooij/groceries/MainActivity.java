@@ -27,7 +27,7 @@ import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.fragments.*;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

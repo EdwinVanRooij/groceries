@@ -1,5 +1,7 @@
 package me.evrooij.groceries.data;
 
+import android.content.Context;
+import me.evrooij.groceries.Config;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
@@ -16,9 +18,15 @@ import java.util.List;
 
 public class ListManager {
 
+    private Context context;
+
+    public ListManager(Context context) {
+        this.context = context;
+    }
+
     public List<GroceryList> getMyLists(Account account) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<List<GroceryList>> call = client.getListsByAccountId(account.getId());
@@ -39,7 +47,7 @@ public class ListManager {
 
     public GroceryList newList(GroceryList list) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<GroceryList> call = client.newList(list);
@@ -58,7 +66,7 @@ public class ListManager {
 
     public Product newProduct(int listId, Product newProduct) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<Product> call = client.newProduct(listId, newProduct);
@@ -77,7 +85,7 @@ public class ListManager {
 
     public ResponseMessage deleteProduct(int listId, int productId) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<ResponseMessage> call = client.deleteProduct(listId, productId);
@@ -99,7 +107,7 @@ public class ListManager {
 
     public ResponseMessage editProduct(int listId, int productId, Product editedProduct) {
         // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(ClientInterface.class);
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
         Call<ResponseMessage> call = client.editProduct(listId, productId, editedProduct);

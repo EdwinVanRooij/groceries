@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +77,7 @@ public class SelectFriendsFragment extends Fragment {
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         System.out.println(String.format("Received account %s in selectfriendsfragment", thisAccount));
 
-        userManager = new UserManager();
+        userManager = new UserManager(getActivity().getApplicationContext());
 
         return view;
     }

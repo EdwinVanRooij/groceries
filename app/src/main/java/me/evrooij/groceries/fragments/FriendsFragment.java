@@ -19,7 +19,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 
 /**
@@ -54,7 +54,7 @@ public class FriendsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        userManager = new UserManager();
+        userManager = new UserManager(getActivity().getApplicationContext());
 
         return view;
     }

@@ -24,7 +24,7 @@ import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.data.LoginManager;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment {
         Animation a3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         btnRegister.startAnimation(a3);
 
-        loginManager = new LoginManager();
+        loginManager = new LoginManager(getActivity().getApplicationContext());
 
         return view;
     }

@@ -20,8 +20,8 @@ import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.util.SquareImageView;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
-import static me.evrooij.groceries.Constants.KEY_SEARCHED_USER;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_SEARCHED_USER;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -51,7 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         searchedUser = Parcels.unwrap(getIntent().getParcelableExtra(KEY_SEARCHED_USER));
 
-        userManager = new UserManager();
+        userManager = new UserManager(getApplicationContext());
 
         ViewCompat.setTransitionName(findViewById(R.id.app_bar_layout), EXTRA_IMAGE);
         supportPostponeEnterTransition();

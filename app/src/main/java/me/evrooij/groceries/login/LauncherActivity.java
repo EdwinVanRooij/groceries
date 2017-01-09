@@ -8,7 +8,7 @@ import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.AccountPrefs;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 public class LauncherActivity extends AppCompatActivity {
 

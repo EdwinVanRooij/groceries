@@ -19,7 +19,7 @@ import me.evrooij.groceries.data.FeedbackManager;
 import me.evrooij.groceries.rest.ResponseMessage;
 import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Constants.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,7 +53,7 @@ public class SuggestionFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        feedbackManager = new FeedbackManager();
+        feedbackManager = new FeedbackManager(getActivity().getApplicationContext());
 
         return view;
     }
