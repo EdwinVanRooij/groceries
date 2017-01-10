@@ -26,6 +26,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.fragments.*;
+import me.evrooij.groceries.login.LauncherActivity;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
@@ -165,7 +166,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         accountPrefs.removeUsername();
         accountPrefs.removeEmail();
         accountPrefs.removePassword();
-        finish();
+
+        Intent i = new Intent(this, LauncherActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
     private void setFragment(Class fragmentClass) {
