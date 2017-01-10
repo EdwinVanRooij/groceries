@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import me.evrooij.groceries.fragments.*;
 import me.evrooij.groceries.login.LauncherActivity;
 import org.parceler.Parcels;
 
+import static android.R.attr.id;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,8 +86,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvEmail.setText(thisAccount.getEmail());
 
 
+        initializeNavigationView();
+
         setFragment(DefaultListFragment.class);
         fab.hide();
+    }
+
+    private void initializeNavigationView() {
+        Menu menu = navigationView.getMenu();
+        // Set home checked as it's the first page
+        navigationView.setCheckedItem(R.id.nav_drawer_home);
+
+        // First group
+        menu.findItem(R.id.nav_drawer_home).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_home));
+
+        // Communication
+        menu.findItem(R.id.nav_drawer_lists).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_list));
+        menu.findItem(R.id.nav_drawer_friends).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_supervisor_account));
+        menu.findItem(R.id.nav_drawer_suggestion).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_lightbulb_outline));
+        menu.findItem(R.id.nav_drawer_bug).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_bug_report));
+
+        // Last group
+        menu.findItem(R.id.nav_drawer_settings).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_settings));
+        menu.findItem(R.id.nav_drawer_logout).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_exit_to_app));
     }
 
     public void setActionBarTitle(String title) {
