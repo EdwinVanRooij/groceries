@@ -131,6 +131,7 @@ public class DefaultListFragment extends Fragment {
                     System.out.println(String.format("Finished setting new adapter with %s items", adapter.getCount()));
                 });
             } else {
+                ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.no_list_found));
                 // No list was found, do nothing
                 Log.d(TAG, "setDefaultList: No list found");
             }
