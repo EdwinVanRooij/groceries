@@ -79,4 +79,7 @@
     <string name="toolbar_title_new_product">New Product</string>
     <string name="toolbar_title_search_user">Search User</string>
     <string name="account_not_found">Could not find account. Redirecting to login page.</string>
+
+    <string name="nav_drawer_group_communication">Communication</string>
+    <string name="nav_drawer_group_etc">Etc</string>
 </resources>
