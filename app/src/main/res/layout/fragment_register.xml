@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:clickable="false"
-        android:text="@string/register"
+        android:text="@string/button_goto_register"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@dimen/textSizeH1" />
 
@@ -78,5 +78,5 @@
         android:layout_below="@+id/etPasswordContainer"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:text="@string/btn_register" />
+        android:text="@string/button_register" />
 </RelativeLayout>

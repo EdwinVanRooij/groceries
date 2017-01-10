@@ -41,7 +41,7 @@
         android:layout_above="@id/btnLogin"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
-        android:text="@string/register" />
+        android:text="@string/button_goto_register" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -51,6 +51,6 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="?android:selectableItemBackground"
-        android:text="@string/login" />
+        android:text="@string/button_goto_login" />
 
 </RelativeLayout>

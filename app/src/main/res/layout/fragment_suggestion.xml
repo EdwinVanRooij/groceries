@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_large"
                 android:gravity="top|start"
-                android:hint="@string/suggestion_text"
+                android:hint="@string/suggestion_hint"
                 android:lines="10" />
 
         </LinearLayout>

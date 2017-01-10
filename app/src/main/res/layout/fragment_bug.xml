@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_large"
                 android:gravity="top|start"
-                android:hint="@string/suggestion_hint_when"
+                android:hint="@string/bug_hint_when"
                 android:lines="3" />
 
         </LinearLayout>
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_large"
                 android:gravity="top|start"
-                android:hint="@string/suggestion_hint_what"
+                android:hint="@string/bug_hint_what"
                 android:lines="5" />
 
 
