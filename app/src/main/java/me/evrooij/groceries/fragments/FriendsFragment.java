@@ -53,7 +53,7 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_friends));
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_friends));
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         userManager = new UserManager(getActivity().getApplicationContext());

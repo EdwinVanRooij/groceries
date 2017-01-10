@@ -34,7 +34,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_settings));
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_settings));
 
         return view;
     }

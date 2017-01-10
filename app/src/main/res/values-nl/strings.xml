@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Boodschappen</string>
+    <string name="account_not_found">Account niet gevonden. Wordt terugverwezen naar inlogpagina.</string>
+    <string name="bug_button_send">Verstuur foutmelding!</string>
+    <string name="bug_hint_what">Bijvoorbeeld: De app sloot af…</string>
+    <string name="bug_hint_when">Voorbeeld: Toen ik op \'+\' drukte bij Vrienden…</string>
+    <string name="bug_what">Wat gebeurde er?</string>
+    <string name="bug_when">Heb je een fout ervaren? Laat hieronder weten wanneer.</string>
+    <string name="button_friend_add">Voeg vriend toe!</string>
+    <string name="button_goto_login">Inloggen</string>
+    <string name="button_goto_register">Registereren</string>
+    <string name="button_login">Inloggen</string>
+    <string name="button_register">Registereren</string>
+    <string name="button_update_product">Product aanpassen!</string>
+    <string name="description_profile_picture">Profielfoto</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Wachtwoord</string>
+    <string name="hint_username">Gebruikersnaam</string>
+    <string name="nav_drawer_group_communication">Communicatie</string>
+    <string name="nav_drawer_home">Home</string>
+    <string name="nav_drawer_logout">Uitloggen</string>
+    <string name="title_settings">Instellingen</string>
+    <string name="title_suggestions">Suggesties</string>
+    <string name="negative">nee</string>
+    <string name="new_list_name">Nieuwe lijst naam</string>
+    <string name="no_list_found">Geen lijsten gevonden</string>
+    <string name="product_button_add">Voeg product toe!</string>
+    <string name="positive">ja</string>
+    <string name="product_delete_warning">Wil je dit product verwijderen?</string>
+    <string name="product_hint_comment">Opmerking…</string>
+    <string name="product_hint_name">Naam…</string>
+    <string name="search_user_button">Zoeken!</string>
+    <string name="search_user_title">Zoek Gebruiker</string>
+    <string name="suggestion_button_send">Stuur Feedback!</string>
+    <string name="suggestion_hint">Suggestie…</string>
+    <string name="suggestion_title">Heb je een suggestie om deze app te verbeteren?\\nTyp hieronder!</string>
+    <string name="title_bugs">Fouten</string>
+    <string name="title_friends">Vrienden</string>
+    <string name="title_lists">Mijn Lijsten</string>
+    <string name="toolbar_title_new_list">Nieuwe Lijst</string>
+    <string name="toolbar_title_new_product">Nieuw Product</string>
+    <string name="toolbar_title_profile">Profiel</string>
+    <string name="toolbar_title_search_user">Zoek Gebruiker</string>
+</resources>

@@ -45,7 +45,7 @@ public class BugFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bug, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_bugs));
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_bugs));
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         feedbackManager = new FeedbackManager(getActivity().getApplicationContext());

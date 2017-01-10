@@ -53,7 +53,7 @@ public class MyListsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_lists, container, false);
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.toolbar_title_my_lists));
+        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_lists));
 
         listManager = new ListManager(getActivity().getApplicationContext());
 

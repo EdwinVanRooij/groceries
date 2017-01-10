@@ -16,22 +16,22 @@
                 android:id="@+id/nav_drawer_lists"
                 android:checkable="true"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/nav_drawer_lists" />
+                android:title="@string/title_lists" />
             <item
                 android:id="@+id/nav_drawer_friends"
                 android:checkable="true"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/nav_drawer_friends" />
+                android:title="@string/title_friends" />
             <item
                 android:id="@+id/nav_drawer_suggestion"
                 android:checkable="true"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/nav_drawer_suggestion" />
+                android:title="@string/title_suggestions" />
             <item
                 android:id="@+id/nav_drawer_bug"
                 android:checkable="true"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/nav_drawer_bug" />
+                android:title="@string/title_bugs" />
         </menu>
     </item>
 
@@ -41,7 +41,7 @@
         <item
             android:id="@+id/nav_drawer_settings"
             android:icon="@drawable/ic_menu_manage"
-            android:title="@string/nav_drawer_settings" />
+            android:title="@string/title_settings" />
         <item
             android:id="@+id/nav_drawer_logout"
             android:icon="@drawable/ic_menu_manage"
