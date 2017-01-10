@@ -65,7 +65,6 @@ public class FriendsFragment extends Fragment {
     public void onResume() {
         new Thread(() -> {
             List<Account> result = userManager.getFriends(thisAccount.getId());
-            System.out.println(String.format("Found %s friends of %s", String.valueOf(result.size()), thisAccount.getUsername()));
 
             refreshListView(result);
         }).start();

@@ -73,7 +73,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnAdd)
     public void onBtnAddClick() {
-        System.out.println("clicked button search");
         new Thread(() -> {
             ResponseMessage result = userManager.addFriend(thisAccount.getId(), searchedUser);
 

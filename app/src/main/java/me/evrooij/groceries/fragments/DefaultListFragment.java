@@ -128,7 +128,6 @@ public class DefaultListFragment extends Fragment {
 
                 getActivity().runOnUiThread(() -> {
                     listView.setAdapter(adapter);
-                    System.out.println(String.format("Finished setting new adapter with %s items", adapter.getCount()));
                 });
             } else {
                 ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.no_list_found));
@@ -153,7 +152,6 @@ public class DefaultListFragment extends Fragment {
                     break;
                 case EDIT_PRODUCT_CODE:
                     Product editProduct = Parcels.unwrap(data.getParcelableExtra(KEY_EDIT_PRODUCT));
-                    System.out.println(String.format("Received %s from activity in edit", editProduct.toString()));
 
                     // Remove product from adapter first
                     adapter.remove(editingProduct);
@@ -168,19 +166,15 @@ public class DefaultListFragment extends Fragment {
         }
         if (resultCode == Activity.RESULT_CANCELED) {
             //Write your code if there's no result
-            System.out.println("Canceled");
         }
     }
 
     private void createNewProduct(Product newProduct) {
-        System.out.println(String.format("Received product %s, sending to api now", newProduct.toString()));
-
         new Thread(() -> {
             Product p = listManager.newProduct(thisList.getId(), newProduct);
 
             getActivity().runOnUiThread(() -> {
                 adapter.add(p);
-                System.out.println(String.format("Added %s to adapter", p));
             });
         }).start();
     }

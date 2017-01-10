@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 logOut();
                 break;
             default:
-                System.out.println("Could not determine which drawer item was clicked");
+                Toast.makeText(this, "Could not determine which drawer item was clicked", Toast.LENGTH_SHORT).show();
         }
 
         drawer.closeDrawer(GravityCompat.START);

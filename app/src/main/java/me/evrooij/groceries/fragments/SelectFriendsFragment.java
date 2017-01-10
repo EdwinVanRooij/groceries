@@ -75,7 +75,6 @@ public class SelectFriendsFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        System.out.println(String.format("Received account %s in selectfriendsfragment", thisAccount));
 
         userManager = new UserManager(getActivity().getApplicationContext());
 
@@ -110,7 +109,6 @@ public class SelectFriendsFragment extends Fragment {
         mFastAdapter.withOnClickListener((v, adapter, item, position) -> {
             if (v.isSelected()) {
                 activity.addToSelection(item.getAccount());
-                System.out.println(String.format("selected %s in selectfriendsfragment", item.getAccount()));
             }
             Boolean res = mActionModeHelper.onClick(item);
             return res != null ? res : false;
@@ -132,7 +130,6 @@ public class SelectFriendsFragment extends Fragment {
     private void fillListView() {
         new Thread(() -> {
             List<Account> result = userManager.getFriends(thisAccount.getId());
-            System.out.println(String.format("Found %s friends of %s", String.valueOf(result.size()), thisAccount.getUsername()));
 
             getActivity().runOnUiThread(() -> {
                 for (Account a : result) {

@@ -50,8 +50,6 @@ public class NewListContainerActivity extends AppCompatActivity {
         selectedAccounts = new ArrayList<>();
         listManager = new ListManager(getApplicationContext());
 
-        System.out.println(String.format("Received account %s in newlistcontainer", thisAccount));
-
         try {
             Fragment fragment = SelectFriendsFragment.class.newInstance();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -69,12 +67,10 @@ public class NewListContainerActivity extends AppCompatActivity {
     }
 
     public void addToSelection(Account account) {
-        System.out.println(String.format("Added %s to selection in newlistcontainer", account.toString()));
         selectedAccounts.add(account);
     }
 
     public void setListName(String name) {
-        System.out.println(String.format("Set list name to %s", name));
         this.listName = name;
     }
 
@@ -106,7 +102,6 @@ public class NewListContainerActivity extends AppCompatActivity {
             }
             fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_done).color(Color.WHITE).sizeDp(24));
         } else if (f instanceof CompleteListFragment) {
-            System.out.println(String.format("Would end list %s now with %s participants", listName, selectedAccounts.size()));
             executeNewList();
         } else {
             Snackbar.make(view, "Could not determine the current fragment", Snackbar.LENGTH_LONG)

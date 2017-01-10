@@ -41,7 +41,6 @@ public class NewProduct extends AppCompatActivity {
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         thisProduct = Parcels.unwrap(getIntent().getParcelableExtra(KEY_EDIT_PRODUCT));
         if (thisProduct != null) {
-            System.out.println(String.format("Received %s in new product", thisProduct.toString()));
             isUpdate = true;
 
             etName.setText(thisProduct.getName());

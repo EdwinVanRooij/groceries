@@ -14,7 +14,6 @@ public class LauncherActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("Started");
         AccountPrefs mainPrefs = AccountPrefs.get(this);
 
         if (mainPrefs.getId() != null) {

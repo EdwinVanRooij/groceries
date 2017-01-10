@@ -23,7 +23,6 @@ public class UserManager {
     }
 
     public List<Account> findFriends(int accountId, String query) {
-        System.out.println(String.format("Starting search query with account id %s, query %s", String.valueOf(accountId), query));
         // Create a rest adapter
         ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 

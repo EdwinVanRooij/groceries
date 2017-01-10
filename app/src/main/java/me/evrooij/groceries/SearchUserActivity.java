@@ -53,10 +53,8 @@ public class SearchUserActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnSearch)
     public void onBtnSearchClick() {
-        System.out.println("clicked button search");
         new Thread(() -> {
             List<Account> result = userManager.findFriends(thisAccount.getId(), etSearchQuery.getText().toString());
-            System.out.println(String.format("Found %s results", String.valueOf(result.size())));
 
             refreshListView(result);
         }).start();
