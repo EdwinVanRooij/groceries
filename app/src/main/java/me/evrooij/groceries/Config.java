@@ -9,5 +9,5 @@ public class Config {
     public static final String KEY_NEW_PRODUCT = "newProduct";
     public static final String KEY_EDIT_PRODUCT = "editProduct";
     public static final String KEY_SELECTED_ACCOUNTS = "selectedAccounts";
-    public static final String KEY_SEARCHED_USER = "searchedUser";
+    public static final String KEY_ACCOUNT_PROFILE = "searchedUser";
 }

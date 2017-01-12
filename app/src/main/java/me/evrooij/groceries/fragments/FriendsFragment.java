@@ -1,6 +1,7 @@
 package me.evrooij.groceries.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
+import me.evrooij.groceries.ProfileActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.data.Account;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 
 
 /**
@@ -69,6 +73,14 @@ public class FriendsFragment extends Fragment {
             refreshListView(result);
         }).start();
         super.onResume();
+    }
+
+    @OnItemClick(R.id.lv_users)
+    public void onItemClick(int position) {
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        intent.putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
+        intent.putExtra(KEY_ACCOUNT_PROFILE, Parcels.wrap(listView.getAdapter().getItem(position)));
+        startActivity(intent);
     }
 
     private void refreshListView(List<Account> accounts) {

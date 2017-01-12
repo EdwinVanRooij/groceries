@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
-import static me.evrooij.groceries.Config.KEY_SEARCHED_USER;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 
 public class SearchUserActivity extends AppCompatActivity {
 
@@ -47,7 +47,7 @@ public class SearchUserActivity extends AppCompatActivity {
     public void onItemClick(int position) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
-        intent.putExtra(KEY_SEARCHED_USER, Parcels.wrap(listView.getAdapter().getItem(position)));
+        intent.putExtra(KEY_ACCOUNT_PROFILE, Parcels.wrap(listView.getAdapter().getItem(position)));
         startActivity(intent);
     }
 

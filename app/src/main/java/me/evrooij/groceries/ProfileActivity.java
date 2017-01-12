@@ -21,7 +21,7 @@ import me.evrooij.groceries.util.SquareImageView;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
-import static me.evrooij.groceries.Config.KEY_SEARCHED_USER;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     private UserManager userManager;
 
     private Account thisAccount;
-    private Account searchedUser;
+    private Account thisProfile;
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
-        searchedUser = Parcels.unwrap(getIntent().getParcelableExtra(KEY_SEARCHED_USER));
+        thisProfile = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT_PROFILE));
 
         userManager = new UserManager(getApplicationContext());
 
@@ -61,10 +61,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-        collapsingToolbarLayout.setTitle(searchedUser.getUsername());
+        collapsingToolbarLayout.setTitle(thisProfile.getUsername());
 
-        tvTitle.setText(searchedUser.getUsername());
-        tvDescription.setText(String.format("%s likes to take a shit while being naked...", searchedUser.getUsername()));
+        tvTitle.setText(thisProfile.getUsername());
+        tvDescription.setText(String.format("%s likes to take a shit while being naked...", thisProfile.getUsername()));
 
         Glide.with(this)
                 .load("http://placekitten.com/300/400")
@@ -74,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
     @OnClick(R.id.btnAdd)
     public void onBtnAddClick() {
         new Thread(() -> {
-            ResponseMessage result = userManager.addFriend(thisAccount.getId(), searchedUser);
+            ResponseMessage result = userManager.addFriend(thisAccount.getId(), thisProfile);
 
             runOnUiThread(() -> Toast.makeText(this, String.format("Result: %s", result.toString()), Toast.LENGTH_SHORT).show());
         }).start();
