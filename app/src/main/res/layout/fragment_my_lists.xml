@@ -2,6 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/fragment_vertical_margin"
+    android:paddingLeft="@dimen/fragment_vertical_margin"
+    android:paddingRight="@dimen/fragment_vertical_margin"
+    android:paddingTop="@dimen/fragment_vertical_margin"
     tools:context="me.evrooij.groceries.fragments.MyListsFragment">
 
     <ListView

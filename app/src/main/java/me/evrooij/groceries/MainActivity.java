@@ -30,7 +30,6 @@ import me.evrooij.groceries.fragments.*;
 import me.evrooij.groceries.login.LauncherActivity;
 import org.parceler.Parcels;
 
-import static android.R.attr.id;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,11 +84,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvName.setText(thisAccount.getUsername());
         tvEmail.setText(thisAccount.getEmail());
 
+        header.setOnClickListener(v -> {
+            drawer.closeDrawer(GravityCompat.START);
+            showMyProfile();
+        });
 
         initializeNavigationView();
 
         setFragment(DefaultListFragment.class);
         fab.hide();
+    }
+
+    private void showMyProfile() {
+        setFragment(MyProfileFragment.class);
+        fab.show();
     }
 
     private void initializeNavigationView() {
