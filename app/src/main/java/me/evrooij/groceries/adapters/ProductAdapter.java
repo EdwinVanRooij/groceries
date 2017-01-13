@@ -40,7 +40,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             tvName.setText(product.getName());
             tvAmount.setText(String.valueOf(product.getAmount()));
             tvComment.setText(product.getComment());
-            tvOwner.setText(product.getOwner());
+            tvOwner.setText(product.getOwner().getUsername());
         }
 
         // Return the completed view to render on screen

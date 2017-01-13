@@ -2,6 +2,8 @@ package me.evrooij.groceries.data;
 
 import org.parceler.Parcel;
 
+import java.util.Date;
+
 /**
  * Author: eddy
  * Date: 22-11-16.
@@ -12,8 +14,9 @@ public class Product {
     private int id;
     private String name;
     private int amount;
-    private String owner;
+    private Account owner;
     private String comment;
+    private Date deletionDate;
 
     public int getId() {
         return id;
@@ -31,14 +34,14 @@ public class Product {
         return comment;
     }
 
-    public String getOwner() {
+    public Account getOwner() {
         return owner;
     }
 
     public Product() {
     }
 
-    public Product(int id, String name, int amount, String comment, String owner) {
+    public Product(int id, String name, int amount, String comment, Account owner) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -46,7 +49,7 @@ public class Product {
         this.comment = comment;
     }
 
-    public Product(String name, int amount, String comment, String owner) {
+    public Product(String name, int amount, String comment, Account owner) {
         this.name = name;
         this.amount = amount;
         this.owner = owner;
@@ -76,8 +79,7 @@ public class Product {
         Product other = (Product) obj;
         // If all fields are the same, return true
 //        return other.getId() == getId() // If all fields are the same, return true
-        return other.getId() == getId()
-                && other.getName().equals(getName())
+        return other.getName().equals(getName())
                 && other.getAmount() == getAmount()
                 && other.getOwner().equals(getOwner())
                 && other.getComment().equals(getComment())

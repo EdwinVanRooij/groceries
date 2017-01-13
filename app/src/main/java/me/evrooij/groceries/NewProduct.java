@@ -66,14 +66,14 @@ public class NewProduct extends AppCompatActivity {
         Product product;
 
         if (isUpdate) {
-            product = new Product(thisProduct.getId(), name, amount, comment, thisAccount.getUsername());
+            product = new Product(thisProduct.getId(), name, amount, comment, thisAccount);
             // Product already exists, do an update
             Intent returnIntent = new Intent();
             returnIntent.putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } else {
-            product = new Product(name, amount, comment, thisAccount.getUsername());
+            product = new Product(name, amount, comment, thisAccount);
             // Product doesn't exist yet, make new product
             Intent returnIntent = new Intent();
             returnIntent.putExtra(KEY_NEW_PRODUCT, Parcels.wrap(product));
