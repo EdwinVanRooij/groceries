@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         if (thisAccount == null) {
             // If activity was not created from launcher activity, get it from shared pref
-            AccountPrefs mainPrefs = AccountPrefs.get(this);
-            if (mainPrefs.getId() != null) {
-                thisAccount = new Account(mainPrefs.getId(), mainPrefs.getUsername(), mainPrefs.getEmail(), mainPrefs.getPassword());
+            AccountPrefs accountPrefs = AccountPrefs.get(this);
+            if (accountPrefs.getId() != null) {
+                thisAccount = new Account(accountPrefs.getId(), accountPrefs.getUsername(), accountPrefs.getEmail(), accountPrefs.getPassword());
             } else {
                 Toast.makeText(this, getString(R.string.account_not_found), Toast.LENGTH_SHORT).show();
                 logOut();

@@ -14,11 +14,11 @@ public class LauncherActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AccountPrefs mainPrefs = AccountPrefs.get(this);
+        AccountPrefs accountPrefs = AccountPrefs.get(this);
 
-        if (mainPrefs.getId() != null) {
+        if (accountPrefs.getId() != null) {
             Intent i = new Intent(this, MainActivity.class);
-            Account a = new Account(mainPrefs.getId(), mainPrefs.getUsername(), mainPrefs.getEmail(), mainPrefs.getPassword());
+            Account a = new Account(accountPrefs.getId(), accountPrefs.getUsername(), accountPrefs.getEmail(), accountPrefs.getPassword());
             i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);

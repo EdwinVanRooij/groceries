@@ -1,5 +1,6 @@
 package me.evrooij.groceries.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
+import me.evrooij.groceries.ProfileActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.GroceryListAdapter;
 import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.ListManager;
 import org.parceler.Parcels;
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 
 
 /**
@@ -41,7 +46,6 @@ public class MyListsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -60,6 +64,19 @@ public class MyListsFragment extends Fragment {
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
         return view;
+    }
+
+    @OnItemClick(R.id.lv_my_lists)
+    public void onItemClick(int position) {
+//        GroceryListPrefs listPrefs = GroceryListPrefs.get(getActivity());
+//        //noinspection ConstantConditions
+//        accountPrefs.edit().putId(a.getId()).putUsername(a.getUsername()).putEmail(a.getEmail()).putPassword(a.getPassword()).apply();
+
+
+        Intent intent = new Intent(getActivity(), ProfileActivity.class);
+        intent.putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
+        intent.putExtra(KEY_ACCOUNT_PROFILE, Parcels.wrap(listView.getAdapter().getItem(position)));
+        startActivity(intent);
     }
 
     @Override

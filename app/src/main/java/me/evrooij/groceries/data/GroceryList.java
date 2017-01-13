@@ -1,5 +1,9 @@
 package me.evrooij.groceries.data;
 
+import org.jraf.android.prefs.Name;
+import org.jraf.android.prefs.Prefs;
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +12,10 @@ import java.util.List;
  * Date: 20-11-16.
  */
 
+@Prefs
 public class GroceryList {
-    private int id;
+    @Name("PREF_ID")
+    private Integer id;
     private String name;
     private Account owner;
     private List<Account> participants;
