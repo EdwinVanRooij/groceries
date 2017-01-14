@@ -25,12 +25,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.orhanobut.hawk.Hawk;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.fragments.*;
 import me.evrooij.groceries.login.LauncherActivity;
+import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
+import static android.R.attr.id;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -61,21 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initializeNavigationView();
 
-        // Attempt to get account from launcher activity
-        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
-        if (thisAccount == null) {
-            // If activity was not created from launcher activity, get it from shared pref
-            AccountPrefs accountPrefs = AccountPrefs.get(this);
-            if (accountPrefs.getId() != null) {
-                thisAccount = new Account(accountPrefs.getId(), accountPrefs.getUsername(), accountPrefs.getEmail(), accountPrefs.getPassword());
-            } else {
-                Toast.makeText(this, getString(R.string.account_not_found), Toast.LENGTH_SHORT).show();
-                logOut();
-            }
-        }
+        initAccount();
 
         View header = navigationView.getHeaderView(0);
-/*View view=navigationView.inflateHeaderView(R.layout.nav_header_main);*/
         tvName = (TextView) header.findViewById(R.id.nav_header_name);
         tvEmail = (TextView) header.findViewById(R.id.nav_header_email);
         tvName.setText(thisAccount.getUsername());
@@ -87,12 +77,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fab.hide();
         });
 
+        setDefaultListFragment();
+    }
+
+    public void setDefaultListFragment() {
         setFragment(DefaultListFragment.class, false);
+        navigationView.setCheckedItem(R.id.nav_drawer_home);
         fab.hide();
     }
 
-    public Toolbar getToolbar() {
-        return toolbar;
+    private void initAccount() {
+        // Attempt to get account from launcher activity
+        thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
+        if (thisAccount == null) {
+            // If activity was not created from launcher activity, get it from shared pref
+            if (Preferences.accountExists(this)) {
+                // Account exists, set account
+                thisAccount = Preferences.getAccount(this);
+            } else {
+                // Account does not exist, redirect to login
+                Toast.makeText(this, getString(R.string.account_not_found), Toast.LENGTH_SHORT).show();
+                logOut();
+            }
+        }
     }
 
     private void initializeNavigationView() {
@@ -103,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         Menu menu = navigationView.getMenu();
-        // Set home checked as it's the first page
-        navigationView.setCheckedItem(R.id.nav_drawer_home);
 
         // First group
         menu.findItem(R.id.nav_drawer_home).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_home));
@@ -157,8 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_drawer_home:
-                setFragment(DefaultListFragment.class, false);
-                fab.hide();
+                setDefaultListFragment();
                 break;
             case R.id.nav_drawer_lists:
                 setFragment(MyListsFragment.class, false);
@@ -193,18 +197,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logOut() {
-        AccountPrefs accountPrefs = AccountPrefs.get(this);
-        accountPrefs.removeId();
-        accountPrefs.removeUsername();
-        accountPrefs.removeEmail();
-        accountPrefs.removePassword();
+        Preferences.removeAccount();
 
         Intent i = new Intent(this, LauncherActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
 
-    private void setFragment(Class fragmentClass, boolean addToStack) {
+    public void setFragment(Class fragmentClass, boolean addToStack) {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             Bundle bundle = new Bundle();

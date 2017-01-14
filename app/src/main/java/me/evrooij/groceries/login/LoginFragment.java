@@ -17,13 +17,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import com.orhanobut.hawk.Hawk;
+import me.evrooij.groceries.Config;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.data.LoginManager;
+import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
+import static android.R.attr.id;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 
@@ -95,9 +98,7 @@ public class LoginFragment extends Fragment {
 
             getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Login was successful.\rWelcome, %s", a.getUsername()), Toast.LENGTH_SHORT).show());
 
-            AccountPrefs accountPrefs = AccountPrefs.get(getActivity());
-            //noinspection ConstantConditions
-            accountPrefs.edit().putId(a.getId()).putUsername(a.getUsername()).putEmail(a.getEmail()).putPassword(a.getPassword()).apply();
+            Preferences.saveAccount(getContext(), a);
 
             Intent i = new Intent(getActivity(), MainActivity.class);
             i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));

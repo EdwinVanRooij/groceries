@@ -37,6 +37,9 @@ public interface ClientInterface {
     @GET("/user/{id}/lists")
     Call<List<GroceryList>> getListsByAccountId(@Path("id") int accountId);
 
+    @GET("/lists/{id}")
+    Call<GroceryList> getList(@Path("id") int listId);
+
     @POST("/lists/new")
     Call<GroceryList> newList(@Body GroceryList list);
 

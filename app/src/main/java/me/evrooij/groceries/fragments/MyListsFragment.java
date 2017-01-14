@@ -2,6 +2,7 @@ package me.evrooij.groceries.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,19 +12,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import butterknife.Unbinder;
+import com.orhanobut.hawk.Hawk;
+import me.evrooij.groceries.Config;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.ProfileActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.GroceryListAdapter;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.AccountPrefs;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.ListManager;
+import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 
@@ -57,26 +61,27 @@ public class MyListsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_lists, container, false);
         unbinder = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_lists));
-
         listManager = new ListManager(getActivity().getApplicationContext());
-
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
-        return view;
+        Hawk.init(getContext()).build();
     }
 
     @OnItemClick(R.id.lv_my_lists)
     public void onItemClick(int position) {
-//        GroceryListPrefs listPrefs = GroceryListPrefs.get(getActivity());
-//        //noinspection ConstantConditions
-//        accountPrefs.edit().putId(a.getId()).putUsername(a.getUsername()).putEmail(a.getEmail()).putPassword(a.getPassword()).apply();
+        GroceryList groceryList = (GroceryList) listView.getAdapter().getItem(position);
+        Preferences.saveGroceryListId(getContext(), groceryList.getId());
 
-
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        intent.putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
-        intent.putExtra(KEY_ACCOUNT_PROFILE, Parcels.wrap(listView.getAdapter().getItem(position)));
-        startActivity(intent);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.setDefaultListFragment();
     }
 
     @Override

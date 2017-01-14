@@ -24,6 +24,27 @@ public class ListManager {
         this.context = context;
     }
 
+    public GroceryList getList(int listId) {
+        // Create a rest adapter
+        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
+
+        // Fetch and print a list of the contributors to this library.
+        Call<GroceryList> call = client.getList(listId);
+
+        // Execute the call
+        Response<GroceryList> response;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            // Call failed, ignore exception. Return null.
+//            e.printStackTrace();
+            return null;
+        }
+
+        // Get the account from the body and return
+        return response.body();
+    }
+
     public List<GroceryList> getMyLists(Account account) {
         // Create a rest adapter
         ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);

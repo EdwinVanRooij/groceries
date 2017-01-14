@@ -25,6 +25,7 @@ import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.ListManager;
 import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.rest.ResponseMessage;
+import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -113,28 +114,38 @@ public class DefaultListFragment extends Fragment {
 
     private void setDefaultList() {
         new Thread(() -> {
-            List<GroceryList> result = listManager.getMyLists(thisAccount);
 
-
-            if (result.size() > 0) {
-                thisList = result.get(0);
-                ((MainActivity) getActivity()).setActionBarTitle(thisList.getName());
-
+            // Check if user has a preferred list
+            if (Preferences.groceryListIdExists(getContext())) {
+                int id = Preferences.getGroceryListId(getContext());
+                thisList = listManager.getList(id);
+                setListData();
+            } else {
+                List<GroceryList> result = listManager.getMyLists(thisAccount);
                 Log.d(TAG, String.format("setDefaultList: Retrieved %s lists from api, working with list %s which has %s products", result.size(), result.get(0).getName(), result.get(0).getProductList().size()));
 
-                ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
-
-                adapter = new ProductAdapter(getActivity(), data);
-
-                getActivity().runOnUiThread(() -> {
-                    listView.setAdapter(adapter);
-                });
-            } else {
-                ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.no_list_found));
-                // No list was found, do nothing
-                Log.d(TAG, "setDefaultList: No list found");
+                if (result.size() > 0) {
+                    thisList = result.get(0);
+                    setListData();
+                } else {
+                    ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.no_list_found));
+                    // No list was found, do nothing
+                    Log.d(TAG, "setDefaultList: No list found");
+                }
             }
+
         }).start();
+    }
+
+    private void setListData() {
+        ((MainActivity) getActivity()).setActionBarTitle(thisList.getName());
+        ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
+
+        adapter = new ProductAdapter(getActivity(), data);
+
+        getActivity().runOnUiThread(() -> {
+            listView.setAdapter(adapter);
+        });
     }
 
     @OnClick(R.id.fab)

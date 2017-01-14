@@ -1,8 +1,5 @@
 package me.evrooij.groceries.data;
 
-
-import org.jraf.android.prefs.Name;
-import org.jraf.android.prefs.Prefs;
 import org.parceler.Parcel;
 
 /**
@@ -10,14 +7,10 @@ import org.parceler.Parcel;
  * Date: 27-11-16.
  */
 
-@Prefs
 @Parcel
 public class Account {
-    @Name("PREF_ID")
-    Integer id;
-    @Name("PREF_USERNAME")
+    int id;
     String username;
-    @Name("PREF_EMAIL")
     String email;
     String password;
 
@@ -28,10 +21,10 @@ public class Account {
         this.password = password;
     }
 
-    public Account(String username, String email, String password) {
+    public Account(int id, String username, String email) {
+        this.id = id;
         this.username = username;
         this.email = email;
-        this.password = password;
     }
 
     public Account() {
