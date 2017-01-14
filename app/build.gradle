@@ -50,7 +50,8 @@ dependencies {
         transitive = true
     }
 
-    compile 'com.orhanobut:logger:1.15'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'

@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -58,11 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
+        initializeNavigationView();
 
         // Attempt to get account from launcher activity
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
@@ -86,21 +83,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         header.setOnClickListener(v -> {
             drawer.closeDrawer(GravityCompat.START);
-            showMyProfile();
+            setFragment(MyProfileFragment.class, true);
+            fab.hide();
         });
 
-        initializeNavigationView();
-
-        setFragment(DefaultListFragment.class);
+        setFragment(DefaultListFragment.class, false);
         fab.hide();
     }
 
-    private void showMyProfile() {
-        setFragment(MyProfileFragment.class);
-        fab.show();
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 
     private void initializeNavigationView() {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
+
         Menu menu = navigationView.getMenu();
         // Set home checked as it's the first page
         navigationView.setCheckedItem(R.id.nav_drawer_home);
@@ -156,28 +157,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_drawer_home:
-                setFragment(DefaultListFragment.class);
+                setFragment(DefaultListFragment.class, false);
                 fab.hide();
                 break;
             case R.id.nav_drawer_lists:
-                setFragment(MyListsFragment.class);
+                setFragment(MyListsFragment.class, false);
                 fab.show();
                 break;
             case R.id.nav_drawer_friends:
-                setFragment(FriendsFragment.class);
+                setFragment(FriendsFragment.class, false);
                 fab.show();
                 break;
             case R.id.nav_drawer_suggestion:
-                setFragment(SuggestionFragment.class);
+                setFragment(SuggestionFragment.class, false);
                 fab.hide();
                 break;
             case R.id.nav_drawer_bug:
-                setFragment(BugFragment.class);
+                setFragment(BugFragment.class, false);
                 fab.hide();
                 break;
             case R.id.nav_drawer_settings:
 //                We don't need a fab in settings
-                setFragment(SettingsFragment.class);
+                setFragment(SettingsFragment.class, false);
                 fab.hide();
                 break;
             case R.id.nav_drawer_logout:
@@ -203,16 +204,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(i);
     }
 
-    private void setFragment(Class fragmentClass) {
+    private void setFragment(Class fragmentClass, boolean addToStack) {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
-
             Bundle bundle = new Bundle();
             bundle.putParcelable(KEY_ACCOUNT, Parcels.wrap(thisAccount));
             fragment.setArguments(bundle);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            // Add this transaction to the back stack
+            if (addToStack) {
+                ft.addToBackStack(null);
+            }
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.replace(R.id.flContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

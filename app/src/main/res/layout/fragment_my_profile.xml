@@ -5,15 +5,25 @@
     android:layout_height="match_parent"
     tools:context="me.evrooij.groceries.fragments.MyProfileFragment">
 
-    <android.support.v4.widget.NestedScrollView
+    <com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fillViewport="true">
 
         <include layout="@layout/content_my_profile" />
 
-    </android.support.v4.widget.NestedScrollView>
+    </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 
+    <include layout="@layout/gradient_header" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:theme="@style/Toolbar" />
 </FrameLayout>

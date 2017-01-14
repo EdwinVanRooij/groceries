@@ -48,8 +48,8 @@ public class MyListsFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         unbinder.unbind();
+        super.onDestroyView();
     }
 
     @Override

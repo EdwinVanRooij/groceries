@@ -12,9 +12,7 @@ import java.util.List;
  * Date: 20-11-16.
  */
 
-@Prefs
 public class GroceryList {
-    @Name("PREF_ID")
     private Integer id;
     private String name;
     private Account owner;
