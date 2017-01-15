@@ -30,10 +30,10 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <TextView
+                android:id="@+id/tvTipDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_large"
-                android:text="@string/my_products_tip_description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         </LinearLayout>
@@ -43,6 +43,6 @@
         android:id="@+id/lv_my_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_standard" />
+        android:layout_marginTop="@dimen/fragment_vertical_margin" />
 
 </LinearLayout>

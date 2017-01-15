@@ -68,8 +68,13 @@
 
 
     <!--My Products related-->
-    <string name="my_products_tip_description">You have %% personal products. Add a photo to help your friends find your products faster!</string>
+    <string name="my_products_tip_description">You have %1$d personal products.\nAdd a photo to help your friends find your products faster!</string>
     <string name="my_products_tip_title">Tip</string>
+
+    <string name="my_products_title_photo">Photo</string>
+    <string name="my_products_title_name">Name</string>
+    <string name="my_products_title_amount">Amount</string>
+    <string name="my_products_title_comment">Comment</string>
 
 
     <!--Friends related-->

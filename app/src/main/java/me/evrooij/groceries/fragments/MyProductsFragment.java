@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ListView;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -17,6 +18,7 @@ import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.adapters.GroceryListAdapter;
+import me.evrooij.groceries.adapters.MyProductAdapter;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.*;
 import org.parceler.Parcels;
@@ -33,12 +35,14 @@ public class MyProductsFragment extends Fragment {
 
     @BindView(R.id.lv_my_products)
     ListView listView;
+    @BindView(R.id.tvTipDescription)
+    TextView tvTipDescription;
 
     private Account thisAccount;
     private Unbinder unbinder;
 
     private ArrayList<Product> data;
-    private ProductAdapter adapter;
+    private MyProductAdapter adapter;
     private ProductManager productManager;
 
     public MyProductsFragment() {
@@ -70,11 +74,18 @@ public class MyProductsFragment extends Fragment {
 
     @Override
     public void onResume() {
-//        new Thread(() -> {
+        new Thread(() -> {
 //            List<Product> result = productManager.getMyProducts(thisAccount.getId());
-//
-//            refreshListView(result);
-//        }).start();
+            List<Product> result = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                result.add(new Product(i, String.format("Name %s", i), i, String.format("Comment %s", i), thisAccount));
+            }
+
+            refreshListView(result);
+            getActivity().runOnUiThread(() -> {
+                tvTipDescription.setText(getString(R.string.my_products_tip_description, data.size()));
+            });
+        }).start();
         super.onResume();
     }
 
@@ -82,10 +93,12 @@ public class MyProductsFragment extends Fragment {
         // Construct the data source
         data = new ArrayList<>(products);
         // Create the adapter to convert the array to views
-        adapter = new ProductAdapter(getActivity(), data);
+        adapter = new MyProductAdapter(getActivity(), data);
 
-        getActivity().runOnUiThread(() ->
-                // Attach the adapter to a ListView
-                listView.setAdapter(adapter));
+        getActivity().runOnUiThread(() -> {
+                    // Attach the adapter to a ListView
+                    listView.setAdapter(adapter);
+                }
+        );
     }
 }
