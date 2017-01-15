@@ -76,7 +76,7 @@ public class SelectFriendsFragment extends Fragment {
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
-        userManager = new UserManager(getActivity().getApplicationContext());
+        userManager = new UserManager(getContext());
 
         return view;
     }

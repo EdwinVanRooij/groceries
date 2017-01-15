@@ -50,7 +50,7 @@ public class ListManager {
         ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
 
         // Fetch and print a list of the contributors to this library.
-        Call<List<GroceryList>> call = client.getListsByAccountId(account.getId());
+        Call<List<GroceryList>> call = client.getLists(account.getId());
 
         // Execute the call
         Response<List<GroceryList>> response;

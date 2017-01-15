@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment {
         Animation a3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         btnRegister.startAnimation(a3);
 
-        loginManager = new LoginManager(getActivity().getApplicationContext());
+        loginManager = new LoginManager(getContext());
 
         return view;
     }

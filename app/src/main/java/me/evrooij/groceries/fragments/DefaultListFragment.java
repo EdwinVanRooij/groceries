@@ -75,7 +75,7 @@ public class DefaultListFragment extends Fragment {
         fab.setImageDrawable(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
-        listManager = new ListManager(getActivity().getApplicationContext());
+        listManager = new ListManager(getContext());
 
         setDefaultList();
 

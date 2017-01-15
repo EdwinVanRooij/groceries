@@ -16,12 +16,14 @@ import java.util.Map;
  */
 
 public interface ClientInterface {
+
     // Login
     @GET("/users/login")
     Call<Account> getAccountByLogin(@Query("username") String username, @Query("password") String password);
 
     @POST("/users/register")
     Call<Account> registerAccount(@Body Map<String, String> accountMap);
+
 
     // Friends
     @GET("/accounts/{ownId}/friends/find")
@@ -33,15 +35,17 @@ public interface ClientInterface {
     @GET("/accounts/{ownId}/friends")
     Call<List<Account>> getFriends(@Path("ownId") int ownId);
 
+
     // Lists
     @GET("/user/{id}/lists")
-    Call<List<GroceryList>> getListsByAccountId(@Path("id") int accountId);
+    Call<List<GroceryList>> getLists(@Path("id") int accountId);
 
     @GET("/lists/{id}")
     Call<GroceryList> getList(@Path("id") int listId);
 
     @POST("/lists/new")
     Call<GroceryList> newList(@Body GroceryList list);
+
 
     // Products
     @POST("/list/{id}/products/new")
@@ -53,7 +57,12 @@ public interface ClientInterface {
     @PUT("/lists/{listId}/products/{productId}/edit")
     Call<ResponseMessage> editProduct(@Path("listId") int listId, @Path("productId") int productId, @Body Product editedProduct);
 
+    @GET("/{id}/myproducts")
+    Call<List<Product>> getMyProducts(@Path("id") int accountId);
+
+
     // Feedback
     @POST("/feedback/new")
     Call<ResponseMessage> reportFeedback(@Body Feedback feedback);
+
 }

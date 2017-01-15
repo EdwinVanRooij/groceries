@@ -55,7 +55,7 @@ public class SuggestionFragment extends Fragment {
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_suggestions));
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        feedbackManager = new FeedbackManager(getActivity().getApplicationContext());
+        feedbackManager = new FeedbackManager(getContext());
 
         return view;
     }

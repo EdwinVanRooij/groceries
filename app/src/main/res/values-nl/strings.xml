@@ -43,4 +43,7 @@
     <string name="toolbar_title_profile">Profiel</string>
     <string name="toolbar_title_search_user">Zoek Gebruiker</string>
     <string name="title_my_profile">Mijn Profiel</string>
+    <string name="title_products">Mijn Producten</string>
+    <string name="my_products_tip_description"></string>
+    <string name="my_products_tip_title">Tip</string>
 </resources>

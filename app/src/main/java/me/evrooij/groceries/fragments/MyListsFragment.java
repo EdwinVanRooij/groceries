@@ -69,7 +69,7 @@ public class MyListsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_lists));
-        listManager = new ListManager(getActivity().getApplicationContext());
+        listManager = new ListManager(getContext());
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
         Hawk.init(getContext()).build();

@@ -17,6 +17,7 @@
     <string name="title_bugs">Bugs</string>
     <string name="title_settings">Settings</string>
     <string name="title_my_profile">My Profile</string>
+    <string name="title_products">My Products</string>
 
 
     <!--Toolbar titles-->
@@ -64,6 +65,11 @@
 
     <!--GroceryList related-->
     <string name="new_list_name">New list name</string>
+
+
+    <!--My Products related-->
+    <string name="my_products_tip_description">You have %% personal products. Add a photo to help your friends find your products faster!</string>
+    <string name="my_products_tip_title">Tip</string>
 
 
     <!--Friends related-->

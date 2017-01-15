@@ -48,7 +48,7 @@ public class BugFragment extends Fragment {
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_bugs));
 
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-        feedbackManager = new FeedbackManager(getActivity().getApplicationContext());
+        feedbackManager = new FeedbackManager(getContext());
 
         return view;
     }
