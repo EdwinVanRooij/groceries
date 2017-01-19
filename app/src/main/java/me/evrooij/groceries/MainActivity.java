@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.hide();
     }
 
-
     /**
      * Initializes thisAccount
      */
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
-
 
     /**
      * Initializes the navigation drawer, including variable usage to set account name and email in the header
