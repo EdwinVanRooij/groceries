@@ -59,15 +59,14 @@ public class MyListsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_lists, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(R.layout.fragment_my_lists, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        unbinder = ButterKnife.bind(this, view);
         ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_lists));
         listManager = new ListManager(getContext());
         thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));

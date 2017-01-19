@@ -22,4 +22,6 @@ public class Config {
     public static final String PREF_KEY_GROCERYLIST_ID = "GROCERYLIST_PREF_ID";
     public static final String PREF_KEY_GROCERYLIST_NAME = "GROCERYLIST_PREF_NAME";
 
+    public static final int THREADPOOL_MAINACTIVITY_SIZE = 4;
+    public static final int THREADPOOL_NEWLIST_SIZE = 4;
 }

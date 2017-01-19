@@ -65,4 +65,8 @@ public class Preferences {
         Hawk.delete(Config.PREF_KEY_ACCOUNT_USERNAME);
         Hawk.delete(Config.PREF_KEY_ACCOUNT_EMAIL);
     }
+
+    public static void removeAll() {
+        Hawk.deleteAll();
+    }
 }

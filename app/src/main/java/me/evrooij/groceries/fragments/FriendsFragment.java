@@ -3,6 +3,7 @@ package me.evrooij.groceries.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +37,8 @@ public class FriendsFragment extends Fragment {
     ListView listView;
     private Unbinder unbinder;
 
-    private Account thisAccount;
     private UserManager userManager;
+    private MainActivity mainActivity;
 
     ArrayList<Account> data;
     AccountAdapter adapter;
@@ -55,30 +56,35 @@ public class FriendsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+        return inflater.inflate(R.layout.fragment_friends, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_friends));
+        mainActivity = (MainActivity) getActivity();
+        mainActivity.setActionBarTitle(getString(R.string.title_friends));
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
         userManager = new UserManager(getContext());
-
-        return view;
     }
 
     @Override
     public void onResume() {
-        new Thread(() -> {
-            List<Account> result = userManager.getFriends(thisAccount.getId());
+        super.onResume();
+
+        mainActivity.executeRunnable(() -> {
+            List<Account> result = userManager.getFriends(mainActivity.getThisAccount().getId());
 
             refreshListView(result);
-        }).start();
-        super.onResume();
+        });
     }
 
     @OnItemClick(R.id.lv_users)
     public void onItemClick(int position) {
-        Intent intent = new Intent(getActivity(), ProfileActivity.class);
-        intent.putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount));
+        Intent intent = new Intent(getContext(), ProfileActivity.class);
+        intent.putExtra(KEY_ACCOUNT, Parcels.wrap(mainActivity.getThisAccount()));
         intent.putExtra(KEY_ACCOUNT_PROFILE, Parcels.wrap(listView.getAdapter().getItem(position)));
         startActivity(intent);
     }
@@ -87,11 +93,11 @@ public class FriendsFragment extends Fragment {
         // Construct the data source
         data = new ArrayList<>(accounts);
         // Create the adapter to convert the array to views
-        adapter = new AccountAdapter(getActivity(), data);
+        adapter = new AccountAdapter(getContext(), data);
 
-        getActivity().runOnUiThread(() ->
-                // Attach the adapter to a ListView
-                listView.setAdapter(adapter));
+        mainActivity.runOnUiThread(() -> {
+            // Attach the adapter to a ListView
+            listView.setAdapter(adapter);
+        });
     }
-
 }

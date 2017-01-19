@@ -25,17 +25,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.orhanobut.hawk.Hawk;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.fragments.*;
+import me.evrooij.groceries.interfaces.ContainerActivity;
 import me.evrooij.groceries.login.LauncherActivity;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
-import static android.R.attr.id;
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.THREADPOOL_MAINACTIVITY_SIZE;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ContainerActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -46,10 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    TextView tvName;
-    TextView tvEmail;
-
     private Account thisAccount;
+    private ExecutorService threadPool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,26 +58,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-
-        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
-
-        initializeNavigationView();
-
         initAccount();
+        initNavigationDrawer();
 
-        View header = navigationView.getHeaderView(0);
-        tvName = (TextView) header.findViewById(R.id.nav_header_name);
-        tvEmail = (TextView) header.findViewById(R.id.nav_header_email);
-        tvName.setText(thisAccount.getUsername());
-        tvEmail.setText(thisAccount.getEmail());
+        threadPool = Executors.newFixedThreadPool(THREADPOOL_MAINACTIVITY_SIZE);
 
-        header.setOnClickListener(v -> {
-            drawer.closeDrawer(GravityCompat.START);
-            setFragment(MyProfileFragment.class, true);
-            fab.hide();
-        });
-
+        setSupportActionBar(toolbar);
+        fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
         setDefaultListFragment();
     }
 
@@ -86,6 +74,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.hide();
     }
 
+
+    /**
+     * Initializes thisAccount
+     */
     private void initAccount() {
         // Attempt to get account from launcher activity
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
@@ -102,7 +94,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void initializeNavigationView() {
+
+    /**
+     * Initializes the navigation drawer, including variable usage to set account name and email in the header
+     */
+    private void initNavigationDrawer() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
@@ -124,11 +120,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Last group
         menu.findItem(R.id.nav_drawer_settings).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_settings));
         menu.findItem(R.id.nav_drawer_logout).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_exit_to_app));
+
+        View header = navigationView.getHeaderView(0);
+
+        TextView tvName = (TextView) header.findViewById(R.id.nav_header_name);
+        TextView tvEmail = (TextView) header.findViewById(R.id.nav_header_email);
+        tvName.setText(thisAccount.getUsername());
+        tvEmail.setText(thisAccount.getEmail());
+
+        header.setOnClickListener(v -> {
+            drawer.closeDrawer(GravityCompat.START);
+            setFragment(MyProfileFragment.class, true);
+            fab.hide();
+        });
     }
 
-    public void setActionBarTitle(String title) {
-        runOnUiThread(() -> toolbar.setTitle(title));
-    }
 
     @OnClick(R.id.fab)
     public void onFabClick(View view) {
@@ -209,6 +215,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(i);
     }
 
+    @Override
+    public Account getThisAccount() {
+        return thisAccount;
+    }
+
+    @Override
     public void setFragment(Class fragmentClass, boolean addToStack) {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
@@ -227,5 +239,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void executeRunnable(Runnable runnable) {
+        threadPool.execute(runnable);
+    }
+
+    @Override
+    public void setActionBarTitle(String title) {
+        runOnUiThread(() -> toolbar.setTitle(title));
     }
 }

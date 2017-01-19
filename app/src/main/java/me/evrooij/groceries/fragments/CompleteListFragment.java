@@ -2,6 +2,7 @@ package me.evrooij.groceries.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -53,7 +54,13 @@ public class CompleteListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_complete_list, container, false);
+        return inflater.inflate(R.layout.fragment_complete_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         unbinder = ButterKnife.bind(this, view);
 
         List<Account> selectedAccounts = Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS));
@@ -82,8 +89,5 @@ public class CompleteListFragment extends Fragment {
                 activity.setListName(s.toString());
             }
         });
-
-        return view;
     }
-
 }
