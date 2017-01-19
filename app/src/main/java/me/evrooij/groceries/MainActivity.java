@@ -207,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logOut() {
-        Preferences.removeAccount();
+//        Preferences.removeAccount();
+        Preferences.removeAll();
 
         Intent i = new Intent(this, LauncherActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.flContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, getString(R.string.set_fragment_exception), Toast.LENGTH_SHORT).show();
         }
     }
 
