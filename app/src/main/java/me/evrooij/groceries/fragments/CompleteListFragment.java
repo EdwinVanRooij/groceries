@@ -38,7 +38,7 @@ public class CompleteListFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    private NewListContainerActivity activity;
+    private NewListContainerActivity containerActivity;
 
     public CompleteListFragment() {
         // Required empty public constructor
@@ -60,10 +60,11 @@ public class CompleteListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         unbinder = ButterKnife.bind(this, view);
+        containerActivity = (NewListContainerActivity) getActivity();
 
-        List<Account> selectedAccounts = Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS));
+        List<Account> selectedAccounts = containerActivity.getSelectedAccounts();
+//        Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS))
 
         // Construct the data source
         ArrayList<Account> data = new ArrayList<>(selectedAccounts);
@@ -72,7 +73,6 @@ public class CompleteListFragment extends Fragment {
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
 
-        activity = (NewListContainerActivity) getActivity();
         etName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -86,7 +86,7 @@ public class CompleteListFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                activity.setListName(s.toString());
+                containerActivity.setListName(s.toString());
             }
         });
     }

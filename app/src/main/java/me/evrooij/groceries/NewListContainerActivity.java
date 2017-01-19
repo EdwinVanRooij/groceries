@@ -60,16 +60,7 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
 
         threadPool = Executors.newFixedThreadPool(THREADPOOL_NEWLIST_SIZE);
 
-        try {
-            Fragment fragment = SelectFriendsFragment.class.newInstance();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-            transaction.replace(R.id.flContent, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setFragment(SelectFriendsFragment.class, false);
     }
 
     public void addToSelection(Account account) {
@@ -103,8 +94,7 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
     }
 
     private void completeList() {
-        new Thread(() -> {
-
+        executeRunnable(() -> {
             GroceryList listToAdd = new GroceryList(listName, thisAccount, selectedAccounts);
 
             GroceryList returnedList = listManager.newList(listToAdd);
@@ -113,7 +103,7 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
                 Toast.makeText(this, String.format("Successfully created new list %s", returnedList.getName()), Toast.LENGTH_SHORT).show();
                 finish();
             });
-        }).start();
+        });
     }
 
     @Override
@@ -145,5 +135,9 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
     @Override
     public void setActionBarTitle(String title) {
         runOnUiThread(() -> setActionBarTitle(title));
+    }
+
+    public List<Account> getSelectedAccounts() {
+        return selectedAccounts;
     }
 }

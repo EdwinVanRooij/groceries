@@ -43,11 +43,7 @@ public class SelectFriendsFragment extends Fragment {
 //    ListView listView;
     private Unbinder unbinder;
 
-    private Account thisAccount;
     private UserManager userManager;
-
-    ArrayList<Account> data;
-    AccountAdapter adapter;
 
     //save our FastAdapter
     private FastAdapter<AccountItem> mFastAdapter;
@@ -56,7 +52,7 @@ public class SelectFriendsFragment extends Fragment {
 
     private ItemAdapter<AccountItem> itemAdapter;
 
-    NewListContainerActivity activity;
+    private NewListContainerActivity containerActivity;
 
     public SelectFriendsFragment() {
         // Required empty public constructor
@@ -71,18 +67,16 @@ public class SelectFriendsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_select_friends, container, false);
-        unbinder = ButterKnife.bind(this, view);
-
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-
-        userManager = new UserManager(getContext());
-
-        return view;
+        return inflater.inflate(R.layout.fragment_select_friends, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        unbinder = ButterKnife.bind(this, view);
+        containerActivity = (NewListContainerActivity) getActivity();
+
+        userManager = new UserManager(getContext());
+
         //create our FastAdapter
         mFastAdapter = new FastAdapter<>();
 
@@ -99,8 +93,6 @@ public class SelectFriendsFragment extends Fragment {
         //create our adapters
         itemAdapter = new ItemAdapter<>();
 
-        activity = (NewListContainerActivity) getActivity();
-
         //configure our mFastAdapter
         //as we provide id's for the items we want the hasStableIds enabled to speed up things
         mFastAdapter.setHasStableIds(true);
@@ -108,7 +100,7 @@ public class SelectFriendsFragment extends Fragment {
         mFastAdapter.withMultiSelect(true);
         mFastAdapter.withOnClickListener((v, adapter, item, position) -> {
             if (v.isSelected()) {
-                activity.addToSelection(item.getAccount());
+                containerActivity.addToSelection(item.getAccount());
             }
             Boolean res = mActionModeHelper.onClick(item);
             return res != null ? res : false;
@@ -128,16 +120,15 @@ public class SelectFriendsFragment extends Fragment {
     }
 
     private void fillListView() {
-        new Thread(() -> {
-            List<Account> result = userManager.getFriends(thisAccount.getId());
+        containerActivity.executeRunnable(() -> {
+            List<Account> result = userManager.getFriends(containerActivity.getThisAccount().getId());
 
             getActivity().runOnUiThread(() -> {
                 for (Account a : result) {
                     itemAdapter.add(new AccountItem().withAccount(a));
                 }
             });
-
-        }).start();
+        });
     }
 
     /**
