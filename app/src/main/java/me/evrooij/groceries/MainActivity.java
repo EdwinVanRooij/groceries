@@ -58,12 +58,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+
         initAccount();
         initNavigationDrawer();
 
         threadPool = Executors.newFixedThreadPool(THREADPOOL_MAINACTIVITY_SIZE);
 
-        setSupportActionBar(toolbar);
         fab.setImageDrawable(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
         setDefaultListFragment();
     }
