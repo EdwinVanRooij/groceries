@@ -166,13 +166,13 @@ public class DefaultListFragment extends MainFragment {
     }
 
     private void createNewProduct(Product newProduct) {
-        new Thread(() -> {
+        mainActivity.executeRunnable(() -> {
             Product p = listManager.newProduct(thisList.getId(), newProduct);
 
             mainActivity.runOnUiThread(() -> {
                 adapter.add(p);
             });
-        }).start();
+        });
     }
 
     private void editProduct(Product editedProduct) {
