@@ -23,7 +23,8 @@
         android:layout_marginLeft="@dimen/minimal_margin"
         android:layout_marginRight="@dimen/minimal_margin"
         android:layout_weight="0.25"
-        android:text="@string/my_products_title_name" />
+        android:text="@string/my_products_title_name"
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/tvAmount"
