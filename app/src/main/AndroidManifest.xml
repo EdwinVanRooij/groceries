@@ -45,6 +45,7 @@
             android:name=".NewProduct"
             android:label="@string/toolbar_title_new_product"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".CrashActivity"></activity>
     </application>
 
 </manifest>

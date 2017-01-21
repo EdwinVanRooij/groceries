@@ -55,12 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initAccount();
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this, new Account(thisAccount.getId(), thisAccount.getUsername(), thisAccount.getEmail())));
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
 
-        initAccount();
         initNavigationDrawer();
 
         threadPool = Executors.newFixedThreadPool(THREADPOOL_MAINACTIVITY_SIZE);
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void logOut() {
 //        Preferences.removeAccount();
-        Preferences.removeAll();
+        Preferences.removeAll(this);
 
         Intent i = new Intent(this, LauncherActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

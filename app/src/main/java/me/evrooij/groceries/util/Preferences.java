@@ -60,13 +60,15 @@ public class Preferences {
         }
     }
 
-    public static void removeAccount() {
+    public static void removeAccount(Context context) {
+        Hawk.init(context).build();
         Hawk.delete(Config.PREF_KEY_ACCOUNT_ID);
         Hawk.delete(Config.PREF_KEY_ACCOUNT_USERNAME);
         Hawk.delete(Config.PREF_KEY_ACCOUNT_EMAIL);
     }
 
-    public static void removeAll() {
+    public static void removeAll(Context context) {
+        Hawk.init(context).build();
         Hawk.deleteAll();
     }
 }
