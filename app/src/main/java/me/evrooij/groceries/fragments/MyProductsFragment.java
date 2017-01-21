@@ -31,61 +31,45 @@ import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyProductsFragment extends Fragment {
+public class MyProductsFragment extends MainFragment {
 
     @BindView(R.id.lv_my_products)
     ListView listView;
     @BindView(R.id.tvTipDescription)
     TextView tvTipDescription;
 
-    private Account thisAccount;
-    private Unbinder unbinder;
-
     private ArrayList<Product> data;
     private MyProductAdapter adapter;
     private ProductManager productManager;
 
-    public MyProductsFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_products, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(R.layout.fragment_my_products, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_products));
+        mainActivity.setActionBarTitle(getString(R.string.title_products));
         productManager = new ProductManager(getContext());
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
     }
 
     @Override
     public void onResume() {
-        new Thread(() -> {
+        mainActivity.executeRunnable(() -> {
 //            List<Product> result = productManager.getMyProducts(thisAccount.getId());
             List<Product> result = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
-                result.add(new Product(i, String.format("Name %s", i), i, String.format("Comment %s", i), thisAccount));
+                result.add(new Product(i, String.format("Name %s", i), i, String.format("Comment %s", i), mainActivity.getThisAccount()));
             }
 
             refreshListView(result);
             getActivity().runOnUiThread(() -> {
                 tvTipDescription.setText(getString(R.string.my_products_tip_description, data.size()));
             });
-        }).start();
+        });
         super.onResume();
     }
 
@@ -95,7 +79,7 @@ public class MyProductsFragment extends Fragment {
         // Create the adapter to convert the array to views
         adapter = new MyProductAdapter(getActivity(), data);
 
-        getActivity().runOnUiThread(() -> {
+        mainActivity.runOnUiThread(() -> {
                     // Attach the adapter to a ListView
                     listView.setAdapter(adapter);
                 }

@@ -36,10 +36,6 @@ public class MainLoginFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    public MainLoginFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onDestroyView() {
         unbinder.unbind();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,6 +21,7 @@ import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.ListManager;
 import me.evrooij.groceries.data.Product;
+import me.evrooij.groceries.interfaces.ReturnBoolean;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
@@ -32,7 +34,7 @@ import static me.evrooij.groceries.Config.*;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DefaultListFragment extends Fragment {
+public class DefaultListFragment extends MainFragment {
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -41,40 +43,29 @@ public class DefaultListFragment extends Fragment {
 
     private ProductAdapter adapter;
     private Product editingProduct;
-    private MainActivity mainActivity;
 
     public final static int NEW_PRODUCT_CODE = 1;
     public final static int EDIT_PRODUCT_CODE = 2;
     private static final String TAG = "DefaultListFragment";
 
-    private Unbinder unbinder;
     private ListManager listManager;
     private GroceryList thisList;
-
-    public DefaultListFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_default_list, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        return inflater.inflate(R.layout.fragment_default_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         fab.setImageDrawable(new IconicsDrawable(getContext(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
 
         listManager = new ListManager(getContext());
-        mainActivity = (MainActivity) getActivity();
 
         setDefaultList();
-
-        return view;
     }
 
     @OnItemClick(R.id.lv_my_groceries)

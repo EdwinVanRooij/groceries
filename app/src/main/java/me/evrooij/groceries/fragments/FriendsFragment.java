@@ -31,27 +31,15 @@ import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends MainFragment {
 
     @BindView(R.id.lv_users)
     ListView listView;
-    private Unbinder unbinder;
 
     private UserManager userManager;
-    private MainActivity mainActivity;
 
-    ArrayList<Account> data;
-    AccountAdapter adapter;
-
-    public FriendsFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
+    private ArrayList<Account> data;
+    private AccountAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,10 +51,7 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        unbinder = ButterKnife.bind(this, view);
-        mainActivity = (MainActivity) getActivity();
         mainActivity.setActionBarTitle(getString(R.string.title_friends));
-
         userManager = new UserManager(getContext());
     }
 

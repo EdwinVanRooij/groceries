@@ -50,10 +50,6 @@ public class LoginFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onDestroyView() {
         unbinder.unbind();

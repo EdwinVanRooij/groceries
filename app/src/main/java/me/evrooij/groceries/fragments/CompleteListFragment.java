@@ -40,11 +40,6 @@ public class CompleteListFragment extends Fragment {
 
     private NewListContainerActivity containerActivity;
 
-    public CompleteListFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public void onDestroyView() {
         unbinder.unbind();

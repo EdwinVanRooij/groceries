@@ -18,10 +18,6 @@ public abstract class MainFragment extends Fragment {
     private Unbinder unbinder;
     protected MainActivity mainActivity;
 
-    public MainFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

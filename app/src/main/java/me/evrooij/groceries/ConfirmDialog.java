@@ -2,6 +2,7 @@ package me.evrooij.groceries;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import me.evrooij.groceries.interfaces.ReturnBoolean;
 
 /**
  * Author: Edwin
@@ -10,7 +11,6 @@ import android.content.Context;
 public class ConfirmDialog {
     //region Fields
     private Context c;
-    private boolean clickedYes;
     //endregion
 
     //region Properties
@@ -25,7 +25,7 @@ public class ConfirmDialog {
     //endregion
 
     //region Methods
-    public boolean show(String message) {
+    public void show(String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(c);
         alertDialogBuilder.setMessage(message);
 
@@ -36,7 +36,6 @@ public class ConfirmDialog {
                 (arg0, arg1) -> delegate.processFinish(false));
 
         alertDialogBuilder.create().show();
-        return clickedYes;
     }
     //endregion
 }

@@ -54,10 +54,6 @@ public class SelectFriendsFragment extends Fragment {
 
     private NewListContainerActivity containerActivity;
 
-    public SelectFriendsFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onDestroyView() {
         unbinder.unbind();

@@ -2,7 +2,6 @@ package me.evrooij.groceries;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -10,14 +9,13 @@ import butterknife.ButterKnife;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Feedback;
 import me.evrooij.groceries.data.FeedbackManager;
+import me.evrooij.groceries.interfaces.ReturnBoolean;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
-import static java.security.AccessController.getContext;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.Config.KEY_CRASH_REPORT;
-import static me.evrooij.groceries.R.id.textView;
 
 public class CrashActivity extends AppCompatActivity {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package me.evrooij.groceries;
+package me.evrooij.groceries.interfaces;
 
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 

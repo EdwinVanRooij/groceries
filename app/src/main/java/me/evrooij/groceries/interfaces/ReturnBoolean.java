@@ -1,4 +1,4 @@
-package me.evrooij.groceries;
+package me.evrooij.groceries.interfaces;
 
 /**
  * Author: Edwin

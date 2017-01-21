@@ -50,10 +50,6 @@ public class RegisterFragment extends Fragment {
 
     private Unbinder unbinder;
 
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onDestroyView() {
         unbinder.unbind();

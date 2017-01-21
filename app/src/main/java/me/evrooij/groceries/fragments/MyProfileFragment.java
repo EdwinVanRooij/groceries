@@ -37,37 +37,33 @@ import static me.evrooij.groceries.R.id.toolbar;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyProfileFragment extends Fragment implements ObservableScrollViewCallbacks, NavigationView.OnNavigationItemSelectedListener {
+public class MyProfileFragment extends MainFragment implements ObservableScrollViewCallbacks, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.image)
     ImageView mImageView;
     @BindView(toolbar)
     Toolbar mToolbarView;
 
-    private Unbinder unbinder;
-
     private int mParallaxImageHeight;
-    private MainActivity mainActivity;
-
-    public MyProfileFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onDestroyView() {
-        showToolbar();
-        unbinder.unbind();
+        mainActivity.getSupportActionBar().show();
         super.onDestroyView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Disable MainActivity toolbar
-        hideToolbar();
+        return inflater.inflate(R.layout.fragment_my_profile, container, false);
+    }
 
-        View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Disable MainActivity toolbar
+        mainActivity.getSupportActionBar().hide();
 
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.primary)));
         mToolbarView.setTitle(getString(R.string.title_my_profile));
@@ -78,38 +74,9 @@ public class MyProfileFragment extends Fragment implements ObservableScrollViewC
 
         mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
 
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mainActivity = ((MainActivity) getActivity());
-
         Glide.with(this)
                 .load("http://placekitten.com/600/300")
                 .into(mImageView);
-    }
-
-    private void showToolbar() {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            ActionBar ab = activity.getSupportActionBar();
-            if (ab != null) {
-                ab.show();
-            }
-        }
-    }
-
-    private void hideToolbar() {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if (activity != null) {
-            ActionBar ab = activity.getSupportActionBar();
-            if (ab != null) {
-                ab.hide();
-            }
-        }
     }
 
     @Override

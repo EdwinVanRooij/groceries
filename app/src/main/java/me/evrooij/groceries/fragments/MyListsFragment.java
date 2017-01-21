@@ -35,27 +35,14 @@ import static me.evrooij.groceries.Config.KEY_ACCOUNT_PROFILE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyListsFragment extends Fragment {
+public class MyListsFragment extends MainFragment {
 
     @BindView(R.id.lv_my_lists)
     ListView listView;
 
-    private Unbinder unbinder;
     private ArrayList<GroceryList> data;
     private GroceryListAdapter adapter;
     private ListManager listManager;
-
-    private MainActivity mainActivity;
-
-    public MyListsFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,9 +54,6 @@ public class MyListsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        unbinder = ButterKnife.bind(this, view);
-        mainActivity = ((MainActivity) getActivity());
-        mainActivity.setActionBarTitle(getString(R.string.title_lists));
         listManager = new ListManager(getContext());
 
         Hawk.init(getContext()).build();

@@ -27,18 +27,13 @@ import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SuggestionFragment extends Fragment {
+public class SuggestionFragment extends MainFragment {
 
     @BindView(R.id.suggestion_edittext)
     EditText etMessage;
 
-    private Unbinder unbinder;
     private FeedbackManager feedbackManager;
-    private ContainerActivity containerActivity;
 
-    public SuggestionFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,26 +45,17 @@ public class SuggestionFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        unbinder = ButterKnife.bind(this, view);
-        containerActivity = (ContainerActivity) getActivity();
-        containerActivity.setActionBarTitle(getString(R.string.title_suggestions));
+        mainActivity.setActionBarTitle(getString(R.string.title_suggestions));
 
         feedbackManager = new FeedbackManager(getContext());
     }
 
     @OnClick(R.id.suggestion_button_send)
     public void onButtonSendClick() {
-        containerActivity.executeRunnable(() -> {
-                    ResponseMessage message = feedbackManager.reportFeedback(new Feedback(etMessage.getText().toString(), Feedback.Type.Suggestion, containerActivity.getThisAccount()));
+        mainActivity.executeRunnable(() -> {
+                    ResponseMessage message = feedbackManager.reportFeedback(new Feedback(etMessage.getText().toString(), Feedback.Type.Suggestion, mainActivity.getThisAccount()));
                     getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message.toString(), Toast.LENGTH_SHORT).show());
                 }
         );
     }
-
-    @Override
-    public void onDestroyView() {
-        unbinder.unbind();
-        super.onDestroyView();
-    }
-
 }
