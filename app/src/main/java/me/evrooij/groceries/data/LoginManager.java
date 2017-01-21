@@ -24,48 +24,24 @@ public class LoginManager {
     }
 
     public Account login(String username, String password) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<Account> call = client.getAccountByLogin(username, password);
-
-        // Execute the call
-        Response<Account> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).getAccountByLogin(username, password).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
             e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 
     public Account register(String username, String email, String password) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Map<String, String> accountMap = new HashMap<>();
-        accountMap.put("username", username);
-        accountMap.put("email", email);
-        accountMap.put("password", password);
-        Call<Account> call = client.registerAccount(accountMap);
-
-        // Execute the call
-        Response<Account> response;
         try {
-            response = call.execute();
+            Map<String, String> accountMap = new HashMap<>();
+            accountMap.put("username", username);
+            accountMap.put("email", email);
+            accountMap.put("password", password);
+            return ServiceGenerator.createService(context, ClientInterface.class).registerAccount(accountMap).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
             e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 }

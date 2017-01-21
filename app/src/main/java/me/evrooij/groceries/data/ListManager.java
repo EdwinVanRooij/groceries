@@ -11,6 +11,8 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.List;
 
+import static android.R.id.list;
+
 /**
  * Author: eddy
  * Date: 15-12-16.
@@ -25,125 +27,56 @@ public class ListManager {
     }
 
     public GroceryList getList(int listId) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<GroceryList> call = client.getList(listId);
-
-        // Execute the call
-        Response<GroceryList> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).getList(listId).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 
     public List<GroceryList> getMyLists(Account account) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<List<GroceryList>> call = client.getLists(account.getId());
-
-        // Execute the call
-        Response<List<GroceryList>> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).getLists(account.getId()).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 
     public GroceryList newList(GroceryList list) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<GroceryList> call = client.newList(list);
-
-        // Execute the call
-        Response<GroceryList> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).newList(list).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-
-        return response.body();
     }
 
     public Product newProduct(int listId, Product newProduct) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<Product> call = client.newProduct(listId, newProduct);
-
-        // Execute the call
-        Response<Product> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).newProduct(listId, newProduct).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-
-        return response.body();
     }
 
     public ResponseMessage deleteProduct(int listId, int productId) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<ResponseMessage> call = client.deleteProduct(listId, productId);
-
-        // Execute the call
-        Response<ResponseMessage> response;
         try {
-            response = call.execute();
-
+            return ServiceGenerator.createService(context, ClientInterface.class).deleteProduct(listId, productId).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-
         }
-
-        return response.body();
-
     }
 
     public ResponseMessage editProduct(int listId, int productId, Product editedProduct) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<ResponseMessage> call = client.editProduct(listId, productId, editedProduct);
-
-        // Execute the call
-        Response<ResponseMessage> response;
         try {
-            response = call.execute();
-
+            return ServiceGenerator.createService(context, ClientInterface.class).editProduct(listId, productId, editedProduct).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-
         }
-
-        return response.body();
     }
 }

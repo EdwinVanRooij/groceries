@@ -61,7 +61,7 @@ public interface ClientInterface {
     Call<List<Product>> getMyProducts(@Path("id") int accountId);
 
     @POST("/{id}/myproducts")
-    Call<List<Product>> getMyProducts(@Path("id") int accountId);
+    Call<Product> addMyProduct(@Path("id") int accountId, @Body Product product);
 
 
     // Feedback

@@ -20,25 +20,14 @@ public class FeedbackManager {
 
     public FeedbackManager(Context context) {
         this.context = context;
-
     }
 
     public ResponseMessage reportFeedback(Feedback feedback) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<ResponseMessage> call = client.reportFeedback(feedback);
-
-        // Execute the call
-        Response<ResponseMessage> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).reportFeedback(feedback).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
-
-        return response.body();
     }
 }

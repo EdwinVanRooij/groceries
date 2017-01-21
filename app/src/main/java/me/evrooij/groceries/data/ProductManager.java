@@ -24,23 +24,11 @@ public class ProductManager {
     }
 
     public List<Product> getMyProducts(int accountId) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<List<Product>> call = client.getMyProducts(accountId);
-
-        // Execute the call
-        Response<List<Product>> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).getMyProducts(accountId).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 }

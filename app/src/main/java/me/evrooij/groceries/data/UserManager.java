@@ -10,6 +10,8 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.List;
 
+import static android.R.attr.password;
+
 /**
  * Author: eddy
  * Date: 15-12-16.
@@ -23,65 +25,29 @@ public class UserManager {
     }
 
     public List<Account> findFriends(int accountId, String query) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<List<Account>> call = client.findFriends(accountId, query);
-
-        // Execute the call
-        Response<List<Account>> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).findFriends(accountId, query).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 
     public ResponseMessage addFriend(int accountId, Account friend) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<ResponseMessage> call = client.addFriend(accountId, friend);
-
-        // Execute the call
-        Response<ResponseMessage> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).addFriend(accountId, friend).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 
     public List<Account> getFriends(int accountId) {
-        // Create a rest adapter
-        ClientInterface client = ServiceGenerator.createService(context, ClientInterface.class);
-
-        // Fetch and print a list of the contributors to this library.
-        Call<List<Account>> call = client.getFriends(accountId);
-
-        // Execute the call
-        Response<List<Account>> response;
         try {
-            response = call.execute();
+            return ServiceGenerator.createService(context, ClientInterface.class).getFriends(accountId).execute().body();
         } catch (IOException e) {
-            // Call failed, ignore exception. Return null.
-//            e.printStackTrace();
+            e.printStackTrace();
             return null;
         }
-
-        // Get the account from the body and return
-        return response.body();
     }
 }
