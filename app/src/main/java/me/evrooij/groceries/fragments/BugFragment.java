@@ -31,10 +31,6 @@ public class BugFragment extends MainFragment {
 
     private FeedbackManager feedbackManager;
 
-    public BugFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
