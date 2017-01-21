@@ -144,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (f instanceof MyListsFragment) {
             // Start creating a new list
             startActivity(new Intent(this, NewListContainerActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
+        } else if (f instanceof MyProductsFragment) {
+            // Start creating a new product
+            startActivity(new Intent(this, NewListContainerActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
         } else if (f instanceof FriendsFragment) {
             // Start searching for friends
             startActivity(new Intent(this, SearchUserActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));

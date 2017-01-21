@@ -60,6 +60,9 @@ public interface ClientInterface {
     @GET("/{id}/myproducts")
     Call<List<Product>> getMyProducts(@Path("id") int accountId);
 
+    @POST("/{id}/myproducts")
+    Call<List<Product>> getMyProducts(@Path("id") int accountId);
+
 
     // Feedback
     @POST("/feedback/new")

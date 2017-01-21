@@ -59,11 +59,11 @@ public class MyProductsFragment extends MainFragment {
     @Override
     public void onResume() {
         mainActivity.executeRunnable(() -> {
-//            List<Product> result = productManager.getMyProducts(thisAccount.getId());
-            List<Product> result = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                result.add(new Product(i, String.format("Name %s", i), i, String.format("Comment %s", i), mainActivity.getThisAccount()));
-            }
+            List<Product> result = productManager.getMyProducts(mainActivity.getThisAccount().getId());
+//            List<Product> result = new ArrayList<>();
+//            for (int i = 0; i < 10; i++) {
+//                result.add(new Product(i, String.format("Name %s", i), i, String.format("Comment %s", i), mainActivity.getThisAccount()));
+//            }
 
             refreshListView(result);
             getActivity().runOnUiThread(() -> {
