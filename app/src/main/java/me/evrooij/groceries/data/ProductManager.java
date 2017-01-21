@@ -31,4 +31,13 @@ public class ProductManager {
             return null;
         }
     }
+
+    public Product addMyProduct(int accountId, Product product) {
+        try {
+            return ServiceGenerator.createService(context, ClientInterface.class).addMyProduct(accountId, product).execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
