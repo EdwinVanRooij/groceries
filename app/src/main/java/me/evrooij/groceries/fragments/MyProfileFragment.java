@@ -46,9 +46,8 @@ public class MyProfileFragment extends Fragment implements ObservableScrollViewC
 
     private Unbinder unbinder;
 
-    private Account thisAccount;
-
     private int mParallaxImageHeight;
+    private MainActivity mainActivity;
 
     public MyProfileFragment() {
         // Required empty public constructor
@@ -70,8 +69,6 @@ public class MyProfileFragment extends Fragment implements ObservableScrollViewC
         View view = inflater.inflate(R.layout.fragment_my_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
-
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.primary)));
         mToolbarView.setTitle(getString(R.string.title_my_profile));
 
@@ -87,6 +84,8 @@ public class MyProfileFragment extends Fragment implements ObservableScrollViewC
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mainActivity = ((MainActivity) getActivity());
 
         Glide.with(this)
                 .load("http://placekitten.com/600/300")

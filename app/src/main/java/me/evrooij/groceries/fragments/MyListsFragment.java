@@ -40,11 +40,12 @@ public class MyListsFragment extends Fragment {
     @BindView(R.id.lv_my_lists)
     ListView listView;
 
-    private Account thisAccount;
     private Unbinder unbinder;
     private ArrayList<GroceryList> data;
     private GroceryListAdapter adapter;
     private ListManager listManager;
+
+    private MainActivity mainActivity;
 
     public MyListsFragment() {
         // Required empty public constructor
@@ -67,9 +68,9 @@ public class MyListsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         unbinder = ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setActionBarTitle(getString(R.string.title_lists));
+        mainActivity = ((MainActivity) getActivity());
+        mainActivity.setActionBarTitle(getString(R.string.title_lists));
         listManager = new ListManager(getContext());
-        thisAccount = Parcels.unwrap(getArguments().getParcelable(KEY_ACCOUNT));
 
         Hawk.init(getContext()).build();
     }
@@ -85,15 +86,13 @@ public class MyListsFragment extends Fragment {
 
     @Override
     public void onResume() {
-        new Thread(() -> {
-            new Thread(() -> {
-                List<GroceryList> result = listManager.getMyLists(thisAccount);
-                data = new ArrayList<>(result);
-                adapter = new GroceryListAdapter(getActivity(), data);
+        mainActivity.executeRunnable(() -> {
+            List<GroceryList> result = listManager.getMyLists(mainActivity.getThisAccount());
+            data = new ArrayList<>(result);
+            adapter = new GroceryListAdapter(getActivity(), data);
 
-                getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
-            }).start();
-        }).start();
+            getActivity().runOnUiThread(() -> listView.setAdapter(adapter));
+        });
         super.onResume();
     }
 }

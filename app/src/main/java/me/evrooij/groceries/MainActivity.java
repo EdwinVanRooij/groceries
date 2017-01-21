@@ -35,6 +35,7 @@ import org.parceler.Parcels;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static android.R.id.list;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.Config.THREADPOOL_MAINACTIVITY_SIZE;
 
@@ -141,10 +142,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flContent);
 
         if (f instanceof MyListsFragment) {
-//            Start creating a new list
+            // Start creating a new list
             startActivity(new Intent(this, NewListContainerActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
         } else if (f instanceof FriendsFragment) {
-//            Start searching for friends
+            // Start searching for friends
             startActivity(new Intent(this, SearchUserActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
         } else {
             Snackbar.make(view, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
