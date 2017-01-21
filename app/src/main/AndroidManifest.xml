@@ -42,7 +42,7 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NewProduct"
+            android:name=".NewProductActivity"
             android:label="@string/toolbar_title_new_product"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".CrashActivity"></activity>

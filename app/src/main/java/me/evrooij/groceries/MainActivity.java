@@ -1,5 +1,6 @@
 package me.evrooij.groceries;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +27,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import me.evrooij.groceries.adapters.MyProductAdapter;
 import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.fragments.*;
 import me.evrooij.groceries.interfaces.ContainerActivity;
 import me.evrooij.groceries.login.LauncherActivity;
@@ -35,9 +39,10 @@ import org.parceler.Parcels;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static android.R.id.list;
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
-import static me.evrooij.groceries.Config.THREADPOOL_MAINACTIVITY_SIZE;
+import static java.security.AccessController.getContext;
+import static me.evrooij.groceries.Config.*;
+import static me.evrooij.groceries.fragments.DefaultListFragment.EDIT_PRODUCT_CODE;
+import static me.evrooij.groceries.fragments.DefaultListFragment.NEW_PRODUCT_CODE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ContainerActivity {
 
@@ -52,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private Account thisAccount;
     private ExecutorService threadPool;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setDefaultListFragment() {
         setFragment(DefaultListFragment.class, false);
         navigationView.setCheckedItem(R.id.nav_drawer_home);
-        fab.hide();
+        fab.show();
     }
 
     /**
@@ -144,9 +151,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (f instanceof MyListsFragment) {
             // Start creating a new list
             startActivity(new Intent(this, NewListContainerActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
+        } else if (f instanceof DefaultListFragment) {
+            // Start creating a new product for a list
+            Intent i = new Intent(this, NewProductActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(getThisAccount()));
+            startActivityForResult(i, NEW_PRODUCT_CODE);
         } else if (f instanceof MyProductsFragment) {
-            // Start creating a new product
-            startActivity(new Intent(this, NewListContainerActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
+            // Start creating a new custom product
+            Intent i = new Intent(this, NewProductActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(getThisAccount()));
+            startActivityForResult(i, NEW_PRODUCT_CODE);
         } else if (f instanceof FriendsFragment) {
             // Start searching for friends
             startActivity(new Intent(this, SearchUserActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(thisAccount)));
@@ -255,5 +267,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void setActionBarTitle(String title) {
         runOnUiThread(() -> toolbar.setTitle(title));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.flContent);
+
+        // Check what fragment was started an activity for
+        if (fragment instanceof DefaultListFragment) {
+
+            // Get specific fragment for calling methods
+            DefaultListFragment defaultListFragment = (DefaultListFragment) fragment;
+
+            if (resultCode == Activity.RESULT_OK) {
+                switch (requestCode) {
+                    case NEW_PRODUCT_CODE:
+                        defaultListFragment.createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
+                        break;
+                    case EDIT_PRODUCT_CODE:
+                        Product editProduct = Parcels.unwrap(data.getParcelableExtra(KEY_EDIT_PRODUCT));
+                        // Update change to backend
+                        defaultListFragment.editProduct(editProduct);
+                        break;
+                    default:
+                        Toast.makeText(this, "onActivityResult: Could not find result code", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onActivityResult: Could not find result code");
+                        break;
+                }
+            }
+        } else if (fragment instanceof MyProductsFragment) {
+            // Get specific fragment for calling methods
+            MyProductsFragment myProductsFragment = (MyProductsFragment) fragment;
+
+            if (resultCode == Activity.RESULT_OK) {
+                switch (requestCode) {
+                    case NEW_PRODUCT_CODE:
+                        myProductsFragment.createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
+                        break;
+                    default:
+                        Toast.makeText(this, "onActivityResult: Could not find result code", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onActivityResult: Could not find result code");
+                        break;
+                }
+            }
+        }
     }
 }

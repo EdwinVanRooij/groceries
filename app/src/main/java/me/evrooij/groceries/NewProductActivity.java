@@ -15,7 +15,7 @@ import org.parceler.Parcels;
 
 import static me.evrooij.groceries.Config.*;
 
-public class NewProduct extends AppCompatActivity {
+public class NewProductActivity extends AppCompatActivity {
     //region Fields
     @BindView(R.id.etName)
     EditText etName;

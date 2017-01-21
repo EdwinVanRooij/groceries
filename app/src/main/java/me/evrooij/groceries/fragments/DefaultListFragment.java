@@ -30,14 +30,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static me.evrooij.groceries.Config.*;
+import static me.evrooij.groceries.R.id.fab;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DefaultListFragment extends MainFragment {
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     @BindView(R.id.lv_my_groceries)
     ListView listView;
 
@@ -60,8 +59,6 @@ public class DefaultListFragment extends MainFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        fab.setImageDrawable(new IconicsDrawable(getContext(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).sizeDp(24));
 
         listManager = new ListManager(getContext());
 
@@ -93,8 +90,8 @@ public class DefaultListFragment extends MainFragment {
 
         editingProduct = product;
 
-        Intent i = new Intent(mainActivity, NewProduct.class).putExtra(KEY_ACCOUNT, Parcels.wrap(mainActivity.getThisAccount())).putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
-        startActivityForResult(i, EDIT_PRODUCT_CODE);
+        Intent i = new Intent(mainActivity, NewProductActivity.class).putExtra(KEY_ACCOUNT, Parcels.wrap(mainActivity.getThisAccount())).putExtra(KEY_EDIT_PRODUCT, Parcels.wrap(product));
+        mainActivity.startActivityForResult(i, EDIT_PRODUCT_CODE);
 
         return true;
     }
@@ -133,39 +130,7 @@ public class DefaultListFragment extends MainFragment {
         });
     }
 
-    @OnClick(R.id.fab)
-    public void onFabClick(View view) {
-        Intent i = new Intent(getContext(), NewProduct.class).putExtra(KEY_ACCOUNT, Parcels.wrap(mainActivity.getThisAccount()));
-        startActivityForResult(i, NEW_PRODUCT_CODE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case NEW_PRODUCT_CODE:
-                    createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
-                    break;
-                case EDIT_PRODUCT_CODE:
-                    Product editProduct = Parcels.unwrap(data.getParcelableExtra(KEY_EDIT_PRODUCT));
-
-                    // Remove product from adapter first
-                    adapter.remove(editingProduct);
-
-                    // Update change to backend
-                    editProduct(editProduct);
-                    break;
-                default:
-                    Log.d(TAG, "onActivityResult: Could not find product code");
-                    break;
-            }
-        }
-        if (resultCode == Activity.RESULT_CANCELED) {
-            //Write your code if there's no result
-        }
-    }
-
-    private void createNewProduct(Product newProduct) {
+    public void createNewProduct(Product newProduct) {
         mainActivity.executeRunnable(() -> {
             Product p = listManager.newProduct(thisList.getId(), newProduct);
 
@@ -175,7 +140,10 @@ public class DefaultListFragment extends MainFragment {
         });
     }
 
-    private void editProduct(Product editedProduct) {
+    public void editProduct(Product editedProduct) {
+        // Remove product from adapter first
+        adapter.remove(editingProduct);
+
         mainActivity.executeRunnable(() -> {
             ResponseMessage responseMessage = listManager.editProduct(thisList.getId(), editedProduct.getId(), editedProduct);
 

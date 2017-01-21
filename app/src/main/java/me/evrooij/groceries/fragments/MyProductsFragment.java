@@ -54,23 +54,15 @@ public class MyProductsFragment extends MainFragment {
 
         mainActivity.setActionBarTitle(getString(R.string.title_products));
         productManager = new ProductManager(getContext());
-    }
 
-    @Override
-    public void onResume() {
         mainActivity.executeRunnable(() -> {
             List<Product> result = productManager.getMyProducts(mainActivity.getThisAccount().getId());
-//            List<Product> result = new ArrayList<>();
-//            for (int i = 0; i < 10; i++) {
-//                result.add(new Product(i, String.format("Name %s", i), i, String.format("Comment %s", i), mainActivity.getThisAccount()));
-//            }
 
             refreshListView(result);
             getActivity().runOnUiThread(() -> {
                 tvTipDescription.setText(getString(R.string.my_products_tip_description, data.size()));
             });
         });
-        super.onResume();
     }
 
     private void refreshListView(List<Product> products) {
@@ -84,5 +76,15 @@ public class MyProductsFragment extends MainFragment {
                     listView.setAdapter(adapter);
                 }
         );
+    }
+
+    public void createNewProduct(Product newProduct) {
+        mainActivity.executeRunnable(() -> {
+            Product p = productManager.addMyProduct(mainActivity.getThisAccount().getId(), newProduct);
+
+            mainActivity.runOnUiThread(() -> {
+                adapter.add(p);
+            });
+        });
     }
 }

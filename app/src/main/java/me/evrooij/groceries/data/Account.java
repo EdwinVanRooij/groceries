@@ -37,6 +37,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return String.format("User %s (%s) - Mail %s - Pass %s", username, id, email, password);
+        return String.format("User %s (%s) - Mail %s", username, id, email);
     }
 }

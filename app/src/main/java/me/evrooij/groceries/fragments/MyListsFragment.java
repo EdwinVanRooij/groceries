@@ -54,6 +54,7 @@ public class MyListsFragment extends MainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mainActivity.setActionBarTitle(getString(R.string.title_lists));
         listManager = new ListManager(getContext());
 
         Hawk.init(getContext()).build();
