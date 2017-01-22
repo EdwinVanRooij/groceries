@@ -72,7 +72,7 @@ public class NewProductActivity extends AppCompatActivity {
             new Thread(() -> {
                 ArrayList<Product> result = (ArrayList<Product>) productManager.getMyProducts(thisAccount.getId());
 
-                MyProductAdapter adapter = new MyProductAdapter(this, result, null, false);
+                ProductAdapter adapter = new ProductAdapter(this, result);
 
                 runOnUiThread(() -> {
                     etName.setAdapter(adapter);

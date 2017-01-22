@@ -51,6 +51,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,7 +61,7 @@ import static me.evrooij.groceries.fragments.DefaultListFragment.NEW_PRODUCT_COD
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ContainerActivity {
 
-    public static final int REQUEST_IMAGE_CAPTURE = 100;
+    public static final int REQUEST_IMAGE_CAPTURE = 5;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -290,6 +291,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.flContent);
 
+        // Workaround to let all child fragments know about a result
+        //region Workaround
+        final FragmentManager childFragmentManager = getSupportFragmentManager();
+
+        if (childFragmentManager != null) {
+            final List<Fragment> nestedFragments = childFragmentManager.getFragments();
+
+            if (nestedFragments == null || nestedFragments.size() == 0) return;
+
+            for (Fragment childFragment : nestedFragments) {
+                if (childFragment != null && !childFragment.isDetached() && !childFragment.isRemoving()) {
+                    childFragment.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+        }
+        //endregion
+
         // Check what fragment was started an activity for
         if (fragment instanceof DefaultListFragment) {
 
@@ -321,12 +339,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case NEW_PRODUCT_CODE:
                         myProductsFragment.createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
                         break;
-                    case REQUEST_IMAGE_CAPTURE:
-                        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                        uploadImage(getThisAccount().getId(), 234, imageBitmap);
-                        break;
                     default:
-                        Toast.makeText(this, "onActivityResult: Could not find result code", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, String.format("onActivityResult: Could not find result code, was %s", resultCode), Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onActivityResult: Could not find result code");
                         break;
                 }
@@ -334,57 +348,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-    }
-
-    public void uploadImage(int accountId, int productId, Bitmap imageBitmap) {
-        try {
-// create upload service client
-            FileUploadInterface service =
-                    ServiceGenerator.createService(getApplicationContext(), FileUploadInterface.class);
-
-            File f = null;
-            //create a file to write bitmap data
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-            byte[] bitmapdata = bos.toByteArray();
-
-            FileOutputStream fos = new FileOutputStream(f);
-            fos.write(bitmapdata);
-            fos.flush();
-            fos.close();
-
-            // create RequestBody instance from file
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), f);
-
-            // MultipartBody.Part is used to send also the actual file name
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("picture", "file", requestFile);
-
-            // add another part within the multipart request
-            String descriptionString = "hello, this is description speaking";
-            RequestBody description =
-                    RequestBody.create(
-                            okhttp3.MultipartBody.FORM, descriptionString);
-
-            // finally, execute the request
-            Call<ResponseBody> call = service.upload(accountId, productId, description, body);
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call,
-                                       Response<ResponseBody> response) {
-                    Log.v("Upload", "success");
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.e("Upload error:", t.getMessage());
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

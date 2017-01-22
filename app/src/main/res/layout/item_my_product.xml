@@ -6,14 +6,6 @@
     android:paddingBottom="@dimen/minimal_margin"
     android:paddingTop="@dimen/minimal_margin">
 
-    <ImageView
-        android:id="@+id/ivPhoto"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/minimal_margin"
-        android:layout_marginRight="@dimen/minimal_margin"
-        android:layout_weight="0.25" />
-
     <TextView
         android:id="@+id/tvName"
         style="@android:style/TextAppearance.DeviceDefault.Medium"

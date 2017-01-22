@@ -13,6 +13,7 @@ public class Config {
     public static final String KEY_SELECTED_ACCOUNTS = "selectedAccounts";
     public static final String KEY_ACCOUNT_PROFILE = "searchedUser";
     public static final String KEY_CRASH_REPORT = "crashReport";
+    public static final String KEY_PRODUCT_ID = "productId";
 
 
     // Shared preferences keys
