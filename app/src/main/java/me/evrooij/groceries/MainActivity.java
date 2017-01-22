@@ -322,8 +322,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         myProductsFragment.createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
                         break;
                     case REQUEST_IMAGE_CAPTURE:
-                        Bundle extras = data.getExtras();
-                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
                         uploadImage(getThisAccount().getId(), 234, imageBitmap);
                         break;
                     default:
