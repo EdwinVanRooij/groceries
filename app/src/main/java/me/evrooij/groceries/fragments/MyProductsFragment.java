@@ -1,32 +1,29 @@
 package me.evrooij.groceries.fragments;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ListView;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import com.orhanobut.hawk.Hawk;
-import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.adapters.AccountAdapter;
-import me.evrooij.groceries.adapters.GroceryListAdapter;
 import me.evrooij.groceries.adapters.MyProductAdapter;
-import me.evrooij.groceries.adapters.ProductAdapter;
-import me.evrooij.groceries.data.*;
-import org.parceler.Parcels;
+import me.evrooij.groceries.data.Product;
+import me.evrooij.groceries.data.ProductManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.MainActivity.REQUEST_IMAGE_CAPTURE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,17 +56,20 @@ public class MyProductsFragment extends MainFragment {
             List<Product> result = productManager.getMyProducts(mainActivity.getThisAccount().getId());
 
             refreshListView(result);
-            getActivity().runOnUiThread(() -> {
-                tvTipDescription.setText(getString(R.string.my_products_tip_description, data.size()));
-            });
+//            getActivity().runOnUiThread(() -> {
+//                tvTipDescription.setText(getString(R.string.my_products_tip_description, data.size()));
+//            });
         });
     }
 
     private void refreshListView(List<Product> products) {
         // Construct the data source
         data = new ArrayList<>(products);
+
+        View.OnClickListener listener = v -> mainActivity.dispatchTakePictureIntent();
+
         // Create the adapter to convert the array to views
-        adapter = new MyProductAdapter(getActivity(), data);
+        adapter = new MyProductAdapter(getActivity(), data, listener, true);
 
         mainActivity.runOnUiThread(() -> {
                     // Attach the adapter to a ListView
@@ -87,4 +87,5 @@ public class MyProductsFragment extends MainFragment {
             });
         });
     }
+
 }

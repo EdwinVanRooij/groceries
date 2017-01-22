@@ -17,6 +17,7 @@ public class Product {
     private Account owner;
     private String comment;
     private Date deletionDate;
+    private String imageUrl;
 
     public int getId() {
         return id;
@@ -36,6 +37,10 @@ public class Product {
 
     public Account getOwner() {
         return owner;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public Product() {
@@ -66,6 +71,10 @@ public class Product {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     /**

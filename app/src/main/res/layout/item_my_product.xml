@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/minimal_margin"
         android:layout_marginRight="@dimen/minimal_margin"
-        android:layout_weight="0.25"
-        android:src="@drawable/person" />
+        android:layout_weight="0.25" />
 
     <TextView
         android:id="@+id/tvName"

@@ -2,8 +2,10 @@ package me.evrooij.groceries;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,24 +29,38 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.adapters.MyProductAdapter;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.fragments.*;
 import me.evrooij.groceries.interfaces.ContainerActivity;
 import me.evrooij.groceries.login.LauncherActivity;
+import me.evrooij.groceries.rest.FileUploadInterface;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import me.evrooij.groceries.util.Preferences;
+import net.gotev.uploadservice.UploadService;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import org.parceler.Parcels;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static java.security.AccessController.getContext;
 import static me.evrooij.groceries.Config.*;
 import static me.evrooij.groceries.fragments.DefaultListFragment.EDIT_PRODUCT_CODE;
 import static me.evrooij.groceries.fragments.DefaultListFragment.NEW_PRODUCT_CODE;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ContainerActivity {
+
+    public static final int REQUEST_IMAGE_CAPTURE = 100;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -65,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         initAccount();
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this, new Account(thisAccount.getId(), thisAccount.getUsername(), thisAccount.getEmail())));
+        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -304,12 +321,71 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case NEW_PRODUCT_CODE:
                         myProductsFragment.createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
                         break;
+                    case REQUEST_IMAGE_CAPTURE:
+                        Bundle extras = data.getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        uploadImage(getThisAccount().getId(), 234, imageBitmap);
+                        break;
                     default:
                         Toast.makeText(this, "onActivityResult: Could not find result code", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "onActivityResult: Could not find result code");
                         break;
                 }
             }
+        }
+    }
+
+    public void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    }
+
+    public void uploadImage(int accountId, int productId, Bitmap imageBitmap) {
+        try {
+// create upload service client
+            FileUploadInterface service =
+                    ServiceGenerator.createService(getApplicationContext(), FileUploadInterface.class);
+
+            File f = null;
+            //create a file to write bitmap data
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+
+            // create RequestBody instance from file
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), f);
+
+            // MultipartBody.Part is used to send also the actual file name
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("picture", "file", requestFile);
+
+            // add another part within the multipart request
+            String descriptionString = "hello, this is description speaking";
+            RequestBody description =
+                    RequestBody.create(
+                            okhttp3.MultipartBody.FORM, descriptionString);
+
+            // finally, execute the request
+            Call<ResponseBody> call = service.upload(accountId, productId, description, body);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call,
+                                       Response<ResponseBody> response) {
+                    Log.v("Upload", "success");
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.e("Upload error:", t.getMessage());
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

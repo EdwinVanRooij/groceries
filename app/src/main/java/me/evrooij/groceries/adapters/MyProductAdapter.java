@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Product;
 
 import java.util.ArrayList;
-
-import static me.evrooij.groceries.R.id.tvName;
-import static me.evrooij.groceries.R.id.tvOwner;
 
 /**
  * Author: eddy
@@ -23,8 +23,13 @@ import static me.evrooij.groceries.R.id.tvOwner;
  */
 
 public class MyProductAdapter extends ArrayAdapter<Product> {
-    public MyProductAdapter(Context context, ArrayList<Product> products) {
+    private View.OnClickListener listener;
+    private boolean plusIfEmpty;
+
+    public MyProductAdapter(Context context, ArrayList<Product> products, View.OnClickListener listener, boolean plusIfEmpty) {
         super(context, 0, products);
+        this.listener = listener;
+        this.plusIfEmpty = plusIfEmpty;
     }
 
     @Override
@@ -42,13 +47,25 @@ public class MyProductAdapter extends ArrayAdapter<Product> {
         TextView tvComment = (TextView) convertView.findViewById(R.id.tvComment);
         // Populate the data into the template view using the data object
         if (product != null) {
-            Glide.with(getContext())
-                    .load("http://lorempixel.com/100/100")
-                    .into(ivPhoto);
+            if (product.getImageUrl() != null) {
+                Glide.with(getContext())
+                        .load(product.getImageUrl())
+                        .into(ivPhoto);
+            } else {
+                if (plusIfEmpty) {
+                    ivPhoto.setImageDrawable(new IconicsDrawable(getContext(), GoogleMaterial.Icon.gmd_add).color(getContext().getResources().getColor(R.color.primary_dark)).sizeDp(24));
+                }
+            }
             tvName.setText(product.getName());
             tvAmount.setText(String.valueOf(product.getAmount()));
             tvComment.setText(product.getComment());
         }
+
+        ivPhoto.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onClick(v);
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;
