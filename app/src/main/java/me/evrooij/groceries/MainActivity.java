@@ -325,8 +325,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         defaultListFragment.editProduct(editProduct);
                         break;
                     default:
-                        Toast.makeText(this, "onActivityResult: Could not find result code", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onActivityResult: Could not find result code");
+                        for (int i = 0; i < 3; i++) {
+                            Log.d(TAG, "onActivityResult: Could not find result code");
+                        }
                         break;
                 }
             }
@@ -340,8 +341,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         myProductsFragment.createNewProduct(Parcels.unwrap(data.getParcelableExtra(KEY_NEW_PRODUCT)));
                         break;
                     default:
-//                        Toast.makeText(this, String.format("onActivityResult: Could not find result code, was %s", resultCode), Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onActivityResult: Could not find result code");
+                        for (int i = 0; i < 3; i++) {
+                            Log.d(TAG, "onActivityResult: Could not find result code");
+                        }
                         break;
                 }
             }
