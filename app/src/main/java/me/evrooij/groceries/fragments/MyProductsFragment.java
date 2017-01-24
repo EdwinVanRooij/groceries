@@ -135,11 +135,12 @@ public class MyProductsFragment extends MainFragment {
 
     public void editProduct(File file) {
         mainActivity.executeRunnable(() -> {
-            ResponseMessage message = productManager.editMyProduct(mainActivity.getThisAccount().getId(), editingProduct, file);
-
-            mainActivity.runOnUiThread(() -> {
-                Toast.makeText(getContext(), message.toString(), Toast.LENGTH_SHORT).show();
-            });
+            productManager.editMyProduct(mainActivity.getThisAccount().getId(), editingProduct, file);
+//            ResponseMessage message = productManager.editMyProduct(mainActivity.getThisAccount().getId(), editingProduct, file);
+//
+//            mainActivity.runOnUiThread(() -> {
+//                Toast.makeText(getContext(), message.toString(), Toast.LENGTH_SHORT).show();
+//            });
         });
     }
 
@@ -147,16 +148,16 @@ public class MyProductsFragment extends MainFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
-            Toast.makeText(getContext(), "Starting select picture result", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Starting select picture result", Toast.LENGTH_SHORT).show();
             if (data == null) {
-                Toast.makeText(getContext(), "Data was null", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Data was null", Toast.LENGTH_SHORT).show();
                 return;
             }
             try {
                 InputStream inputStream = mainActivity.getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 editProduct(bitmapToFile(bitmap));
-                Toast.makeText(getContext(), "May have uploaded image", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "May have uploaded image", Toast.LENGTH_SHORT).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
