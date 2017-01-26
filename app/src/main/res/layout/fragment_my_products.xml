@@ -12,7 +12,6 @@
     <ListView
         android:id="@+id/lv_my_products"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/fragment_vertical_margin" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
