@@ -17,8 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.orhanobut.hawk.Hawk;
-import me.evrooij.groceries.Config;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Account;
@@ -29,7 +27,6 @@ import org.parceler.Parcels;
 
 import java.io.IOException;
 
-import static android.R.attr.id;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 

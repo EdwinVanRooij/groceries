@@ -1,37 +1,26 @@
 package me.evrooij.groceries.fragments;
 
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.ImageVideoBitmapDecoder;
-import com.github.ksoichiro.android.observablescrollview.*;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.nineoldandroids.view.ViewHelper;
-import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.util.SquareImageView;
-import org.parceler.Parcels;
 
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.R.id.toolbar;
 
 /**

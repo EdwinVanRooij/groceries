@@ -19,8 +19,6 @@ import me.evrooij.groceries.rest.ServiceGenerator;
 
 import java.io.IOException;
 
-import static android.R.id.message;
-
 /**
  * A simple {@link Fragment} subclass.
  */

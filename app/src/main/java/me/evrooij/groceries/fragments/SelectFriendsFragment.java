@@ -20,17 +20,13 @@ import com.mikepenz.fastadapter_extensions.ActionModeHelper;
 import com.mikepenz.fastadapter_extensions.UndoHelper;
 import me.evrooij.groceries.NewListContainerActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.AccountItem;
 import me.evrooij.groceries.data.UserManager;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
 /**
  * A simple {@link Fragment} subclass.

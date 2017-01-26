@@ -1,7 +1,6 @@
 package me.evrooij.groceries.rest;
 
 import android.content.Context;
-import me.evrooij.groceries.Config;
 import me.evrooij.groceries.R;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

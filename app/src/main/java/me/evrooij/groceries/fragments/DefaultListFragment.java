@@ -10,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
-import butterknife.*;
-import me.evrooij.groceries.*;
+import butterknife.BindView;
+import butterknife.OnItemClick;
+import butterknife.OnItemLongClick;
+import me.evrooij.groceries.ConfirmDialog;
+import me.evrooij.groceries.NewProductActivity;
+import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.GroceryList;
 import me.evrooij.groceries.data.Product;
@@ -26,7 +30,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.evrooij.groceries.Config.*;
+import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import static me.evrooij.groceries.Config.KEY_EDIT_PRODUCT;
 
 /**
  * A simple {@link Fragment} subclass.

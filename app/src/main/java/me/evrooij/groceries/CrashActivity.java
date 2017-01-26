@@ -1,7 +1,7 @@
 package me.evrooij.groceries;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -15,7 +15,6 @@ import me.evrooij.groceries.rest.ServiceGenerator;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
-import static android.R.id.message;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.Config.KEY_CRASH_REPORT;
 

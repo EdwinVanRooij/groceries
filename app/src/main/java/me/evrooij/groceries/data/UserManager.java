@@ -4,13 +4,9 @@ import android.content.Context;
 import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
 import me.evrooij.groceries.rest.ServiceGenerator;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
-
-import static android.R.attr.password;
 
 /**
  * Author: eddy

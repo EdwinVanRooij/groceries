@@ -4,11 +4,6 @@ import android.content.Context;
 import com.orhanobut.hawk.Hawk;
 import me.evrooij.groceries.Config;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.GroceryList;
-
-import static android.R.attr.configChanges;
-import static android.R.attr.id;
-import static android.os.Build.ID;
 
 /**
  * Author: eddy

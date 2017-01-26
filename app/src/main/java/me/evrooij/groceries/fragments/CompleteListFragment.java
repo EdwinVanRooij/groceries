@@ -18,12 +18,9 @@ import me.evrooij.groceries.NewListContainerActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.AccountAdapter;
 import me.evrooij.groceries.data.Account;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static me.evrooij.groceries.Config.KEY_SELECTED_ACCOUNTS;
 
 
 /**

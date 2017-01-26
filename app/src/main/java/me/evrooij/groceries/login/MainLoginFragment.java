@@ -17,7 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.bumptech.glide.Glide;
 import me.evrooij.groceries.R;
 
 /**

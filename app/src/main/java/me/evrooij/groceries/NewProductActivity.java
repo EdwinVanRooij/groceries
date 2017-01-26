@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.*;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,7 +21,6 @@ import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static me.evrooij.groceries.Config.*;
 

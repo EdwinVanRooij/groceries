@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.widget.Toast;
 import me.evrooij.groceries.data.Account;
 import org.parceler.Parcels;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static java.security.AccessController.getContext;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.Config.KEY_CRASH_REPORT;
 

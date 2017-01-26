@@ -7,9 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 
 

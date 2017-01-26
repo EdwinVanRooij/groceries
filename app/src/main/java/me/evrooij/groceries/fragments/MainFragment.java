@@ -7,7 +7,6 @@ import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
-import me.evrooij.groceries.data.Account;
 
 /**
  * Author: eddy
