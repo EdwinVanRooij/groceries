@@ -1,6 +1,6 @@
-package me.evrooij.groceries.data;
+package me.evrooij.groceries.data
 
-import org.parceler.Parcel;
+import org.parceler.Parcel
 
 /**
  * Author: eddy
