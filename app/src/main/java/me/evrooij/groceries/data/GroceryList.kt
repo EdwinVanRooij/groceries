@@ -9,20 +9,10 @@ import java.util.ArrayList
 
 class GroceryList(
         val name: String,
-        val owner: Account) {
+        val owner: Account,
+        // Optional participants parameter
+        @Suppress("unused") val participants: List<Account>? = null) {
 
     val id: Int = 0
-    var participants: List<Account>? = null
-    var productList: List<Product>? = null
-
-    init {
-        productList = ArrayList<Product>()
-        participants = ArrayList<Account>()
-    }
-
-    @Suppress("unused")
-    constructor(name: String, owner: Account, participants: List<Account>) : this(name, owner) {
-        this.participants = participants
-        productList = ArrayList<Product>()
-    }
+    var productList: List<Product> = ArrayList()
 }
