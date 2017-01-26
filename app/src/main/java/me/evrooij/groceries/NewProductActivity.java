@@ -38,9 +38,6 @@ public class NewProductActivity extends AppCompatActivity {
 
     private Account thisAccount;
 
-    private ArrayList<Product> data;
-    private ProductAdapter adapter;
-
     private Product selectedMyProduct;
 
     private boolean isUpdate;

@@ -44,13 +44,6 @@
     <string name="toolbar_title_search_user">Zoek Gebruiker</string>
     <string name="title_my_profile">Mijn Profiel</string>
     <string name="title_products">Mijn Producten</string>
-    <string name="my_products_tip_title">Tip</string>
-    <string name="my_products_tip_description">U heeft %1$d persoonlijke producten.\nVoeg een foto toe zodat ze deze sneller kunnen vinden!</string>
     <string name="set_fragment_exception">Kon deze pagina niet opstarten.</string>
-    <string name="uncaught_exception">Onverwachte fout opgetreden.</string>
     <string name="send_feedback">Fout opgetreden. Rapport verzenden om te helpen dit probleem op te lossen?</string>
-    <string name="my_products_title_amount">Keer</string>
-    <string name="my_products_title_comment">Opmerking</string>
-    <string name="my_products_title_name">Naam</string>
-    <string name="my_products_title_photo">Foto</string>
 </resources>
