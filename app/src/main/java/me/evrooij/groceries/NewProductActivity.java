@@ -63,7 +63,7 @@ public class NewProductActivity extends AppCompatActivity {
         if (!isUpdate) {
             new Thread(() -> {
                 try {
-                    ArrayList<Product> result = (ArrayList<Product>) ServiceGenerator.createService(getApplicationContext(), ClientInterface.class).getMyProducts(thisAccount.getId()).execute().body();
+                    ArrayList<Product> result = (ArrayList<Product>) ServiceGenerator.createService(this, ClientInterface.class).getMyProducts(thisAccount.getId()).execute().body();
 
                     ProductAdapter adapter = new ProductAdapter(this, result);
 

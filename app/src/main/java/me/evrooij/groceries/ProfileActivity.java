@@ -3,6 +3,7 @@ package me.evrooij.groceries;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         thisProfile = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT_PROFILE));
 
-        userManager = new UserManager(getApplicationContext());
+        userManager = new UserManager(this);
 
         ViewCompat.setTransitionName(findViewById(R.id.app_bar_layout), EXTRA_IMAGE);
         supportPostponeEnterTransition();
@@ -60,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, android.R.color.transparent));
         collapsingToolbarLayout.setTitle(thisProfile.getUsername());
 
         tvTitle.setText(thisProfile.getUsername());

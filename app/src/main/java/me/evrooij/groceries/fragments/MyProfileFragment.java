@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -54,7 +55,7 @@ public class MyProfileFragment extends MainFragment implements ObservableScrollV
         // Disable MainActivity toolbar
         mainActivity.getSupportActionBar().hide();
 
-        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.primary)));
+        mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, ContextCompat.getColor(getContext(), R.color.primary)));
         mToolbarView.setTitle(getString(R.string.title_my_profile));
 
         // Basic init
@@ -70,7 +71,7 @@ public class MyProfileFragment extends MainFragment implements ObservableScrollV
 
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        int baseColor = getResources().getColor(R.color.primary);
+        int baseColor = ContextCompat.getColor(getContext(), R.color.primary_dark);
         float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
         mToolbarView.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
         ViewHelper.setTranslationY(mImageView, scrollY / 2);

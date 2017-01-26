@@ -101,9 +101,7 @@ public class MyProductsFragment extends MainFragment {
 
     @OnItemLongClick(R.id.lv_my_products)
     public boolean onItemLongClick(int position) {
-        Product product = adapter.getItem(position);
-
-        editingProduct = product;
+        editingProduct = adapter.getItem(position);
 
         Intent pickIntent = new Intent();
         pickIntent.setType("image/*");

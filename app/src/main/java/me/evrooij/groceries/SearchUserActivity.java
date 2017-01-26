@@ -40,7 +40,7 @@ public class SearchUserActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
-        userManager = new UserManager(getApplicationContext());
+        userManager = new UserManager(this);
     }
 
     @OnItemClick(R.id.lv_users)

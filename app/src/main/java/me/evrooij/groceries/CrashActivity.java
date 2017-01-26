@@ -42,7 +42,7 @@ public class CrashActivity extends AppCompatActivity {
                 new Thread(() -> {
                     try {
                         ResponseMessage responseMessage =
-                                ServiceGenerator.createService(getApplicationContext(), ClientInterface.class)
+                                ServiceGenerator.createService(this, ClientInterface.class)
                                         .reportFeedback(new Feedback(report, Feedback.Type.Bug, thisAccount))
                                         .execute()
                                         .body();

@@ -13,7 +13,7 @@ public interface ContainerActivity {
      *
      * @return account object
      */
-    public Account getThisAccount();
+    Account getThisAccount();
 
     /**
      * Changes the current fragment with a new one, optionally adding it to back stack
@@ -21,19 +21,19 @@ public interface ContainerActivity {
      * @param fragmentClass new fragment to show
      * @param addToStack    true to add current to back stack
      */
-    public void setFragment(Class fragmentClass, boolean addToStack);
+    void setFragment(Class fragmentClass, boolean addToStack);
 
     /**
      * Executes a runnable in the container ThreadPool
      *
      * @param runnable runnable to execute
      */
-    public void executeRunnable(Runnable runnable);
+    void executeRunnable(Runnable runnable);
 
     /**
      * Sets the title of the action bar
      *
      * @param title title to change actionbar title to
      */
-    public void setActionBarTitle(String title);
+    void setActionBarTitle(String title);
 }

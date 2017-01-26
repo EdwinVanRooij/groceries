@@ -56,7 +56,6 @@ public class CompleteListFragment extends Fragment {
         containerActivity = (NewListContainerActivity) getActivity();
 
         List<Account> selectedAccounts = containerActivity.getSelectedAccounts();
-//        Parcels.unwrap(getArguments().getParcelable(KEY_SELECTED_ACCOUNTS))
 
         // Construct the data source
         ArrayList<Account> data = new ArrayList<>(selectedAccounts);

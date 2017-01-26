@@ -71,7 +71,6 @@ public class DefaultListFragment extends MainFragment {
             if (result) {
                 mainActivity.executeRunnable(() -> {
                     try {
-
                         ResponseMessage message = ServiceGenerator.createService(getContext(), ClientInterface.class).deleteProduct(thisList.getId(), product.getId()).execute().body();
 
                         mainActivity.runOnUiThread(() -> {

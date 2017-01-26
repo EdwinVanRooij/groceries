@@ -94,7 +94,7 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
             try {
                 GroceryList listToAdd = new GroceryList(listName, thisAccount, selectedAccounts);
 
-                GroceryList returnedList = ServiceGenerator.createService(getApplicationContext(), ClientInterface.class).newList(listToAdd).execute().body();
+                GroceryList returnedList = ServiceGenerator.createService(this, ClientInterface.class).newList(listToAdd).execute().body();
 
                 runOnUiThread(() -> {
                     Toast.makeText(this, String.format("Successfully created new list %s", returnedList.getName()), Toast.LENGTH_SHORT).show();

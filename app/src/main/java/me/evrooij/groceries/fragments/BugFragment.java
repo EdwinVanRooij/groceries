@@ -45,8 +45,8 @@ public class BugFragment extends MainFragment {
     @OnClick(R.id.bug_button_send)
     public void onButtonSendClick() {
         mainActivity.executeRunnable(() -> {
-            String message = String.format("When: %s\nWhat: %s", etWhen.getText().toString(), etWhat.getText().toString());
             try {
+                String message = String.format("When: %s\nWhat: %s", etWhen.getText().toString(), etWhat.getText().toString());
                 ResponseMessage responseMessage =
                         ServiceGenerator.createService(getContext(), ClientInterface.class)
                                 .reportFeedback(new Feedback(message, Feedback.Type.Bug, mainActivity.getThisAccount()))
