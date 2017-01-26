@@ -10,19 +10,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
-import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Feedback;
-import me.evrooij.groceries.data.FeedbackManager;
-import me.evrooij.groceries.interfaces.ContainerActivity;
+import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
-import org.parceler.Parcels;
+import me.evrooij.groceries.rest.ServiceGenerator;
 
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
+import java.io.IOException;
+
+import static android.R.id.message;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +28,6 @@ public class SuggestionFragment extends MainFragment {
 
     @BindView(R.id.suggestion_edittext)
     EditText etMessage;
-
-    private FeedbackManager feedbackManager;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,15 +40,21 @@ public class SuggestionFragment extends MainFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mainActivity.setActionBarTitle(getString(R.string.title_suggestions));
-
-        feedbackManager = new FeedbackManager(getContext());
     }
 
     @OnClick(R.id.suggestion_button_send)
     public void onButtonSendClick() {
         mainActivity.executeRunnable(() -> {
-                    ResponseMessage message = feedbackManager.reportFeedback(new Feedback(etMessage.getText().toString(), Feedback.Type.Suggestion, mainActivity.getThisAccount()));
-                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message.toString(), Toast.LENGTH_SHORT).show());
+                    try {
+                        ResponseMessage responseMessage =
+                                ServiceGenerator.createService(getContext(), ClientInterface.class)
+                                        .reportFeedback(new Feedback(etMessage.getText().toString(), Feedback.Type.Suggestion, mainActivity.getThisAccount()))
+                                        .execute()
+                                        .body();
+                        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), responseMessage.toString(), Toast.LENGTH_SHORT).show());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
         );
     }

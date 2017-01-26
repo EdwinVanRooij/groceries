@@ -13,10 +13,13 @@ import butterknife.OnTextChanged;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Product;
-import me.evrooij.groceries.data.ProductManager;
+import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static me.evrooij.groceries.Config.*;
 
@@ -34,7 +37,6 @@ public class NewProductActivity extends AppCompatActivity {
 
     private Account thisAccount;
 
-    private ProductManager productManager;
     private ArrayList<Product> data;
     private ProductAdapter adapter;
 
@@ -61,21 +63,24 @@ public class NewProductActivity extends AppCompatActivity {
             btnAdd.setText(R.string.button_update_product);
         }
         if (!isUpdate) {
-            productManager = new ProductManager(this);
             new Thread(() -> {
-                ArrayList<Product> result = (ArrayList<Product>) productManager.getMyProducts(thisAccount.getId());
+                try {
+                    ArrayList<Product> result = (ArrayList<Product>) ServiceGenerator.createService(getApplicationContext(), ClientInterface.class).getMyProducts(thisAccount.getId()).execute().body();
 
-                ProductAdapter adapter = new ProductAdapter(this, result);
+                    ProductAdapter adapter = new ProductAdapter(this, result);
 
-                runOnUiThread(() -> {
-                    etName.setAdapter(adapter);
-                    etName.setOnItemClickListener((parent, view, position, id) -> {
-                        selectedMyProduct = (Product) parent.getItemAtPosition(position);
-                        etName.setText(selectedMyProduct.getName());
-                        etAmount.setText(String.valueOf(selectedMyProduct.getAmount()));
-                        etRemark.setText(selectedMyProduct.getComment());
+                    runOnUiThread(() -> {
+                        etName.setAdapter(adapter);
+                        etName.setOnItemClickListener((parent, view, position, id) -> {
+                            selectedMyProduct = (Product) parent.getItemAtPosition(position);
+                            etName.setText(selectedMyProduct.getName());
+                            etAmount.setText(String.valueOf(selectedMyProduct.getAmount()));
+                            etRemark.setText(selectedMyProduct.getComment());
+                        });
                     });
-                });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }).start();
 
         }

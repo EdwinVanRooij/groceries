@@ -20,9 +20,14 @@ import butterknife.Unbinder;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.LoginManager;
+import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 
@@ -45,8 +50,6 @@ public class RegisterFragment extends Fragment {
     TextInputLayout containerPassword;
     @BindView(R.id.btnRegister)
     Button btnRegister;
-
-    private LoginManager loginManager;
 
     private Unbinder unbinder;
 
@@ -75,8 +78,6 @@ public class RegisterFragment extends Fragment {
         Animation a3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         btnRegister.startAnimation(a3);
 
-        loginManager = new LoginManager(getContext());
-
         return view;
     }
 
@@ -88,20 +89,28 @@ public class RegisterFragment extends Fragment {
             String password = etPassword.getText().toString().trim();
 
             new Thread(() -> {
-                Account a = loginManager.register(username, email, password);
-                if (a == null) {
-                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Could not register.\nPlease fill in valid fields.", Toast.LENGTH_SHORT).show());
-                    return;
+                try {
+                    Map<String, String> accountMap = new HashMap<>();
+                    accountMap.put("username", username);
+                    accountMap.put("email", email);
+                    accountMap.put("password", password);
+                    Account a = ServiceGenerator.createService(getContext(), ClientInterface.class).registerAccount(accountMap).execute().body();
+                    if (a == null) {
+                        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Could not register.\nPlease fill in valid fields.", Toast.LENGTH_SHORT).show());
+                        return;
+                    }
+
+                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Registration was successful.\rWelcome, %s", a.getUsername()), Toast.LENGTH_SHORT).show());
+
+                    Preferences.saveAccount(getContext(), a);
+
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Registration was successful.\rWelcome, %s", a.getUsername()), Toast.LENGTH_SHORT).show());
-
-                Preferences.saveAccount(getContext(), a);
-
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
             }).start();
         } catch (Exception e) {
             e.printStackTrace();

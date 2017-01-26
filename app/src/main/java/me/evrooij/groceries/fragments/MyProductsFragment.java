@@ -1,7 +1,6 @@
 package me.evrooij.groceries.fragments;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,48 +11,37 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
-import butterknife.OnItemClick;
 import butterknife.OnItemLongClick;
-import me.evrooij.groceries.ConfirmDialog;
-import me.evrooij.groceries.NewProductActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.Product;
-import me.evrooij.groceries.data.ProductManager;
-import me.evrooij.groceries.interfaces.ReturnBoolean;
+import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.FileUploadInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
-import org.parceler.Parcels;
+import me.evrooij.groceries.rest.ServiceGenerator;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static me.evrooij.groceries.Config.KEY_ACCOUNT;
-import static me.evrooij.groceries.Config.KEY_EDIT_PRODUCT;
-import static me.evrooij.groceries.R.id.iv;
-import static me.evrooij.groceries.fragments.DefaultListFragment.EDIT_PRODUCT_CODE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MyProductsFragment extends MainFragment {
 
-    @BindView(R.id.testIv)
-    ImageView testIv;
     @BindView(R.id.lv_my_products)
     ListView listView;
-    @BindView(R.id.tvTipDescription)
-    TextView tvTipDescription;
 
     private ArrayList<Product> data;
     private ProductAdapter adapter;
-    private ProductManager productManager;
 
     private Product editingProduct;
 
@@ -68,15 +56,15 @@ public class MyProductsFragment extends MainFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mainActivity.setActionBarTitle(getString(R.string.title_products));
-        productManager = new ProductManager(getContext());
 
         mainActivity.executeRunnable(() -> {
-            List<Product> result = productManager.getMyProducts(mainActivity.getThisAccount().getId());
+            try {
+                List<Product> result = ServiceGenerator.createService(getContext(), ClientInterface.class).getMyProducts(mainActivity.getThisAccount().getId()).execute().body();
 
-            refreshListView(result);
-            getActivity().runOnUiThread(() -> {
-                tvTipDescription.setText(getString(R.string.my_products_tip_description, data.size()));
-            });
+                refreshListView(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -96,11 +84,15 @@ public class MyProductsFragment extends MainFragment {
 
     public void createNewProduct(Product newProduct) {
         mainActivity.executeRunnable(() -> {
-            Product p = productManager.addMyProduct(mainActivity.getThisAccount().getId(), newProduct);
+            try {
+                Product p = ServiceGenerator.createService(getContext(), ClientInterface.class).addMyProduct(mainActivity.getThisAccount().getId(), newProduct).execute().body();
 
-            mainActivity.runOnUiThread(() -> {
-                adapter.add(p);
-            });
+                mainActivity.runOnUiThread(() -> {
+                    adapter.add(p);
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -135,12 +127,22 @@ public class MyProductsFragment extends MainFragment {
 
     public void editProduct(File file) {
         mainActivity.executeRunnable(() -> {
-            productManager.editMyProduct(mainActivity.getThisAccount().getId(), editingProduct, file);
-//            ResponseMessage message = productManager.editMyProduct(mainActivity.getThisAccount().getId(), editingProduct, file);
-//
-//            mainActivity.runOnUiThread(() -> {
-//                Toast.makeText(getContext(), message.toString(), Toast.LENGTH_SHORT).show();
-//            });
+            try {
+                ResponseMessage message = ServiceGenerator.createService(
+                        getContext(),
+                        FileUploadInterface.class)
+                        .upload(
+                                mainActivity.getThisAccount().getId(),
+                                editingProduct.getId(),
+                                MultipartBody.Part.createFormData(
+                                        "picture", file.getName(),
+                                        RequestBody.create(MediaType.parse("image/*"),
+                                                file))).execute().body();
+
+                mainActivity.runOnUiThread(() -> Toast.makeText(getContext(), message.toString(), Toast.LENGTH_SHORT).show());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -148,16 +150,13 @@ public class MyProductsFragment extends MainFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK) {
-//            Toast.makeText(getContext(), "Starting select picture result", Toast.LENGTH_SHORT).show();
             if (data == null) {
-//                Toast.makeText(getContext(), "Data was null", Toast.LENGTH_SHORT).show();
                 return;
             }
             try {
                 InputStream inputStream = mainActivity.getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 editProduct(bitmapToFile(bitmap));
-//                Toast.makeText(getContext(), "May have uploaded image", Toast.LENGTH_SHORT).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

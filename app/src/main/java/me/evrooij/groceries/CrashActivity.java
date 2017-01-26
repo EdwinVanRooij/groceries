@@ -8,12 +8,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.Feedback;
-import me.evrooij.groceries.data.FeedbackManager;
 import me.evrooij.groceries.interfaces.ReturnBoolean;
+import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
+import static android.R.id.message;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
 import static me.evrooij.groceries.Config.KEY_CRASH_REPORT;
 
@@ -24,7 +26,6 @@ public class CrashActivity extends AppCompatActivity {
 
     private String report;
     private Account thisAccount;
-    private FeedbackManager feedbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class CrashActivity extends AppCompatActivity {
 
         report = Parcels.unwrap(getIntent().getParcelableExtra(KEY_CRASH_REPORT));
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
-        feedbackManager = new FeedbackManager(this);
 
         textView.setText(report);
 
@@ -42,12 +42,15 @@ public class CrashActivity extends AppCompatActivity {
             if (result) {
                 new Thread(() -> {
                     try {
-                        Feedback feedback = new Feedback(report, Feedback.Type.Bug, thisAccount);
+                        ResponseMessage responseMessage =
+                                ServiceGenerator.createService(getApplicationContext(), ClientInterface.class)
+                                        .reportFeedback(new Feedback(report, Feedback.Type.Bug, thisAccount))
+                                        .execute()
+                                        .body();
                         Preferences.removeAll(this);
-                        ResponseMessage message = feedbackManager.reportFeedback(feedback);
 
                         runOnUiThread(() -> {
-                            Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, responseMessage.toString(), Toast.LENGTH_SHORT).show();
                             Preferences.removeAll(this);
                             System.exit(0);
                         });

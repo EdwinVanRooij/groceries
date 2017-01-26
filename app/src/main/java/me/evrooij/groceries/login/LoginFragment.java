@@ -22,9 +22,12 @@ import me.evrooij.groceries.Config;
 import me.evrooij.groceries.MainActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.data.Account;
-import me.evrooij.groceries.data.LoginManager;
+import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
+
+import java.io.IOException;
 
 import static android.R.attr.id;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
@@ -46,7 +49,6 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.btnLogin)
     Button btnLogin;
 
-    private LoginManager loginManager;
 
     private Unbinder unbinder;
 
@@ -75,7 +77,6 @@ public class LoginFragment extends Fragment {
         Animation a3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
         btnLogin.startAnimation(a3);
 
-        loginManager = new LoginManager(getContext());
 
         return view;
     }
@@ -86,20 +87,24 @@ public class LoginFragment extends Fragment {
         String password = etPassword.getText().toString().trim();
 
         new Thread(() -> {
-            Account a = loginManager.login(username, password);
-            if (a == null) {
-                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Could not login.\nPlease check your credentials.", Toast.LENGTH_SHORT).show());
-                return;
+            try {
+                Account account = ServiceGenerator.createService(getContext(), ClientInterface.class).getAccountByLogin(username, password).execute().body();
+                if (account == null) {
+                    getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Could not login.\nPlease check your credentials.", Toast.LENGTH_SHORT).show());
+                    return;
+                }
+
+                getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Login was successful.\rWelcome, %s", account.getUsername()), Toast.LENGTH_SHORT).show());
+
+                Preferences.saveAccount(getContext(), account);
+
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                i.putExtra(KEY_ACCOUNT, Parcels.wrap(account));
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), String.format("Login was successful.\rWelcome, %s", a.getUsername()), Toast.LENGTH_SHORT).show());
-
-            Preferences.saveAccount(getContext(), a);
-
-            Intent i = new Intent(getActivity(), MainActivity.class);
-            i.putExtra(KEY_ACCOUNT, Parcels.wrap(a));
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i);
         }).start();
     }
 }

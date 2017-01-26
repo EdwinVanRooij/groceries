@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -18,20 +16,20 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.data.Account;
 import me.evrooij.groceries.data.GroceryList;
-import me.evrooij.groceries.data.ListManager;
 import me.evrooij.groceries.fragments.CompleteListFragment;
 import me.evrooij.groceries.fragments.SelectFriendsFragment;
 import me.evrooij.groceries.interfaces.ContainerActivity;
+import me.evrooij.groceries.rest.ClientInterface;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static android.R.attr.fragment;
 import static me.evrooij.groceries.Config.KEY_ACCOUNT;
-import static me.evrooij.groceries.Config.KEY_SELECTED_ACCOUNTS;
 import static me.evrooij.groceries.Config.THREADPOOL_NEWLIST_SIZE;
 
 public class NewListContainerActivity extends AppCompatActivity implements ContainerActivity {
@@ -43,7 +41,6 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
     private List<Account> selectedAccounts;
     private String listName;
 
-    private ListManager listManager;
     private ExecutorService threadPool;
 
     @Override
@@ -56,7 +53,6 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
 
         thisAccount = Parcels.unwrap(getIntent().getParcelableExtra(KEY_ACCOUNT));
         selectedAccounts = new ArrayList<>();
-        listManager = new ListManager(getApplicationContext());
 
         threadPool = Executors.newFixedThreadPool(THREADPOOL_NEWLIST_SIZE);
 
@@ -95,14 +91,18 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
 
     private void completeList() {
         executeRunnable(() -> {
-            GroceryList listToAdd = new GroceryList(listName, thisAccount, selectedAccounts);
+            try {
+                GroceryList listToAdd = new GroceryList(listName, thisAccount, selectedAccounts);
 
-            GroceryList returnedList = listManager.newList(listToAdd);
+                GroceryList returnedList = ServiceGenerator.createService(getApplicationContext(), ClientInterface.class).newList(listToAdd).execute().body();
 
-            runOnUiThread(() -> {
-                Toast.makeText(this, String.format("Successfully created new list %s", returnedList.getName()), Toast.LENGTH_SHORT).show();
-                finish();
-            });
+                runOnUiThread(() -> {
+                    Toast.makeText(this, String.format("Successfully created new list %s", returnedList.getName()), Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 

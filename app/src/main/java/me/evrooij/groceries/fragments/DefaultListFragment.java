@@ -1,11 +1,8 @@
 package me.evrooij.groceries.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,23 +11,22 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 import butterknife.*;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import me.evrooij.groceries.*;
 import me.evrooij.groceries.adapters.ProductAdapter;
 import me.evrooij.groceries.data.GroceryList;
-import me.evrooij.groceries.data.ListManager;
 import me.evrooij.groceries.data.Product;
 import me.evrooij.groceries.interfaces.ReturnBoolean;
+import me.evrooij.groceries.rest.ClientInterface;
 import me.evrooij.groceries.rest.ResponseMessage;
+import me.evrooij.groceries.rest.ServiceGenerator;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static me.evrooij.groceries.Config.*;
-import static me.evrooij.groceries.R.id.fab;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +43,6 @@ public class DefaultListFragment extends MainFragment {
     public final static int EDIT_PRODUCT_CODE = 2;
     private static final String TAG = "DefaultListFragment";
 
-    private ListManager listManager;
     private GroceryList thisList;
 
     @Override
@@ -60,8 +55,6 @@ public class DefaultListFragment extends MainFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listManager = new ListManager(getContext());
-
         setDefaultList();
     }
 
@@ -72,12 +65,17 @@ public class DefaultListFragment extends MainFragment {
         ReturnBoolean r = result -> {
             if (result) {
                 mainActivity.executeRunnable(() -> {
-                    ResponseMessage message = listManager.deleteProduct(thisList.getId(), product.getId());
+                    try {
 
-                    mainActivity.runOnUiThread(() -> {
-                        adapter.remove(product);
-                        Toast.makeText(getContext(), (message.toString()), Toast.LENGTH_SHORT).show();
-                    });
+                        ResponseMessage message = ServiceGenerator.createService(getContext(), ClientInterface.class).deleteProduct(thisList.getId(), product.getId()).execute().body();
+
+                        mainActivity.runOnUiThread(() -> {
+                            adapter.remove(product);
+                            Toast.makeText(getContext(), (message.toString()), Toast.LENGTH_SHORT).show();
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         };
@@ -98,22 +96,26 @@ public class DefaultListFragment extends MainFragment {
 
     private void setDefaultList() {
         mainActivity.executeRunnable(() -> {
-                    // Check if user has a preferred list
-                    if (Preferences.groceryListIdExists(getContext())) {
-                        int id = Preferences.getGroceryListId(getContext());
-                        thisList = listManager.getList(id);
-                        setListData();
-                    } else {
-                        List<GroceryList> result = listManager.getMyLists(mainActivity.getThisAccount());
-
-                        if (result.size() > 0) {
-                            thisList = result.get(0);
+                    try {
+                        // Check if user has a preferred list
+                        if (Preferences.groceryListIdExists(getContext())) {
+                            int id = Preferences.getGroceryListId(getContext());
+                            thisList = ServiceGenerator.createService(getContext(), ClientInterface.class).getList(id).execute().body();
                             setListData();
                         } else {
-                            mainActivity.setActionBarTitle(getString(R.string.no_list_found));
-                            // No list was found, do nothing
-                            Log.d(TAG, "setDefaultList: No list found");
+                            List<GroceryList> result = ServiceGenerator.createService(getContext(), ClientInterface.class).getLists(mainActivity.getThisAccount().getId()).execute().body();
+
+                            if (result.size() > 0) {
+                                thisList = result.get(0);
+                                setListData();
+                            } else {
+                                mainActivity.setActionBarTitle(getString(R.string.no_list_found));
+                                // No list was found, do nothing
+                                Log.d(TAG, "setDefaultList: No list found");
+                            }
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
         );
@@ -132,11 +134,15 @@ public class DefaultListFragment extends MainFragment {
 
     public void createNewProduct(Product newProduct) {
         mainActivity.executeRunnable(() -> {
-            Product p = listManager.newProduct(thisList.getId(), newProduct);
+            try {
+                Product p = ServiceGenerator.createService(getContext(), ClientInterface.class).newProduct(thisList.getId(), newProduct).execute().body();
 
-            mainActivity.runOnUiThread(() -> {
-                adapter.add(p);
-            });
+                mainActivity.runOnUiThread(() -> {
+                    adapter.add(p);
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -145,12 +151,16 @@ public class DefaultListFragment extends MainFragment {
         adapter.remove(editingProduct);
 
         mainActivity.executeRunnable(() -> {
-            ResponseMessage responseMessage = listManager.editProduct(thisList.getId(), editedProduct.getId(), editedProduct);
+            try {
+                ResponseMessage responseMessage = ServiceGenerator.createService(getContext(), ClientInterface.class).editProduct(thisList.getId(), editedProduct.getId(), editedProduct).execute().body();
 
-            mainActivity.runOnUiThread(() -> {
-                adapter.add(editedProduct);
-                Toast.makeText(getContext(), responseMessage.toString(), Toast.LENGTH_SHORT).show();
-            });
+                mainActivity.runOnUiThread(() -> {
+                    adapter.add(editedProduct);
+                    Toast.makeText(getContext(), responseMessage.toString(), Toast.LENGTH_SHORT).show();
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 }
