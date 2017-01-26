@@ -7,7 +7,7 @@ import java.util.ArrayList
  * Date: 20-11-16.
  */
 
-class GroceryList(
+data class GroceryList(
         val name: String,
         val owner: Account,
         // Optional participants parameter
