@@ -43,7 +43,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         TextView tvOwner = (TextView) convertView.findViewById(R.id.tvOwner);
         // Populate the data into the template view using the data object
         if (product != null) {
-            if (product.getImageUrl() != null) {
+            if (product. getImageUrl() != null) {
                 Glide.with(getContext())
                         .load(product.getImageUrl())
                         .into(ivPhoto);
