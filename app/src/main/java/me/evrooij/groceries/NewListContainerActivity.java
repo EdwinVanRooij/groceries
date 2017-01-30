@@ -60,7 +60,9 @@ public class NewListContainerActivity extends AppCompatActivity implements Conta
     }
 
     public void addToSelection(Account account) {
-        selectedAccounts.add(account);
+        if (!selectedAccounts.contains(account)) {
+            selectedAccounts.add(account);
+        }
     }
 
     public void setListName(String name) {
