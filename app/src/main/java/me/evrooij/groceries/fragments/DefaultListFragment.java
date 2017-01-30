@@ -109,7 +109,7 @@ public class DefaultListFragment extends MainFragment {
                         } else {
                             List<GroceryList> result = ServiceGenerator.createService(getContext(), ClientInterface.class).getLists(mainActivity.getThisAccount().getId()).execute().body();
 
-                            if (result.size() > 0) {
+                            if (result != null && result.size() > 0) {
                                 thisList = result.get(0);
                                 setListData();
                             } else {
@@ -132,7 +132,9 @@ public class DefaultListFragment extends MainFragment {
         adapter = new ProductAdapter(getContext(), data);
 
         mainActivity.runOnUiThread(() -> {
-            listView.setAdapter(adapter);
+            if (listView != null) {
+                listView.setAdapter(adapter);
+            }
         });
     }
 

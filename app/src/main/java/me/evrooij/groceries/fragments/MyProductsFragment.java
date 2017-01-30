@@ -56,6 +56,11 @@ public class MyProductsFragment extends MainFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mainActivity.setActionBarTitle(getString(R.string.title_products));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         mainActivity.executeRunnable(() -> {
             try {
@@ -107,15 +112,8 @@ public class MyProductsFragment extends MainFragment {
         pickIntent.setType("image/*");
         pickIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
         String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
         Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-        chooserIntent.putExtra
-                (
-                        Intent.EXTRA_INITIAL_INTENTS,
-                        new Intent[]{takePhotoIntent}
-                );
 
         mainActivity.startActivityForResult(chooserIntent, SELECT_PICTURE);
 
@@ -124,6 +122,7 @@ public class MyProductsFragment extends MainFragment {
 
 
     public void editProduct(File file) {
+        Toast.makeText(mainActivity, getString(R.string.wait), Toast.LENGTH_SHORT).show();
         mainActivity.executeRunnable(() -> {
             try {
                 ResponseMessage message = ServiceGenerator.createService(
@@ -137,7 +136,9 @@ public class MyProductsFragment extends MainFragment {
                                         RequestBody.create(MediaType.parse("image/*"),
                                                 file))).execute().body();
 
-                mainActivity.runOnUiThread(() -> Toast.makeText(getContext(), message.toString(), Toast.LENGTH_SHORT).show());
+                mainActivity.runOnUiThread(() ->
+//                        Toast.makeText(getContext(), message.toString(), Toast.LENGTH_SHORT).show());
+                        Toast.makeText(mainActivity, getString(R.string.uploaded_image), Toast.LENGTH_SHORT).show());
             } catch (IOException e) {
                 e.printStackTrace();
             }

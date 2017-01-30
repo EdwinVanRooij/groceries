@@ -15,6 +15,7 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_short">8dp</dimen>
 
     <!--TextView dimens-->
     <dimen name="launcherAppName">49sp</dimen>

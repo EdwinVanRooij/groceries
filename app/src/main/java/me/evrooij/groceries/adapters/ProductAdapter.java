@@ -2,6 +2,8 @@ package me.evrooij.groceries.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         // Lookup view for data population
         ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-        TextView tvAmount = (TextView) convertView.findViewById(R.id.tvAmount);
         TextView tvComment = (TextView) convertView.findViewById(R.id.tvComment);
         TextView tvOwner = (TextView) convertView.findViewById(R.id.tvOwner);
         // Populate the data into the template view using the data object
@@ -47,17 +48,29 @@ public class ProductAdapter extends ArrayAdapter<Product> {
                 Glide.with(getContext())
                         .load(product.getImageUrl())
                         .into(ivPhoto);
-            } else {
-                ivPhoto.setVisibility(GONE);
             }
-            tvName.setText(product.getName());
-            tvAmount.setText(String.valueOf(product.getAmount()));
+            if (product.getAmount() > 1) {
+                tvName.setText(fromHtml(String.format("<b>(%s)</b> %s", product.getAmount(), product.getName())));
+            } else {
+                tvName.setText(product.getName());
+            }
             tvComment.setText(product.getComment());
             tvOwner.setText(product.getOwner().getUsername());
         }
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String html) {
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
     }
 }
 

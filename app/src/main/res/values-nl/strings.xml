@@ -46,4 +46,6 @@
     <string name="title_products">Mijn Producten</string>
     <string name="set_fragment_exception">Kon deze pagina niet opstarten.</string>
     <string name="send_feedback">Fout opgetreden. Rapport verzenden om te helpen dit probleem op te lossen?</string>
+    <string name="uploaded_image">Plaatje geupload.</string>
+    <string name="wait">Wacht alstublieft…</string>
 </resources>

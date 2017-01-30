@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="8dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large"
+    android:paddingLeft="@dimen/spacing_large"
+    android:paddingRight="@dimen/spacing_large"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingTop="@dimen/spacing_large">
 
     <ImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/spacing_short"
+        android:layout_marginRight="@dimen/spacing_short"
         android:contentDescription="@string/description_profile_picture"
         app:srcCompat="@drawable/person" />
 
@@ -21,7 +25,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="10dp"
         android:text="@string/placeholder_text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

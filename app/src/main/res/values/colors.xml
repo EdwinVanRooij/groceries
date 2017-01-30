@@ -7,4 +7,5 @@
 
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+    <color name="text_shadow">#7F308080</color>
 </resources>
