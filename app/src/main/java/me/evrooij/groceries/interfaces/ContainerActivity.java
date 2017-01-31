@@ -1,6 +1,6 @@
 package me.evrooij.groceries.interfaces;
 
-import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.models.Account;
 
 /**
  * Author: eddy

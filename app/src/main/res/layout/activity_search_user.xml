@@ -10,7 +10,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="8dp"
-    tools:context="me.evrooij.groceries.SearchUserActivity">
+    tools:context="me.evrooij.groceries.ui.SearchUserActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

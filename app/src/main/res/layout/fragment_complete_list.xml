@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/spacing_large"
     android:paddingRight="@dimen/spacing_large"
     android:paddingTop="@dimen/spacing_large"
-    tools:context="me.evrooij.groceries.fragments.CompleteListFragment">
+    tools:context=".ui.fragments.CompleteListFragment">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

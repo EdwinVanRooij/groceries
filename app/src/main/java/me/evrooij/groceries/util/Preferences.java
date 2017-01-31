@@ -2,8 +2,7 @@ package me.evrooij.groceries.util;
 
 import android.content.Context;
 import com.orhanobut.hawk.Hawk;
-import me.evrooij.groceries.Config;
-import me.evrooij.groceries.data.Account;
+import me.evrooij.groceries.models.Account;
 
 /**
  * Author: eddy

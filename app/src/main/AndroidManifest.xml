@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".login.LauncherActivity"
+            android:name=".ui.login.LauncherActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,31 +23,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.LoginContainerActivity"
+            android:name=".ui.login.LoginContainerActivity"
             android:theme="@style/AppTheme.Dark.NoActionBar.FullScreen" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NewListContainerActivity"
+            android:name=".ui.NewListContainerActivity"
             android:label="@string/toolbar_title_new_list"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".SearchUserActivity"
+            android:name=".ui.SearchUserActivity"
             android:label="@string/toolbar_title_search_user"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.ProfileActivity"
             android:label="@string/toolbar_title_profile"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".NewProductActivity"
+            android:name=".ui.NewProductActivity"
             android:label="@string/toolbar_title_new_product"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".CrashActivity"></activity>
+            android:parentActivityName=".ui.MainActivity" />
+        <activity android:name=".ui.CrashActivity"></activity>
     </application>
 
 </manifest>

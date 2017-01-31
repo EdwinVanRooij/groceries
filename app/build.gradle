@@ -21,13 +21,17 @@ android {
         }
     }
     productFlavors {
-        production {
-            applicationId "me.evrooij.groceries"
-            versionNameSuffix "-production"
-        }
         development {
             applicationId "me.evrooij.groceries.development"
             versionNameSuffix "-development"
+
+            buildConfigField 'String', 'GROCERIES_API_ENDPOINT', GROCERIES_API_ENDPOINT_DEV
+        }
+        production {
+            applicationId "me.evrooij.groceries"
+            versionNameSuffix "-production"
+
+            buildConfigField 'String', 'GROCERIES_API_ENDPOINT', GROCERIES_API_ENDPOINT_PROD
         }
     }
     compileOptions {
