@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
 
         setContentView(R.layout.activity_main);
+        ButterKnife.setDebug(BuildConfig.DEBUG);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
