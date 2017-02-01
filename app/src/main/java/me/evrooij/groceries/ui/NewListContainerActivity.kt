@@ -1,6 +1,5 @@
 package me.evrooij.groceries.ui
 
-import android.app.FragmentManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
@@ -8,30 +7,25 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Toast
-import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.OnClick
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import me.evrooij.groceries.R
+import me.evrooij.groceries.interfaces.ContainerActivity
 import me.evrooij.groceries.models.Account
 import me.evrooij.groceries.models.GroceryList
+import me.evrooij.groceries.network.ApiService
+import me.evrooij.groceries.network.ClientInterface
 import me.evrooij.groceries.ui.fragments.CompleteListFragment
 import me.evrooij.groceries.ui.fragments.SelectFriendsFragment
-import me.evrooij.groceries.interfaces.ContainerActivity
-import me.evrooij.groceries.network.ClientInterface
-import me.evrooij.groceries.network.ApiService
-import org.parceler.Parcels
-
-import java.io.IOException
-import java.util.ArrayList
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-
 import me.evrooij.groceries.util.Config.KEY_ACCOUNT
 import me.evrooij.groceries.util.Config.THREADPOOL_NEWLIST_SIZE
-import me.evrooij.groceries.R
+import org.parceler.Parcels
+import java.io.IOException
+import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
 
@@ -91,7 +85,7 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
 
 
     private fun completeList() {
-        executeRunnable {
+        executeRunnable(Runnable {
             try {
                 val listToAdd = GroceryList(listName!!, thisAccount!!, selectedAccounts)
 
@@ -104,22 +98,14 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        }
+        })
     }
 
     override fun getThisAccount(): Account? {
         return thisAccount
     }
 
-    fun changeFragment(f: Fragment, cleanStack: Boolean = false) {
-        val ft = supportFragmentManager.beginTransaction()
-        ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit)
-        ft.replace(R.id.flContent, f)
-        ft.addToBackStack(null)
-        ft.commit()
-    }
-
-    override fun setFragment(fragmentClass: Class<*>, addToStack: Boolean = false) {
+    override fun setFragment(fragmentClass: Class<*>, addToStack: Boolean) {
         try {
             val fragment = fragmentClass.newInstance() as Fragment
             val transaction = supportFragmentManager.beginTransaction()
