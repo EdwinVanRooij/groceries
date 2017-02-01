@@ -18,6 +18,7 @@ import me.evrooij.groceries.ui.NewListContainerActivity;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.ui.adapters.AccountAdapter;
 import me.evrooij.groceries.models.Account;
+import me.evrooij.groceries.util.Extensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class CompleteListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_complete_list, container, false);
+        return Extensions.inflate(container, R.layout.fragment_complete_list);
     }
 
     @Override

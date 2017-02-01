@@ -21,6 +21,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.nineoldandroids.view.ViewHelper;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.util.Extensions;
 
 import static me.evrooij.groceries.R.id.toolbar;
 
@@ -45,7 +46,7 @@ public class MyProfileFragment extends MainFragment implements ObservableScrollV
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_profile, container, false);
+        return Extensions.inflate(container, R.layout.fragment_my_profile);
     }
 
     @Override

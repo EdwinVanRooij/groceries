@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.models.Product;
+import me.evrooij.groceries.util.Extensions;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Product product = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_product, parent, false);
+            convertView = Extensions.inflate(parent, R.layout.item_product);
         }
         // Lookup view for data population
         ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);

@@ -21,6 +21,7 @@ import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.FileUploadInterface;
 import me.evrooij.groceries.network.ResponseMessage;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.util.Extensions;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -47,7 +48,7 @@ public class MyProductsFragment extends MainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_products, container, false);
+        return Extensions.inflate(container, R.layout.fragment_my_products);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.models.Account;
+import me.evrooij.groceries.util.Extensions;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class AccountAdapter extends ArrayAdapter<Account> {
         Account user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user, parent, false);
+            convertView = Extensions.inflate(parent, R.layout.item_user);
         }
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);

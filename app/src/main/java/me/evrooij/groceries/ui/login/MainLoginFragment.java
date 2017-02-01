@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.util.Extensions;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +45,7 @@ public class MainLoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_login, container, false);
+        View view = Extensions.inflate(container, R.layout.fragment_main_login);
         unbinder = ButterKnife.bind(this, view);
 
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/ADAM.otf");

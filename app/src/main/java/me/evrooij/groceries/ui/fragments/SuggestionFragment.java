@@ -16,6 +16,7 @@ import me.evrooij.groceries.models.Feedback;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ResponseMessage;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.util.Extensions;
 
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class SuggestionFragment extends MainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_suggestion, container, false);
+        return Extensions.inflate(container, R.layout.fragment_suggestion);
     }
 
     @Override

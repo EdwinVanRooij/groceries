@@ -23,6 +23,7 @@ import me.evrooij.groceries.interfaces.ReturnBoolean;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ResponseMessage;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.util.Extensions;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
@@ -53,7 +54,7 @@ public class DefaultListFragment extends MainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_default_list, container, false);
+        return Extensions.inflate(container, R.layout.fragment_default_list);
     }
 
     @Override

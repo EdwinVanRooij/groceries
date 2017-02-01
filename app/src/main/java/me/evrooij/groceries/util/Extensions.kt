@@ -1,3 +1,5 @@
+@file:JvmName("Extensions")
+
 package me.evrooij.groceries.util
 
 import android.view.LayoutInflater

@@ -22,6 +22,7 @@ import me.evrooij.groceries.R;
 import me.evrooij.groceries.models.Account;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.util.Extensions;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
@@ -58,7 +59,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = Extensions.inflate(container, R.layout.fragment_login);
         unbinder = ButterKnife.bind(this, view);
 
         Animation a = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);

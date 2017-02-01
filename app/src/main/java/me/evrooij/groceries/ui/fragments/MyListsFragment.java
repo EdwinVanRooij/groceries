@@ -16,6 +16,7 @@ import me.evrooij.groceries.ui.adapters.GroceryListAdapter;
 import me.evrooij.groceries.models.GroceryList;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.util.Extensions;
 import me.evrooij.groceries.util.Preferences;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class MyListsFragment extends MainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_lists, container, false);
+        return Extensions.inflate(container, R.layout.fragment_my_lists);
     }
 
     @Override
