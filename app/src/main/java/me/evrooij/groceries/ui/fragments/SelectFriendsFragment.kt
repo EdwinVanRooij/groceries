@@ -17,6 +17,7 @@ import me.evrooij.groceries.ui.NewListContainerActivity
 import me.evrooij.groceries.R
 import me.evrooij.groceries.ui.adapters.AccountAdapter
 import me.evrooij.groceries.models.Account
+import me.evrooij.groceries.util.inflate
 
 import java.io.IOException
 import java.util.ArrayList
@@ -35,7 +36,7 @@ class SelectFriendsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_select_friends, container, false)
+        return container!!.inflate(R.layout.fragment_select_friends)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {

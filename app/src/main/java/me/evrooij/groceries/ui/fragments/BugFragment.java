@@ -16,6 +16,7 @@ import me.evrooij.groceries.models.Feedback;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ResponseMessage;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.util.ExtensionsKt;
 
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ public class BugFragment extends MainFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bug, container, false);
+        return ExtensionsKt.inflate(container, R.layout.fragment_bug);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class BugFragment extends MainFragment {
             try {
                 String message = String.format("When: %s\nWhat: %s", etWhen.getText().toString(), etWhat.getText().toString());
                 ResponseMessage responseMessage =
-                        ApiService.createService( ClientInterface.class)
+                        ApiService.createService(ClientInterface.class)
                                 .reportFeedback(new Feedback(message, Feedback.Type.Bug, mainActivity.getThisAccount()))
                                 .execute()
                                 .body();
