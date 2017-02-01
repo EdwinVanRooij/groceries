@@ -3,7 +3,6 @@ package me.evrooij.groceries.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.UserManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +15,7 @@ import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.ui.ProfileActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.ui.adapters.AccountAdapter;
+import me.evrooij.groceries.ui.adapters.AccountAdapterJava;
 import me.evrooij.groceries.models.Account;
 import me.evrooij.groceries.util.Extensions;
 import org.parceler.Parcels;
@@ -38,7 +37,7 @@ public class FriendsFragment extends MainFragment {
     ListView listView;
 
     private ArrayList<Account> data;
-    private AccountAdapter adapter;
+    private AccountAdapterJava adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,7 +79,7 @@ public class FriendsFragment extends MainFragment {
         // Construct the data source
         data = new ArrayList<>(accounts);
         // Create the adapter to convert the array to views
-        adapter = new AccountAdapter(getContext(), data);
+        adapter = new AccountAdapterJava(getContext(), data);
 
         mainActivity.runOnUiThread(() -> {
             // Attach the adapter to a ListView

@@ -2,6 +2,8 @@ package me.evrooij.groceries.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import me.evrooij.groceries.ui.adapters.AdapterConstants
+import me.evrooij.groceries.ui.adapters.ViewType
 
 /**
  * Author: eddy
@@ -25,4 +27,8 @@ data class Account(var id: Int, var username: String, var email: String) : Parce
         dest?.writeString(username)
         dest?.writeString(email)
     }
+}
+
+data class AccountItem(val account: Account) : ViewType {
+    override fun getViewType() = AdapterConstants.FRIEND
 }

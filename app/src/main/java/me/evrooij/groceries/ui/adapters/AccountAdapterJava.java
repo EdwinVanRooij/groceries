@@ -18,8 +18,8 @@ import java.util.ArrayList;
  * Date: 20-11-16.
  */
 
-public class AccountAdapter extends ArrayAdapter<Account> {
-    public AccountAdapter(Context context, ArrayList<Account> users) {
+public class AccountAdapterJava extends ArrayAdapter<Account> {
+    public AccountAdapterJava(Context context, ArrayList<Account> users) {
         super(context, 0, users);
     }
 

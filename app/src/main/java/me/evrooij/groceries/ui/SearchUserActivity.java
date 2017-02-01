@@ -12,7 +12,7 @@ import butterknife.OnItemClick;
 import me.evrooij.groceries.R;
 import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.network.ClientInterface;
-import me.evrooij.groceries.ui.adapters.AccountAdapter;
+import me.evrooij.groceries.ui.adapters.AccountAdapterJava;
 import me.evrooij.groceries.models.Account;
 import org.parceler.Parcels;
 
@@ -31,7 +31,7 @@ public class SearchUserActivity extends AppCompatActivity {
     EditText etSearchQuery;
 
     ArrayList<Account> data;
-    AccountAdapter adapter;
+    AccountAdapterJava adapter;
 
     private Account thisAccount;
 
@@ -69,7 +69,7 @@ public class SearchUserActivity extends AppCompatActivity {
         // Construct the data source
         data = new ArrayList<>(accounts);
         // Create the adapter to convert the array to views
-        adapter = new AccountAdapter(this, data);
+        adapter = new AccountAdapterJava(this, data);
 
         runOnUiThread(() ->
                 // Attach the adapter to a ListView

@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.evrooij.groceries.ui.NewListContainerActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.ui.adapters.AccountAdapter;
+import me.evrooij.groceries.ui.adapters.AccountAdapterJava;
 import me.evrooij.groceries.models.Account;
 import me.evrooij.groceries.util.Extensions;
 
@@ -61,7 +61,7 @@ public class CompleteListFragment extends Fragment {
         // Construct the data source
         ArrayList<Account> data = new ArrayList<>(selectedAccounts);
         // Create the adapter to convert the array to views
-        AccountAdapter adapter = new AccountAdapter(getActivity(), data);
+        AccountAdapterJava adapter = new AccountAdapterJava(getActivity(), data);
         // Attach the adapter to a ListView
         listView.setAdapter(adapter);
 
