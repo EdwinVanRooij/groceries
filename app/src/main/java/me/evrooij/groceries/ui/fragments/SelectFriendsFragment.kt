@@ -1,33 +1,27 @@
 package me.evrooij.groceries.ui.fragments
 
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import kotlinx.android.synthetic.main.fragment_select_friends.*
 import android.support.v4.app.Fragment
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ListView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnItemClick
-import butterknife.Unbinder
+import me.evrooij.groceries.R
+import me.evrooij.groceries.models.Account
 import me.evrooij.groceries.network.ApiService
 import me.evrooij.groceries.network.ClientInterface
 import me.evrooij.groceries.ui.NewListContainerActivity
-import me.evrooij.groceries.R
 import me.evrooij.groceries.ui.adapters.AccountAdapter
-import me.evrooij.groceries.models.Account
 import me.evrooij.groceries.util.inflate
-
 import java.io.IOException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class SelectFriendsFragment : Fragment() {
-
-    private var listView: ListView? = null
 
     private var data: ArrayList<Account>? = null
     private var adapter: AccountAdapter? = null
@@ -40,9 +34,8 @@ class SelectFriendsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        listView = view?.findViewById(R.id.lv_users) as ListView?
-        listView?.setOnItemClickListener { parent, view, position, id ->
-            containerActivity!!.addToSelection(listView!!.adapter.getItem(position) as Account)
+        lv_users.setOnItemClickListener { parent, view, position, id ->
+            containerActivity!!.addToSelection(lv_users.adapter.getItem(position) as Account)
         }
 
         containerActivity = activity as NewListContainerActivity
@@ -68,7 +61,7 @@ class SelectFriendsFragment : Fragment() {
 
         containerActivity!!.runOnUiThread {
             // Attach the adapter to a ListView
-            listView!!.adapter = adapter
+            lv_users.adapter = adapter
         }
     }
 }
