@@ -1,5 +1,7 @@
 package me.evrooij.groceries.ui
 
+
+import kotlinx.android.synthetic.main.activity_container_new_list.*
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
@@ -29,9 +31,6 @@ import java.util.concurrent.Executors
 
 class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
 
-    //        @BindView(R.id.fab)
-    lateinit var fab: FloatingActionButton
-
     private var thisAccount: Account? = null
     private var selectedAccounts: MutableList<Account>? = null
     private var listName: String? = null
@@ -43,7 +42,6 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
         setContentView(R.layout.activity_container_new_list)
         ButterKnife.bind(this)
 
-        fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24))
         fab.setOnClickListener({
             val f = supportFragmentManager.findFragmentById(R.id.flContent)

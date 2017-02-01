@@ -2,12 +2,11 @@ package me.evrooij.groceries.ui.fragments
 
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.fragment_select_friends.*
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
+import kotlinx.android.synthetic.main.fragment_select_friends.*
 import me.evrooij.groceries.R
 import me.evrooij.groceries.models.Account
 import me.evrooij.groceries.network.ApiService
@@ -34,8 +33,8 @@ class SelectFriendsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        lv_users.setOnItemClickListener { parent, view, position, id ->
-            containerActivity!!.addToSelection(lv_users.adapter.getItem(position) as Account)
+        lv_users?.setOnItemClickListener { parent, view, position, id ->
+            containerActivity!!.addToSelection(lv_users!!.adapter.getItem(position) as Account)
         }
 
         containerActivity = activity as NewListContainerActivity
@@ -61,7 +60,7 @@ class SelectFriendsFragment : Fragment() {
 
         containerActivity!!.runOnUiThread {
             // Attach the adapter to a ListView
-            lv_users.adapter = adapter
+            lv_users!!.adapter = adapter
         }
     }
 }
