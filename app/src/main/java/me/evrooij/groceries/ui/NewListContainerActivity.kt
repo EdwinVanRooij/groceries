@@ -1,5 +1,6 @@
 package me.evrooij.groceries.ui
 
+import android.app.FragmentManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
@@ -34,9 +35,8 @@ import me.evrooij.groceries.R
 
 class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
 
-    //    @BindView(R.id.fab)
-//    lateinit var fab: FloatingActionButton
-    private var fab: FloatingActionButton? = null
+    //        @BindView(R.id.fab)
+    lateinit var fab: FloatingActionButton
 
     private var thisAccount: Account? = null
     private var selectedAccounts: MutableList<Account>? = null
@@ -49,20 +49,19 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
         setContentView(R.layout.activity_container_new_list)
         ButterKnife.bind(this)
 
-        fab = findViewById(R.id.fab) as FloatingActionButton;
-        fab!!.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24))
-
-        fab!!.setOnClickListener({
+        fab = findViewById(R.id.fab) as FloatingActionButton
+        fab.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24))
+        fab.setOnClickListener({
             val f = supportFragmentManager.findFragmentById(R.id.flContent)
 
             if (f is SelectFriendsFragment) {
                 // Done selecting friends, move on to completion
                 setFragment(CompleteListFragment::class.java, false)
-                fab!!.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_done).color(Color.WHITE).sizeDp(24))
+                fab.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_done).color(Color.WHITE).sizeDp(24))
             } else if (f is CompleteListFragment) {
                 completeList()
             } else {
-                Snackbar.make(fab!!, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
+                Snackbar.make(fab, "Could not determine the current fragment", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show()
             }
         })
@@ -86,7 +85,7 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
     }
 
     override fun onBackPressed() {
-        fab!!.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24))
+        fab.setImageDrawable(IconicsDrawable(this, GoogleMaterial.Icon.gmd_arrow_forward).color(Color.WHITE).sizeDp(24))
         super.onBackPressed()
     }
 
@@ -112,7 +111,15 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
         return thisAccount
     }
 
-    override fun setFragment(fragmentClass: Class<*>, addToStack: Boolean) {
+    fun changeFragment(f: Fragment, cleanStack: Boolean = false) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out, R.anim.abc_popup_enter, R.anim.abc_popup_exit)
+        ft.replace(R.id.flContent, f)
+        ft.addToBackStack(null)
+        ft.commit()
+    }
+
+    override fun setFragment(fragmentClass: Class<*>, addToStack: Boolean = false) {
         try {
             val fragment = fragmentClass.newInstance() as Fragment
             val transaction = supportFragmentManager.beginTransaction()

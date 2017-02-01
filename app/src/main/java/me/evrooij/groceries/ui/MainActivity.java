@@ -66,11 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initAccount();
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this, new Account(thisAccount.getId(), thisAccount.getUsername(), thisAccount.getEmail())));
-        UploadService.NAMESPACE = BuildConfig.APPLICATION_ID;
+//        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this, new Account(thisAccount.getId(), thisAccount.getUsername(), thisAccount.getEmail())));
 
         setContentView(R.layout.activity_main);
-        ButterKnife.setDebug(BuildConfig.DEBUG);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 

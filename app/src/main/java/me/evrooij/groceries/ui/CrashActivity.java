@@ -47,20 +47,24 @@ public class CrashActivity extends AppCompatActivity {
                                         .reportFeedback(new Feedback(report, Feedback.Type.Bug, thisAccount))
                                         .execute()
                                         .body();
-                        Preferences.removeAll(this);
 
                         runOnUiThread(() -> {
                             Toast.makeText(this, responseMessage.toString(), Toast.LENGTH_SHORT).show();
-                            Preferences.removeAll(this);
-                            System.exit(0);
+                            new Thread(() -> {
+                                try {
+                                    Thread.sleep(1000);
+                                    System.exit(0);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            ).start();
                         });
                     } catch (Exception e) {
-                        Preferences.removeAll(this);
                         e.printStackTrace();
                     }
                 }).start();
             } else {
-                Preferences.removeAll(this);
                 System.exit(0);
             }
         };

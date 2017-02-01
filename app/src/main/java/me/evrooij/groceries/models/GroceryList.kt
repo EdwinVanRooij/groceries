@@ -8,7 +8,7 @@ import java.util.ArrayList
  */
 
 data class GroceryList(
-        val name: String,
+        val name: String = "EmptyName",
         val owner: Account,
         // Optional participants parameter
         @Suppress("unused") val participants: List<Account>? = null) {

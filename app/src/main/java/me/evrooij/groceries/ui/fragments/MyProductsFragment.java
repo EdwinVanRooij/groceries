@@ -73,6 +73,10 @@ public class MyProductsFragment extends MainFragment {
     }
 
     private void refreshListView(List<Product> products) {
+        if (products == null) {
+            return;
+        }
+
         // Construct the data source
         data = new ArrayList<>(products);
 
