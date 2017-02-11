@@ -28,33 +28,9 @@ import java.util.*
  */
 class SelectFriendsFragment : RxBaseFragment() {
 
-    private var data: ArrayList<Account>? = null
-    private var adapter: AccountAdapter? = null
-
-    private var containerActivity: NewListContainerActivity? = null
+    private lateinit var containerActivity: NewListContainerActivity
 
     private val accountManager by lazy { AccountManager() }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        rv_users.setHasFixedSize(true)
-        rv_users.layoutManager = LinearLayoutManager(context)
-
-        initAdapter()
-
-        val subscription = accountManager.getFriends()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { retrievedFriendItems ->
-                            (rv_users.adapter as AccountAdapter).addAccounts(retrievedFriendItems)
-                        },
-                        { e ->
-                            context.toast(e.message!!)
-                        })
-        subscriptions.add(subscription) // add the subscription
-    }
 
     private fun initAdapter() {
         if (rv_users.adapter == null) {
@@ -69,28 +45,24 @@ class SelectFriendsFragment : RxBaseFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        rv_users?.setOnItemClickListener { parent, view, position, id ->
-//            containerActivity!!.addToSelection(rv_users!!.adapter.getItem(position) as Account)
-//        }
 
         containerActivity = activity as NewListContainerActivity
 
-        containerActivity!!.executeRunnable(Runnable {
-            try {
-                val result = ApiService.createService(ClientInterface::class.java).getFriends(containerActivity!!.getThisAccount()!!.id).execute().body()
+        rv_users.setHasFixedSize(true)
+        rv_users.layoutManager = LinearLayoutManager(context)
 
-                addToRecyclerView(result)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        })
-    }
+        initAdapter()
 
-    private fun addToRecyclerView(accounts: List<Account>) {
-        val news = mutableListOf<AccountItem>()
-        for (acc in accounts) {
-            news.add(AccountItem(acc))
-        }
-        (rv_users.adapter as AccountAdapter).addAccounts(news)
+        val subscription = accountManager.getFriends(containerActivity.getThisAccount().id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { retrievedFriendItems ->
+                            (rv_users.adapter as AccountAdapter).addAccounts(retrievedFriendItems)
+                        },
+                        { e ->
+                            context.toast(e.message!!)
+                        })
+        subscriptions.add(subscription) // add the subscription
     }
 }
