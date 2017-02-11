@@ -2,10 +2,12 @@
 
 package me.evrooij.groceries.util
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import me.evrooij.groceries.R
 import java.util.*
@@ -30,6 +32,10 @@ fun ImageView.loadImg(imageUrl: String) {
     } else {
         Glide.with(context).load(imageUrl).into(this)
     }
+}
+
+fun Context.toast(message: CharSequence) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
 fun Long.getFriendlyTime(): String {

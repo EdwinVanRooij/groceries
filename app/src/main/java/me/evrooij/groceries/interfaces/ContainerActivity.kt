@@ -13,7 +13,7 @@ interface ContainerActivity {
 
      * @return account object
      */
-    fun getThisAccount(): Account?
+    fun getThisAccount(): Account
 
     /**
      * Changes the current fragment with a new one, optionally adding it to back stack

@@ -1,11 +1,8 @@
 package me.evrooij.groceries.ui
 
-
-import kotlinx.android.synthetic.main.activity_container_new_list.*
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -13,9 +10,11 @@ import android.widget.Toast
 import butterknife.ButterKnife
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import kotlinx.android.synthetic.main.activity_container_new_list.*
 import me.evrooij.groceries.R
 import me.evrooij.groceries.interfaces.ContainerActivity
 import me.evrooij.groceries.models.Account
+import me.evrooij.groceries.models.AccountManager
 import me.evrooij.groceries.models.GroceryList
 import me.evrooij.groceries.network.ApiService
 import me.evrooij.groceries.network.ClientInterface
@@ -31,11 +30,11 @@ import java.util.concurrent.Executors
 
 class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
 
-    private var thisAccount: Account? = null
+    private lateinit var thisAccount: Account
+    private lateinit var threadPool: ExecutorService
+
     private var selectedAccounts: MutableList<Account>? = null
     private var listName: String? = null
-
-    private var threadPool: ExecutorService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +98,7 @@ class NewListContainerActivity : AppCompatActivity(), ContainerActivity {
         })
     }
 
-    override fun getThisAccount(): Account? {
+    override fun getThisAccount(): Account {
         return thisAccount
     }
 

@@ -55,6 +55,9 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             }
             tvComment.setText(product.getComment());
             tvOwner.setText(product.getOwner().getUsername());
+        } else {
+            ivPhoto.setImageDrawable(null);
+            ivPhoto.setImageDrawable(getContext().getResources().getDrawable(R.drawable.grocery_placeholder));
         }
 
         // Return the completed view to render on screen

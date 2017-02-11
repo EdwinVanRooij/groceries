@@ -127,6 +127,9 @@ public class DefaultListFragment extends MainFragment {
     }
 
     private void setListData() {
+        if (thisList == null) {
+            return;
+        }
         mainActivity.setActionBarTitle(thisList.getName());
         ArrayList<Product> data = new ArrayList<>(thisList.getProductList());
 
