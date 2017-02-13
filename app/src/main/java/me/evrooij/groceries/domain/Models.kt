@@ -46,3 +46,4 @@ data class GroceryList(
     val id: Int = 0
     var productList: List<Product> = ArrayList()
 }
+
