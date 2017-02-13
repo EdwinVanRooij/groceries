@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import me.evrooij.groceries.models.Account;
+import me.evrooij.groceries.domain.Account;
 import org.parceler.Parcels;
 
 import java.io.PrintWriter;

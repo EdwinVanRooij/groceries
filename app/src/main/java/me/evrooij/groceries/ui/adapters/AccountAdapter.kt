@@ -1,73 +1,38 @@
-package me.evrooij.groceries.ui.adapters
+package com.antonioleiva.weatherapp.ui.adapters
 
-import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
+import android.util.SparseBooleanArray
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import me.evrooij.groceries.models.AccountItem
-import java.util.*
+import com.antonioleiva.weatherapp.extensions.ctx
+import kotlinx.android.synthetic.main.item_user.view.*
+import me.evrooij.groceries.R
+import me.evrooij.groceries.domain.Account
+import me.evrooij.groceries.util.loadImg
 
-/**
- * Author: eddy
- * Date: 1-2-17.
- */
+class AccountAdapter(val accountList: List<Account>, val itemClick: (Account) -> Unit) : RecyclerView.Adapter<AccountAdapter.ViewHolder>() {
 
-class AccountAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var items: ArrayList<ViewType>
-    private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
-    private val loadingItem = object : ViewType {
-        override fun getViewType() = AdapterConstants.LOADING
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.ctx).inflate(R.layout.item_user, parent, false)
+        return ViewHolder(view, itemClick)
     }
 
-    init {
-        delegateAdapters.put(AdapterConstants.LOADING, LoadingDelegateAdapter())
-        delegateAdapters.put(AdapterConstants.FRIEND, AccountDelegateAdapter())
-        items = ArrayList()
-        items.add(loadingItem)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bindView(accountList[position])
     }
 
-    override fun getItemCount(): Int {
-        return items.size
+    override fun getItemCount() = accountList.size
+
+    class ViewHolder(view: View, val itemClick: (Account) -> Unit) : RecyclerView.ViewHolder(view) {
+        fun bindView(account: Account) {
+            with(account) {
+                itemView.ivProfilePicture.loadImg("")
+                itemView.tvName.text = username
+                itemView.setOnClickListener {
+                    itemClick(this)
+                }
+            }
+        }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return delegateAdapters.get(viewType).onCreateViewHolder(parent)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, this.items[position])
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return this.items[position].getViewType()
-    }
-
-    fun addAccounts(news: List<AccountItem>) {
-        // first remove loading and notify
-        val initPosition = items.size - 1
-        items.removeAt(initPosition)
-        notifyItemRemoved(initPosition)
-
-        // insert news and the loading at the end of the list
-        items.addAll(news)
-        items.add(loadingItem)
-        notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item */)
-    }
-
-    fun clearAndAddAccounts(news: List<AccountItem>) {
-        items.clear()
-        notifyItemRangeRemoved(0, getLastPosition())
-
-        items.addAll(news)
-        items.add(loadingItem)
-        notifyItemRangeInserted(0, items.size)
-    }
-
-    fun getAccounts(): List<AccountItem> {
-        return items
-                .filter { it.getViewType() == AdapterConstants.FRIEND }
-                .map { it as AccountItem }
-    }
-
-    private fun getLastPosition() = if (items.lastIndex == -1) 0 else items.lastIndex
 }

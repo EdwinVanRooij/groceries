@@ -13,9 +13,7 @@ import com.mikepenz.iconics.IconicsDrawable
 import kotlinx.android.synthetic.main.activity_container_new_list.*
 import me.evrooij.groceries.R
 import me.evrooij.groceries.interfaces.ContainerActivity
-import me.evrooij.groceries.models.Account
-import me.evrooij.groceries.models.AccountManager
-import me.evrooij.groceries.models.GroceryList
+import me.evrooij.groceries.domain.*
 import me.evrooij.groceries.network.ApiService
 import me.evrooij.groceries.network.ClientInterface
 import me.evrooij.groceries.ui.fragments.CompleteListFragment

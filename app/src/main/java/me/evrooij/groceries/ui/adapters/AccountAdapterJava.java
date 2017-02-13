@@ -2,20 +2,19 @@ package me.evrooij.groceries.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.models.Account;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.util.Extensions;
 
 import java.util.ArrayList;
 
 /**
  * Author: eddy
- * Date: 20-11-16.
+ * Date: 13-2-17.
  */
 
 public class AccountAdapterJava extends ArrayAdapter<Account> {
@@ -43,4 +42,3 @@ public class AccountAdapterJava extends ArrayAdapter<Account> {
         return convertView;
     }
 }
-

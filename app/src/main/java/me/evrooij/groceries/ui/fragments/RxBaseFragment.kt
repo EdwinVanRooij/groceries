@@ -1,7 +1,7 @@
 package me.evrooij.groceries.ui.fragments
 
-import rx.subscriptions.CompositeSubscription
 import android.support.v4.app.Fragment
+import rx.subscriptions.CompositeSubscription
 
 /**
  * Author: eddy

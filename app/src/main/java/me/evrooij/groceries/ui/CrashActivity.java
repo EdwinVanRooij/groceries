@@ -7,13 +7,11 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.models.Account;
-import me.evrooij.groceries.models.Feedback;
 import me.evrooij.groceries.interfaces.ReturnBoolean;
+import me.evrooij.groceries.domain.*;
+import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ResponseMessage;
-import me.evrooij.groceries.network.ApiService;
-import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 
 import static me.evrooij.groceries.util.Config.KEY_ACCOUNT;

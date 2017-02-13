@@ -14,10 +14,10 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.evrooij.groceries.ui.NewListContainerActivity;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.ui.NewListContainerActivity;
 import me.evrooij.groceries.ui.adapters.AccountAdapterJava;
-import me.evrooij.groceries.models.Account;
 import me.evrooij.groceries.util.Extensions;
 
 import java.util.ArrayList;

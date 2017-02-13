@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.Spanned;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.models.Product;
+import me.evrooij.groceries.domain.Product;
 import me.evrooij.groceries.util.Extensions;
 
 import java.util.ArrayList;

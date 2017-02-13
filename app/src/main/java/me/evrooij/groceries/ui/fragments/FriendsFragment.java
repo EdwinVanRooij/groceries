@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.OnItemClick;
+import me.evrooij.groceries.R;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.ui.ProfileActivity;
-import me.evrooij.groceries.R;
 import me.evrooij.groceries.ui.adapters.AccountAdapterJava;
-import me.evrooij.groceries.models.Account;
 import me.evrooij.groceries.util.Extensions;
 import org.parceler.Parcels;
 

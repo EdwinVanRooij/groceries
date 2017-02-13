@@ -1,4 +1,4 @@
-package me.evrooij.groceries.models
+package me.evrooij.groceries.domain
 
 import me.evrooij.groceries.network.ApiService
 import me.evrooij.groceries.network.ClientInterface
@@ -10,9 +10,9 @@ import rx.Observable
  * Date: 11-2-17.
  */
 
-class AccountManager() {
+class AccountManager {
 
-    fun getFriends(ownId: Int): Observable<List<AccountItem>> {
+    fun getFriends(ownId: Int): Observable<List<Account>> {
 
         return Observable.create {
             subscriber ->
@@ -21,7 +21,7 @@ class AccountManager() {
             val response = callResponse.execute()
 
             if (response.isSuccessful) {
-                val friends = response.body().map(::AccountItem)
+                val friends = response.body()
 
                 subscriber.onNext(friends)
                 subscriber.onCompleted()

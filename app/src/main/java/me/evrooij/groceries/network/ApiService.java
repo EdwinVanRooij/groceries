@@ -1,8 +1,6 @@
 package me.evrooij.groceries.network;
 
-import android.content.Context;
 import me.evrooij.groceries.BuildConfig;
-import me.evrooij.groceries.R;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

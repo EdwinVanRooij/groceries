@@ -10,12 +10,12 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.OnItemClick;
 import com.orhanobut.hawk.Hawk;
-import me.evrooij.groceries.ui.MainActivity;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.ui.adapters.GroceryListAdapter;
-import me.evrooij.groceries.models.GroceryList;
-import me.evrooij.groceries.network.ClientInterface;
+import me.evrooij.groceries.domain.GroceryList;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.network.ClientInterface;
+import me.evrooij.groceries.ui.MainActivity;
+import me.evrooij.groceries.ui.adapters.GroceryListAdapter;
 import me.evrooij.groceries.util.Extensions;
 import me.evrooij.groceries.util.Preferences;
 

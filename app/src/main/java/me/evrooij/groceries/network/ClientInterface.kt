@@ -1,9 +1,6 @@
 package me.evrooij.groceries.network
 
-import me.evrooij.groceries.models.Account
-import me.evrooij.groceries.models.Feedback
-import me.evrooij.groceries.models.GroceryList
-import me.evrooij.groceries.models.Product
+import me.evrooij.groceries.domain.*
 import retrofit2.Call
 import retrofit2.http.*
 

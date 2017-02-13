@@ -12,10 +12,10 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.models.Feedback;
+import me.evrooij.groceries.domain.Feedback;
+import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.network.ResponseMessage;
-import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.util.Extensions;
 
 import java.io.IOException;

@@ -3,8 +3,8 @@ package me.evrooij.groceries.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.ui.MainActivity;
-import me.evrooij.groceries.models.Account;
 import me.evrooij.groceries.util.Preferences;
 import org.parceler.Parcels;
 

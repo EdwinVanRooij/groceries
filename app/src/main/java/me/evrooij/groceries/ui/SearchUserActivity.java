@@ -9,11 +9,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import com.antonioleiva.weatherapp.ui.adapters.AccountAdapter;
 import me.evrooij.groceries.R;
+import me.evrooij.groceries.domain.*;
 import me.evrooij.groceries.network.ApiService;
 import me.evrooij.groceries.network.ClientInterface;
 import me.evrooij.groceries.ui.adapters.AccountAdapterJava;
-import me.evrooij.groceries.models.Account;
 import org.parceler.Parcels;
 
 import java.io.IOException;

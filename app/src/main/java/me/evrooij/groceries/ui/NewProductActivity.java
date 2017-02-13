@@ -13,11 +13,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.ui.adapters.ProductAdapter;
-import me.evrooij.groceries.models.Account;
-import me.evrooij.groceries.models.Product;
-import me.evrooij.groceries.network.ClientInterface;
+import me.evrooij.groceries.domain.Account;
+import me.evrooij.groceries.domain.Product;
 import me.evrooij.groceries.network.ApiService;
+import me.evrooij.groceries.network.ClientInterface;
+import me.evrooij.groceries.ui.adapters.ProductAdapter;
 import org.parceler.Parcels;
 
 import java.io.IOException;

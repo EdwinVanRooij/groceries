@@ -2,7 +2,7 @@ package me.evrooij.groceries.util;
 
 import android.content.Context;
 import com.orhanobut.hawk.Hawk;
-import me.evrooij.groceries.models.Account;
+import me.evrooij.groceries.domain.Account;
 
 /**
  * Author: eddy

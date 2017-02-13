@@ -1,15 +1,14 @@
-package me.evrooij.groceries.models
+package me.evrooij.groceries.domain
 
 import android.os.Parcel
 import android.os.Parcelable
-import me.evrooij.groceries.ui.adapters.AdapterConstants
-import me.evrooij.groceries.ui.adapters.ViewType
+import com.google.gson.annotations.SerializedName
+import java.util.*
 
 /**
  * Author: eddy
- * Date: 27-11-16.
+ * Date: 13-2-17.
  */
-
 data class Account(var id: Int, var username: String, var email: String) : Parcelable {
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<Account> = object : Parcelable.Creator<Account> {
@@ -29,6 +28,21 @@ data class Account(var id: Int, var username: String, var email: String) : Parce
     }
 }
 
-data class AccountItem(val account: Account) : ViewType {
-    override fun getViewType() = AdapterConstants.FRIEND
+data class Feedback(val message: String, @SerializedName("type") val type: Type, val sender: Account) {
+    enum class Type {
+        @SerializedName("0")
+        Suggestion,
+        @SerializedName("1")
+        Bug
+    }
+}
+
+data class GroceryList(
+        val name: String = "EmptyName",
+        val owner: Account,
+        // Optional participants parameter
+        @Suppress("unused") val participants: List<Account>? = null) {
+
+    val id: Int = 0
+    var productList: List<Product> = ArrayList()
 }

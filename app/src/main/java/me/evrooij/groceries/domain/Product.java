@@ -1,4 +1,4 @@
-package me.evrooij.groceries.models;
+package me.evrooij.groceries.domain;
 
 import org.parceler.Parcel;
 

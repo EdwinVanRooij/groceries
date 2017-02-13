@@ -27,24 +27,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import me.evrooij.groceries.BuildConfig;
 import me.evrooij.groceries.R;
-import me.evrooij.groceries.models.Account;
-import me.evrooij.groceries.models.Product;
-import me.evrooij.groceries.ui.fragments.*;
+import me.evrooij.groceries.domain.Account;
 import me.evrooij.groceries.interfaces.ContainerActivity;
+import me.evrooij.groceries.domain.Product;
+import me.evrooij.groceries.ui.fragments.*;
 import me.evrooij.groceries.ui.login.LauncherActivity;
 import me.evrooij.groceries.util.Preferences;
-import net.gotev.uploadservice.UploadService;
 import org.parceler.Parcels;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static me.evrooij.groceries.util.Config.*;
 import static me.evrooij.groceries.ui.fragments.DefaultListFragment.EDIT_PRODUCT_CODE;
 import static me.evrooij.groceries.ui.fragments.DefaultListFragment.NEW_PRODUCT_CODE;
+import static me.evrooij.groceries.util.Config.*;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ContainerActivity {
 
