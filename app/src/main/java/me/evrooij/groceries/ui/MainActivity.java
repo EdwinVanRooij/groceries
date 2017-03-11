@@ -225,8 +225,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logOut() {
-//        Preferences.removeAccount();
-        Preferences.removeAll(this);
+        Preferences.removeAccount(this);
+//        Preferences.removeAll(this);
 
         Intent i = new Intent(this, LauncherActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
